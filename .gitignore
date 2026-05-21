@@ -9,6 +9,10 @@ Desktop.ini
 .obsidian/workspace*.bak*
 .obsidian/plugins/**/*.bak*
 .obsidian/cache/
+.obsidian/plugins/obsidian-image-auto-upload-plugin/data.json
+.obsidian/plugins/realclaudian/data.json
+.obsidian/plugins/obsidian-excalidraw-plugin/data.json
+.obsidian/plugins/obsidian-git/data.json
 
 # Local/generated caches
 Clippings/
