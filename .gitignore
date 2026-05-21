@@ -11,6 +11,7 @@ Desktop.ini
 .obsidian/cache/
 
 # Local/generated caches
+Clippings/
 Clippings/.llmwiki-cache/
 **/__pycache__/
 *.pyc
