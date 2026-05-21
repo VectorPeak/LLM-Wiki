@@ -1,0 +1,6 @@
+{
+  "attempted": false,
+  "status": "identifier_available",
+  "identifier": "1707.06347",
+  "recommended_action": "Use Zotero Add Item by Identifier or a Zotero MCP/local connector that invokes identifier import. Do not create manual Web API metadata for this paper."
+}

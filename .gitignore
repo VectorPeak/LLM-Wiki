@@ -1,0 +1,25 @@
+# OS/editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Obsidian local workspace state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspace*.bak*
+.obsidian/plugins/**/*.bak*
+.obsidian/cache/
+
+# Local/generated caches
+Clippings/.llmwiki-cache/
+**/__pycache__/
+*.pyc
+
+# Local agent/tool state
+.claude/
+.claudian/
+
+# Environment and secret files
+.env
+.env.*
+!.env.example
