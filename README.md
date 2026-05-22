@@ -1,94 +1,108 @@
-# LLM Wiki
+<div align="center">
 
-> 一个 Karpathy 风格的个人 LLM 知识库：原始资料保持原始，重要知识被重写、压缩、链接，并持续沉淀为可查询的知识网络。
+# LLM Wiki | 个人大模型知识库
 
-## 中文说明
+**一个面向 LLM、Agent、RAG、微调、评估与 AI 工程实践的 Obsidian 知识网络**
 
-LLM Wiki 是一个公开的 Obsidian 知识库，用来学习和整理现代 AI 工程相关内容。主题包括大语言模型、Agent、RAG、微调、强化学习、评估、推理优化，以及围绕这些方向的工程工具和实践方法。
+![knowledge](https://img.shields.io/badge/knowledge-LLM%20%7C%20Agent%20%7C%20RAG-blue)
+![vault](https://img.shields.io/badge/vault-Obsidian-7C3AED)
+![wiki-notes](https://img.shields.io/badge/wiki%20notes-190-brightgreen)
+![raw-files](https://img.shields.io/badge/raw%20files-158-orange)
+![license](https://img.shields.io/badge/license-not%20declared-lightgrey)
 
-这个仓库的目标不是“收集一切”，而是把真正有价值的资料加工成一个紧凑、可导航、可复用的知识图谱。
-
-## 这是一个 Karpathy 风格的知识库
-
-这里所说的 Karpathy 风格，指的是一种偏工程、偏第一性原理、偏可解释的学习方式：
-
-1. 原始资料不要急着丢掉，先保留在 `RAW`。
-2. 重要概念要用自己的话重写，而不是只摘抄。
-3. 笔记要尽量小而清晰，方便被链接和复用。
-4. 代码、论文、图解、面试题、工程经验要互相印证。
-5. 系统要足够简单：Markdown、文件夹、Git、Obsidian 链接即可。
-
-这个库的核心流水线是：
+**简体中文** | [English](./README_EN.md)
 
 ```text
-RAW 原始资料 -> Wiki 结构化笔记 -> 概念、方法、问题、项目和领域网络
+RAW 原始资料  ──►  Wiki 结构化笔记  ──►  可链接、可查询、可复用的知识网络
 ```
 
-## 仓库结构
+</div>
+
+---
+
+## 简介
+
+LLM Wiki 是一个公开的 Obsidian 知识库，用来持续整理现代 AI 工程相关内容，覆盖大语言模型、Agent、RAG、微调、强化学习、评估、推理优化，以及围绕这些方向的工程工具和实践方法
+
+它的目标不是“收集一切”，而是把真正有价值的资料加工成一个紧凑、可导航、可复用的知识图谱。换句话说，`RAW` 更像原矿，`Wiki` 更像被冶炼过的知识合金，`Schema` 则是保证后续加工不跑偏的工艺规程
+
+## 为什么存在
+
+学习 LLM 相关知识时，常见失败模式不是“资料不够”，而是资料过多、层级混乱、概念互相孤立、看完之后无法复用。LLM Wiki 试图把论文、文章、项目、课程、面试题和个人笔记压缩成一套能被反复查询和扩展的结构化系统
+
+这个库采用一种偏 Karpathy 风格的学习方法：先保留原始资料，再用自己的话重写关键概念，最后通过链接、对比、问题和工程场景把知识织成网络
+
+## 核心结构
 
 ```text
 .
-|-- RAW/       # 原始资料层：论文、网页、书籍、课程、自笔记、项目资料
-|-- Wiki/      # 知识产品层：概念、方法、问题、项目、领域和来源笔记
-|-- Schema/    # 维护规则层：摄取、结构、风格、来源、查询和 lint 规则
-`-- .obsidian/ # Obsidian 库配置和部分插件元数据
+├─ RAW/       # 原始资料层：论文、网页、书籍、课程、项目资料、学习日志
+├─ Wiki/      # 知识产品层：概念、方法、问题、项目、领域和来源笔记
+├─ Schema/    # 维护规则层：摄取、结构、风格、来源、查询和 lint 规则
+└─ .obsidian/ # Obsidian 库配置和部分插件元数据
 ```
 
-### RAW
+### RAW：原始资料层
 
-`RAW` 是原始资料层，用来保存还没有完全加工成稳定知识的材料，包括：
+`RAW` 用来保存还没有完全加工成稳定知识的材料，包括论文、网页、课程、书籍、GitHub 项目资料、面试题、算法题、学习日志和个人原始笔记
 
-- 论文和研究资料
-- 自笔记和学习日志
-- GitHub 项目资料
-- 网页、文章和文档
-- 书籍、课程和教程
-- 面试题、算法题和工程笔记
+### Wiki：知识产品层
 
-### Wiki
+`Wiki` 不按资料来源分类，而按知识角色组织。它更像一个知识图谱的节点集合，每个节点都应该能回答一个清晰问题，或承载一个可复用概念
 
-`Wiki` 是知识产品层。它不按资料来源分类，而按知识角色分类：
+| 目录 | 作用 |
+|---|---|
+| [`Wiki/concepts`](./Wiki/concepts) | 原子概念，例如 Transformer、KV Cache、GRPO、RAG chunking |
+| [`Wiki/methods`](./Wiki/methods) | 学习路径、工程方法、评估方法和实践框架 |
+| [`Wiki/questions`](./Wiki/questions) | 面试型问题、研究型问题和容易混淆的问题 |
+| [`Wiki/projects`](./Wiki/projects) | LangChain、LangGraph、LlamaIndex、RAGFlow 等项目 |
+| [`Wiki/domains`](./Wiki/domains) | Agent 工程、RAG、大模型底层原理等领域 |
+| [`Wiki/sources`](./Wiki/sources) | 对原始资料进行重写后的来源笔记 |
+| [`Wiki/comparisons`](./Wiki/comparisons) | 容易混淆对象的对比笔记 |
 
-- `concepts/`：原子概念，例如 Transformer、KV Cache、GRPO、RAG chunking
-- `methods/`：学习路径、工程方法、评估方法和实践框架
-- `questions/`：面试型问题、研究型问题和容易混淆的问题
-- `projects/`：LangChain、LangGraph、LlamaIndex、RAGFlow 等项目
-- `domains/`：Agent 工程、RAG、大模型底层原理等领域
-- `sources/`：对原始资料进行重写后的来源笔记
-- `comparisons/`：容易混淆对象的对比笔记
+### Schema：维护规则层
 
-### Schema
+`Schema` 描述这个知识库应该如何被持续更新，包括 frontmatter、ingest、structure、style、source-policy、query、lint 等规则。它的作用类似“知识库操作系统”的系统调用约束，保证后续由人或 AI 维护时不会随意堆文件
 
-`Schema` 是维护规则层，描述这个知识库应该如何被持续更新。它包含 frontmatter、ingest、structure、style、source-policy、query、lint 等规则。
+## 推荐入口
+
+- [`Wiki/index.md`](./Wiki/index.md)：全库主索引，适合从结构开始浏览
+- [`Wiki/overview.md`](./Wiki/overview.md)：知识库定位、结构和当前状态总览
+- [`Wiki/hot.md`](./Wiki/hot.md)：近期上下文与高频工作区
+- [`Schema/AGENTS.md`](./Schema/AGENTS.md)：AI 辅助维护规则
+- [`Schema/style.md`](./Schema/style.md)：写作风格规则
+- [`Schema/query.md`](./Schema/query.md)：查询和使用规则
+
+## 当前主题
+
+这个知识库目前重点覆盖以下方向：
+
+- 大模型底层原理：Transformer、Attention、KV Cache、MoE、预训练与微调
+- RAG 工程：文本分块、Embedding、Rerank、PDF 解析、效果评估和工程链路
+- Agent 系统：ReAct、Reflection、Tool Calling、记忆系统、人工干预和长程任务
+- AI 编程工具：Claude Code、Repository-Level Context、Spec-Driven Development
+- 模型训练与评估：SFT、RLHF、GRPO、LM Evaluation Harness、推理优化
+- 算法与面试：传统机器学习、深度学习、NLP、数据结构与算法
 
 ## 设计原则
 
-- **来源优先**：重要判断尽量能回到原始来源。
-- **自顶向下**：先讲全局定位，再讲机制细节。
-- **小块知识，高密度链接**：避免大而散的长文堆积。
-- **工程导向**：不仅讲“是什么”，也讲“怎么用、何时失败、如何落地”。
-- **公开安全**：本地缓存、剪藏全文、上传历史、Agent 状态和密钥不进入公开仓库。
+- **来源优先**：重要判断尽量能回到原始来源
+- **自顶向下**：先讲全局定位，再讲机制细节
+- **小块知识，高密度链接**：避免大而散的长文堆积
+- **工程导向**：不仅讲“是什么”，也讲“怎么用、何时失败、如何落地”
+- **公开安全**：本地缓存、剪藏全文、上传历史、Agent 状态和密钥不进入公开仓库
 
 ## 如何使用
 
-用 Obsidian 打开这个目录即可：
+如果只是在线阅读，建议从 [`Wiki/index.md`](./Wiki/index.md) 开始，再沿着 `domains`、`methods`、`concepts`、`questions` 逐层展开
 
-```text
-D:\LLMWiki\LLMWiki
+如果要在本地使用，可以克隆仓库后用 Obsidian 打开根目录：
+
+```bash
+git clone https://github.com/VectorPeak/LLM-Wiki.git
 ```
 
-推荐入口：
-
-- `Wiki/index.md`：主索引
-- `Wiki/overview.md`：知识库总览
-- `Wiki/hot.md`：近期上下文
-- `Schema/AGENTS.md`：AI 辅助维护规则
-
-如果使用 Obsidian Git，可以通过命令面板执行：
-
-```text
-Obsidian Git: Commit-and-sync
-```
+然后在 Obsidian 中选择仓库目录作为 vault，即可使用双链、全文搜索、图谱视图和本地插件能力
 
 ## 公开边界
 
@@ -100,119 +114,12 @@ Obsidian Git: Commit-and-sync
 - Obsidian workspace 状态
 - `.env`、密钥、账号凭据和其他私有配置
 
-公开仓库用于展示知识结构和整理后的笔记，不用于同步所有私人草稿和工具中间产物。
+公开仓库用于展示知识结构和整理后的笔记，不用于同步所有私人草稿和工具中间产物
 
 ## 当前状态
 
-这个知识库仍在持续建设中。部分旧笔记可能还存在结构粗糙、链接不完整或历史导入导致的编码问题。长期目标是让 `Wiki` 层比 `RAW` 层更干净、更密集、更适合复习、检索和复用。
+这个知识库仍在持续建设中。部分旧笔记可能还存在结构粗糙、链接不完整或历史导入导致的编码问题。长期目标是让 `Wiki` 层比 `RAW` 层更干净、更密集、更适合复习、检索和复用
 
 ## 许可说明
 
-当前尚未声明正式开源许可证。原始资料仍应遵循其各自来源的版权和许可要求。
-
----
-
-## English Version
-
-LLM Wiki is a public Obsidian vault for learning and organizing modern AI engineering. It focuses on large language models, agents, RAG, fine-tuning, reinforcement learning, evaluation, inference optimization, and the practical tools around them.
-
-The goal is not to collect everything. The goal is to turn useful sources into a compact, navigable, and reusable knowledge graph.
-
-## A Karpathy-Style Knowledge Base
-
-By Karpathy-style, this repository means an engineering-oriented, first-principles, explainable learning workflow:
-
-1. Keep raw materials close to the work.
-2. Rewrite important ideas in plain language.
-3. Prefer small connected notes over large disconnected summaries.
-4. Let code, papers, diagrams, interview questions, and engineering practice reinforce each other.
-5. Keep the system inspectable: Markdown, folders, Git, and Obsidian links.
-
-The core pipeline is:
-
-```text
-RAW sources -> structured Wiki notes -> concepts, methods, questions, projects, and domains
-```
-
-## Repository Structure
-
-```text
-.
-|-- RAW/       # Original source materials: papers, notes, websites, books, logs
-|-- Wiki/      # Distilled knowledge nodes for reading, linking, and review
-|-- Schema/    # Maintenance rules for ingestion, style, structure, and querying
-`-- .obsidian/ # Obsidian vault settings and selected plugin metadata
-```
-
-### RAW
-
-`RAW` is the source layer. It contains materials before they are fully rewritten into durable knowledge:
-
-- papers and research notes
-- self-notes and learning logs
-- GitHub/project snapshots
-- website and article captures
-- book/course material
-- interview and algorithm notes
-
-### Wiki
-
-`Wiki` is the distilled layer. It is organized by knowledge role rather than by source format:
-
-- `concepts/`: atomic concepts such as Transformer, KV Cache, RAG chunking, GRPO
-- `methods/`: reusable learning paths and engineering methods
-- `questions/`: interview-style or research-style questions
-- `projects/`: tools and frameworks such as LangChain, LangGraph, LlamaIndex, RAGFlow
-- `domains/`: broader areas such as agent engineering, RAG, and model internals
-- `sources/`: rewritten source-level notes
-- `comparisons/`: side-by-side notes for confusing pairs
-
-### Schema
-
-`Schema` defines how the vault should be maintained. It is the rule layer for future updates: ingestion, frontmatter, source policy, structure, style, and linting.
-
-## Design Principles
-
-- **Source first**: important claims should trace back to a source when possible.
-- **Top-down learning**: each topic should start from the big picture, then move into mechanisms and details.
-- **Small pieces, dense links**: knowledge should be broken into reusable nodes and connected with Obsidian wikilinks.
-- **Engineering bias**: notes should answer how something works, when it fails, and how it is used in practice.
-- **Public-safe by default**: local caches, private clippings, upload history, and agent state should stay out of Git.
-
-## How To Use
-
-Open this folder as an Obsidian vault.
-
-Recommended entry points:
-
-- `Wiki/index.md`: main index
-- `Wiki/overview.md`: vault overview
-- `Wiki/hot.md`: active context and recent work
-- `Schema/AGENTS.md`: maintenance rules for AI-assisted updates
-
-If using Obsidian Git, the repository can be synced with:
-
-```text
-Obsidian Git: Commit-and-sync
-```
-
-## Public Boundary
-
-This is a public-facing version of the vault. Some local-only data is intentionally ignored:
-
-- article clippings and extraction caches
-- image upload plugin history
-- local agent plugin state
-- Obsidian workspace state
-- environment files and secrets
-
-The public repository is intended to show the knowledge structure and curated notes, not every private scratchpad or tool artifact.
-
-## Status
-
-This vault is under active development. Some older notes may contain rough structure, incomplete links, or encoding artifacts from previous imports. The long-term direction is to make the `Wiki` layer cleaner, denser, and more useful than the raw source layer.
-
-## License
-
-No formal license is declared yet. Treat the original source materials under their respective licenses and copyrights.
-
+当前尚未声明正式开源许可证。原始资料仍应遵循其各自来源的版权和许可要求
