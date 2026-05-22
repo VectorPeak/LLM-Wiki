@@ -8,7 +8,7 @@
 ![vault](https://img.shields.io/badge/vault-Obsidian-7C3AED)
 ![wiki-notes](https://img.shields.io/badge/wiki%20notes-190-brightgreen)
 ![raw-files](https://img.shields.io/badge/raw%20files-158-orange)
-![license](https://img.shields.io/badge/license-not%20declared-lightgrey)
+![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)
 
 **简体中文** | [English](./README_EN.md)
 
@@ -120,6 +120,10 @@ git clone https://github.com/VectorPeak/LLM-Wiki.git
 
 这个知识库仍在持续建设中。部分旧笔记可能还存在结构粗糙、链接不完整或历史导入导致的编码问题。长期目标是让 `Wiki` 层比 `RAW` 层更干净、更密集、更适合复习、检索和复用
 
-## 许可说明
+## License
 
-当前尚未声明正式开源许可证。原始资料仍应遵循其各自来源的版权和许可要求
+Original knowledge notes, documentation, and curated written content in this repository are licensed under [CC BY-NC 4.0](./LICENSE), unless a specific file states otherwise
+
+Others may copy, share, and adapt the repository's original content for non-commercial purposes, provided that they give appropriate credit, indicate changes, and include a license link
+
+Third-party source materials, quotations, papers, webpages, clippings, and project documents under `RAW/` remain the property of their respective authors or rights holders and should be used according to their original licenses and source terms

@@ -8,7 +8,7 @@
 ![vault](https://img.shields.io/badge/vault-Obsidian-7C3AED)
 ![wiki-notes](https://img.shields.io/badge/wiki%20notes-190-brightgreen)
 ![raw-files](https://img.shields.io/badge/raw%20files-158-orange)
-![license](https://img.shields.io/badge/license-not%20declared-lightgrey)
+![license](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)
 
 [Chinese](./README.md) | **English**
 
@@ -122,4 +122,8 @@ This vault is under active development. Some older notes may still have rough st
 
 ## License
 
-No formal license is declared yet. Treat original source materials under their respective licenses and copyrights
+Original knowledge notes, documentation, and curated written content in this repository are licensed under [CC BY-NC 4.0](./LICENSE), unless a specific file states otherwise
+
+This means others may copy, share, and adapt the repository's original content for non-commercial purposes, provided that they give appropriate credit, indicate changes, and include a license link
+
+Third-party source materials, quotations, papers, webpages, clippings, and project documents under `RAW/` remain the property of their respective authors or rights holders and should be used according to their original licenses and source terms
