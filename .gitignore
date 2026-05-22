@@ -28,3 +28,4 @@ Clippings/.llmwiki-cache/
 .env
 .env.*
 !.env.example
+.obsidian/plugins/nutstore-sync/data.json
