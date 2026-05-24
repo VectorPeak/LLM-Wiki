@@ -1,5 +1,9 @@
 {
   "showRibbon": false,
-  "cssTheme": "Blue Topaz",
-  "accentColor": ""
+  "cssTheme": "GitHub Theme",
+  "accentColor": "",
+  "enabledCssSnippets": [
+    "extended-colorschemes"
+  ],
+  "theme": "obsidian"
 }

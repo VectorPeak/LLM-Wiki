@@ -11,6 +11,7 @@
 
 
 
+
 # Transformer面试问题
 **1\. 为什么 Transformer 需要位置编码（Positional Encoding）？RNN 为什么不需要？**
 
