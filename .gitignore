@@ -23,6 +23,7 @@ Clippings/.llmwiki-cache/
 # Local agent/tool state
 .claude/
 .claudian/
+.codex-work/
 
 # Environment and secret files
 .env
