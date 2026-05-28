@@ -9,7 +9,7 @@ description: TikHub 命中的微信公众号文章候选，共 2 条，本文档
 tags:
   - clippings
   - wechat
-  - 波哥聊大模型
+  - 波哥
 ---
 
 ## 0x01. 【26年4月面试复盘】LangGraph 的流程流转，需要定时拉状态吗？

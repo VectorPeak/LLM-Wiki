@@ -19,6 +19,7 @@ Clippings/
 Clippings/.llmwiki-cache/
 **/__pycache__/
 *.pyc
+*.bak
 
 # Local agent/tool state
 .claude/
