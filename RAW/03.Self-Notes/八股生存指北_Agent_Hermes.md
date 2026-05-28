@@ -14,7 +14,6 @@ Hermes Agent 是 **Nous Research** 推出的开源、可自托管的自主 AI Ag
 
 **Hermes 是一个带“自进化闭环”的事件驱动 Agent 执行引擎**——OpenClaw 做的它都做（多渠道网关、cron、子 Agent），但它额外把“经验沉淀成可复用 skill”和“持续学习用户画像”做成了一等公民。
 
-
 ## 1.2 Hermes 总体架构
 Hermes 的总体架构是**三层主干 + 一圈闭环**——主干三层是**触发层（Trigger）→ 网关层（Gateway）→ Agent 层（Agent Loop）**，和 OpenClaw 完全同构；**闭环是 Agent 层额外挂的自进化回路（Reflect → 记忆 / Skill 沉淀 → 反哺下一次触发）**，这是 Hermes 区别于 OpenClaw 的核心。
 
