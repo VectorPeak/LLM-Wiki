@@ -1,9 +1,3 @@
 {
-  "showRibbon": false,
-  "cssTheme": "GitHub Theme",
-  "accentColor": "",
-  "enabledCssSnippets": [
-    "extended-colorschemes"
-  ],
-  "theme": "obsidian"
+  "cssTheme": "Atom"
 }

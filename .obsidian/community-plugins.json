@@ -1,10 +1,5 @@
 [
-  "obsidian-excalidraw-plugin",
   "calendar",
-  "obsidian-memos",
-  "obsidian-banners",
-  "obsidian-image-auto-upload-plugin",
   "obsidian-git",
-  "nutstore-sync",
-  "obsidian-style-settings"
+  "pdf-plus"
 ]
