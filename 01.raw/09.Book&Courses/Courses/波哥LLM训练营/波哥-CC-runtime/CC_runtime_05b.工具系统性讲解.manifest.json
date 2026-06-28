@@ -1,0 +1,151 @@
+{
+  "document": "CC_runtime_05b.工具系统性讲解.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-43cc01df-41c1-4577-90c9-44e48e6320cc.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "标题、引导说明、Tool ABC、ToolRegistry 基础说明",
+          "anchor_location": "标题 / 1 / 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img1-r2",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "工具编排与执行主链适合转为 Mermaid",
+          "anchor_location": "文档开头总览",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-a055908c-9f1a-4e1f-b7d8-de36cc0b1247.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "三层注册 + 二次布线图主要用于支撑文字分层解释",
+          "anchor_location": "2 / 3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img2-r2",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "StreamingToolExecutor 内部状态与 add_tool 分派逻辑",
+          "anchor_location": "3.1 / 3.2 / 3.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-6180a0a4-0a7c-4733-8967-b0928609faad.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "_process_queue / _pending / has_pending 相关执行细节",
+          "anchor_location": "3.4 - 3.8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0eee4773-3435-489e-a48e-884ae637cc68.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "orchestration.py、Hook 系统、配置和示例脚本",
+          "anchor_location": "4 / 5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-85c6664e-c797-41c6-9ff7-19188542ece0.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "PreToolUse Hook 拦截链适合转为 Mermaid",
+          "anchor_location": "5. Hook 系统：在执行栈中的位置",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img5-r2",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Permission Gate 模式和白名单代码块",
+          "anchor_location": "6. Permission Gate",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-8e985c0e-e288-43fa-b84c-b38d66e5d584.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Skill 数据结构、加载路径、并发安全与工具分类表",
+          "anchor_location": "7 / 8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "本批截图生成新文档，不是续写旧文档。",
+    "使用了 Mermaid 表达工具主执行链与 PreToolUse 拦截链。",
+    "未保留原图裁剪，正文以 Markdown、表格和 Mermaid 为主。",
+    "高密度总览图的细碎标签未逐字转录，已在 OCR 不确定处说明。"
+  ]
+}

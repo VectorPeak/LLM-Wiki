@@ -1,0 +1,185 @@
+{
+  "document": "CC_runtime_03.先抓主线 main 两层架构.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-d48ce686-b755-41be-9a68-cbf3c1bdf2ea.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "标题、问题引导、两层职责说明",
+          "anchor_location": "标题 / 1 / 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img1-r2",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "两层架构图适合转为 Mermaid，正文说明可覆盖主要语义",
+          "anchor_location": "1. 先把整个系统分成两层",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-ad0fa50b-68ac-4cab-9449-9d67de4529a2.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "REPL 一轮输入流程图适合压缩为 Mermaid 主流程",
+          "anchor_location": "2. 最重要的状态不是对象树，而是 transcript（Message）",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img2-r2",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "agent 闭环解释和最小循环文本",
+          "anchor_location": "3. 这个项目为什么是 agent",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-c355a52d-af7e-4900-b601-1c3b7b780856.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "_run_repl 初始化阶段代码",
+          "anchor_location": "4. 主链路先看 REPL",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-48999487-ec18-4b88-af42-3727acfabd03.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "resume 恢复和 slash command 分流代码",
+          "anchor_location": "4. 主链路先看 REPL",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-88add478-dd2c-444f-99e9-79fb59229ca9.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "普通输入、team 收件箱、engine.run_turn 和后台提取逻辑",
+          "anchor_location": "4. 主链路先看 REPL",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-34002292-dddd-4e2a-ac87-c7ecccbf272c.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "序列图截图适合转为 sequenceDiagram",
+          "anchor_location": "5. 一次用户输入的完整序列",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img6-r2",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "状态机说明和职责边界表格",
+          "anchor_location": "6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0dc1125a-c10b-4219-9a9c-5c16b34a9c38.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "高密度总览图主要用于支撑 QueryEngine / messages / system / tools / call_model / QueryEvent 的对象说明",
+          "anchor_location": "8. 在主线里最关键的 6 个对象",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-e485d13e-5bc3-40f5-b64c-00f070c18039.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "事件类型表和推荐阅读顺序表",
+          "anchor_location": "8 / 9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "本批截图生成新文档，不是续写旧文档。",
+    "使用了 Mermaid 表达两层架构图、主流程图和一次输入的序列图。",
+    "未保留原图裁剪，正文以 Markdown 和 Mermaid 为主。",
+    "高密度总览图未逐字转录所有细小标注，已在 OCR 不确定处说明。"
+  ]
+}

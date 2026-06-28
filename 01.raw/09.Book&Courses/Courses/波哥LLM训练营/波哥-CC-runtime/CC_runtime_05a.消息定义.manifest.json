@@ -1,0 +1,92 @@
+{
+  "document": "CC_runtime_05a.消息定义.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-23b687d9-10bb-4491-b49b-13d97b2523af.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "models 三件套总览、数据层职责与三层结构图",
+          "anchor_location": "0",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-a9e61d13-6828-43cf-a766-a57e5a53c740.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "SystemMessage / CompactBoundaryMessage 与 Message 分层",
+          "anchor_location": "1 / 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-51e2034d-1a6d-4ac8-bb88-8ae8d99a4357.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "ContentBlock 层、ToolResultContent、为什么用 block",
+          "anchor_location": "3 / 4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-c706e0be-39bf-40a8-bdbc-551be7d7ff1e.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "normalize_messages_for_api、pairing 修复、协议正确性、ToolSchema",
+          "anchor_location": "5 / 6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-720ac67d-89a3-4af0-af70-ab7a98d6cfa7.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "ToolResult、ToolRegistry、模型与工具的协商协议",
+          "anchor_location": "7 / 8 / 9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}

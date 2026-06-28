@@ -1,0 +1,166 @@
+{
+  "document": "FunctionCall_数据工程.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-9524f484-f8c8-4f1b-a4f5-331b75619e11.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "title, intro, base OpenAI format, plain messages example",
+          "anchor_location": "title / section 1 / section 1.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2c553458-9b6b-4ecc-a746-e900961a4da3.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "function call format example and hotel review call chain",
+          "anchor_location": "section 1.2 / section 1.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-43c81616-f880-4d10-954c-9a59ef32eabc.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "parallel tool-call example with travel guide and weather",
+          "anchor_location": "section 1.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1d29b011-142d-4956-bc8e-debbbd1adcd3.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "continuation of parallel example and chained data format heading",
+          "anchor_location": "section 1.3 / section 1.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-fd178aec-0e73-41eb-bbe1-4f0138436281.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "seed dataset construction explanation and variables",
+          "anchor_location": "section 2 / section 2.1 / section 2.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-144394ca-ce14-4aa6-8d24-0ed455a23f93.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "router summary diagram and dataset split statistics",
+          "anchor_location": "section 2.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1abfdd8c-bd0d-454a-b25f-3461e749094c.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "dataset split characteristics and pipeline heading",
+          "anchor_location": "section 2.5 / section 3 / section 4.1 / section 4.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-7b9bba93-5e95-472f-8eba-090001ef25d7.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "convert_dataset_final_fixed pipeline snippets and message construction",
+          "anchor_location": "section 4.3 / section 4.4 / section 4.5 / section 4.6 / section 4.7 / section 4.8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-afca7bd4-927c-4310-9e21-e7681c2e3c19.png",
+      "regions": [
+        {
+          "region_id": "img9-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "core technical highlights and final sandbox summary",
+          "anchor_location": "section 5 / section 6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This batch creates a new document in the existing 波哥-FunctionCall directory.",
+    "The router summary was converted into Mermaid for Obsidian readability.",
+    "No screenshot crops were retained because the content is primarily prose and code examples.",
+    "Very long prompt and messages examples were preserved structurally with key fields and representative content rather than full repeated text."
+  ]
+}

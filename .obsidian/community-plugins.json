@@ -1,5 +1,8 @@
 [
   "calendar",
   "obsidian-git",
-  "pdf-plus"
+  "pdf-plus",
+  "obsidian-image-auto-upload-plugin",
+  "pane-relief",
+  "obsidian-excalidraw-plugin"
 ]

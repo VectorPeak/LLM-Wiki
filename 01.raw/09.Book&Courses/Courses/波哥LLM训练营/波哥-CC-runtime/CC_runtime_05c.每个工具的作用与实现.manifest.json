@@ -1,0 +1,98 @@
+{
+  "document": "CC_runtime_05c.每个工具的作用与实现.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-20d847b9-f02f-46e1-8a51-a50f6233b79b.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "标题、导语、分组总览、文件操作组起始",
+          "anchor_location": "标题 / 1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-133282ce-6707-4725-ad94-5cba9e250ef0.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Read/Edit/Write/Glob/Grep/WebFetch 条目说明",
+          "anchor_location": "1 / 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-7ec16687-a0c2-4e91-9e58-ed483aed754f.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "WebSearch、AskUserQuestion、Task 管理组、NotebookEdit 起始",
+          "anchor_location": "2 / 3 / 4 / 5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-14561612-a0cd-466d-b48e-58f128f70552.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "ToolSearch、Skill、LSP、TodoWrite、PlanMode、Brief、TeamCreate",
+          "anchor_location": "5 / 6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-8c35bd96-04a3-4d52-aa19-b8d329fa5950.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "TeamDelete、SendMessage、Agent 与并发安全总表",
+          "anchor_location": "7 / 8 / 并发安全性总结",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "本批截图生成新文档，不是续写旧文档。",
+    "本篇以逐工具条目转写为主，没有新增 Mermaid。",
+    "未保留原图裁剪，正文以 Markdown 表达为主。",
+    "高密度总览图的细碎 INPUT/PROCESS/OUTPUT 标注未逐字转录，已在 OCR 不确定处说明。"
+  ]
+}

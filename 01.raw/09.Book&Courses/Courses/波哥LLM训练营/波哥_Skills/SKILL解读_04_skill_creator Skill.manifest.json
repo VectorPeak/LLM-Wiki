@@ -1,0 +1,425 @@
+{
+  "document_basename": "SKILL解读_04_skill_creator Skill",
+  "output_markdown": "E:\\LLM_wiki\\LLM_wiki\\01.raw\\00.WorkSpace\\波哥_Skills\\SKILL解读_04_skill_creator Skill.md",
+  "batch_type": "new_document",
+  "partial": false,
+  "images": [
+    {
+      "image_id": "img01",
+      "regions": [
+        {
+          "region_id": "img01_r1",
+          "region_type": "title_and_toc",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "标题与目录已转成 Markdown。",
+          "anchor_location": "文档开头",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img01_r2",
+          "region_type": "process_diagram_cards",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "阶段一创建技能流程已转成 Mermaid。",
+          "anchor_location": "3.4 创建技能",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img02",
+      "regions": [
+        {
+          "region_id": "img02_r1",
+          "region_type": "multi_stage_workflow_board",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "运行测试与描述优化/打包分发相关流程已拆解为正文与 Mermaid。",
+          "anchor_location": "3.5 与 3.8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img02_r2",
+          "region_type": "overview_prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "概览与目录结构说明已转成 Markdown。",
+          "anchor_location": "1. 概览与 2. 目录结构",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img03",
+      "regions": [
+        {
+          "region_id": "img03_r1",
+          "region_type": "directory_tree_code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "目录树已保留为代码块。",
+          "anchor_location": "2. 目录结构",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img03_r2",
+          "region_type": "iteration_loop_ascii",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "Skill Creator 总体迭代循环已转成紧凑 Mermaid。",
+          "anchor_location": "2. 目录结构之后",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img03_r3",
+          "region_type": "yaml_and_core_flow",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "YAML 与核心流程概述已转成代码块和列表。",
+          "anchor_location": "3.1 与 3.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img04",
+      "regions": [
+        {
+          "region_id": "img04_r1",
+          "region_type": "communication_principles",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "沟通原则已转成 Markdown。",
+          "anchor_location": "3.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img04_r2",
+          "region_type": "capture_intent_steps",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Capture Intent 以问题列表呈现。",
+          "anchor_location": "3.4.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img04_r3",
+          "region_type": "interview_research_steps",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Interview and Research 以说明列表呈现。",
+          "anchor_location": "3.4.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img05",
+      "regions": [
+        {
+          "region_id": "img05_r1",
+          "region_type": "write_skill_md_guidance",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "编写 SKILL.md 指南已转成 Markdown。",
+          "anchor_location": "3.4.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img05_r2",
+          "region_type": "anatomy_tree",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "技能目录结构已保留为树形代码块。",
+          "anchor_location": "3.4.4.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img05_r3",
+          "region_type": "progressive_disclosure_rules",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "渐进式披露规则已转成 Markdown。",
+          "anchor_location": "3.4.4.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img06",
+      "regions": [
+        {
+          "region_id": "img06_r1",
+          "region_type": "domain_organization_tree",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "领域组织示例已保留为代码块。",
+          "anchor_location": "3.4.4.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img06_r2",
+          "region_type": "writing_style_guidance",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "编写风格原则已转成 Markdown。",
+          "anchor_location": "3.4.4.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img06_r3",
+          "region_type": "eval_schema_json",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "JSON 示例已保留为代码块。",
+          "anchor_location": "3.4.4.4 之后",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img06_r4",
+          "region_type": "eval_run_intro",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "运行与评估测试引言已转成 Markdown。",
+          "anchor_location": "3.5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img07",
+      "regions": [
+        {
+          "region_id": "img07_r1",
+          "region_type": "spawn_all_runs",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Step 1 与 eval_metadata.json 已转成 Markdown/代码块。",
+          "anchor_location": "3.5.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img07_r2",
+          "region_type": "draft_assertions",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "断言编写原则已转成 Markdown。",
+          "anchor_location": "3.5.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img07_r3",
+          "region_type": "timing_capture",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Timing 数据说明与 JSON 样例已转成 Markdown/代码块。",
+          "anchor_location": "3.5.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img07_r4",
+          "region_type": "grading_aggregate_intro",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "评分、聚合与查看器启动流程已转成编号列表。",
+          "anchor_location": "3.5.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img08",
+      "regions": [
+        {
+          "region_id": "img08_r1",
+          "region_type": "aggregate_and_viewer_commands",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "命令行与说明文字已完整保留。",
+          "anchor_location": "3.5.4 后半部分",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img08_r2",
+          "region_type": "feedback_json",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "feedback.json 格式已保留为代码块。",
+          "anchor_location": "3.5.5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img08_r3",
+          "region_type": "improve_skill_intro",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "改进技能引言已转成 Markdown。",
+          "anchor_location": "3.6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img09",
+      "regions": [
+        {
+          "region_id": "img09_r1",
+          "region_type": "improvement_principles_and_loop",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "改进原则已转成正文，改进后重跑评测闭环已以结构化文本保留。",
+          "anchor_location": "3.6 后半部分",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img09_r2",
+          "region_type": "blind_comparison",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "盲比较说明已转成 Markdown。",
+          "anchor_location": "3.7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img09_r3",
+          "region_type": "description_optimization_intro",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "描述优化引言已转成 Markdown。",
+          "anchor_location": "3.8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img10",
+      "regions": [
+        {
+          "region_id": "img10_r1",
+          "region_type": "trigger_eval_queries",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "触发评估查询与示例 JSON 已转成正文+代码块。",
+          "anchor_location": "3.8.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img10_r2",
+          "region_type": "review_with_user",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "与用户确认评估集步骤已转成 Markdown。",
+          "anchor_location": "3.8.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img10_r3",
+          "region_type": "optimization_loop_command",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "运行优化循环的命令模板与说明已转成 Markdown/代码块。",
+          "anchor_location": "3.8.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "本批截图不需要保留原图裁剪。",
+    "仅流程型区域使用了 Mermaid。",
+    "文档已追加后续 8 张截图内容。",
+    "3.8.3 英文续写段落从中间开始，按可见内容补写并保留 OCR 不确定说明。",
+    "5.2/5.3/5.4 的部分代码逻辑在截图中以省略形式出现，未擅自补全。"
+  ]
+}

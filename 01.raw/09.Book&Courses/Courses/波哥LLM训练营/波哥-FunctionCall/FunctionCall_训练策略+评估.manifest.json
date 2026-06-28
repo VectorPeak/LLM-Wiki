@@ -1,0 +1,371 @@
+{
+  "document": "FunctionCall_训练策略+评估.md",
+  "status": "complete",
+  "batches": 2,
+  "images": [
+    {
+      "image_id": "codex-clipboard-a7d43adb-5edd-4538-9e83-7c0f4324590c.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "opening dataset example with system prompt and tool call chain",
+          "anchor_location": "example-hotel-chain",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-bc18f6df-da18-421e-aa75-47522a7967b6.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "continued tool-call example and inspect script prompt rendering",
+          "anchor_location": "example-hotel-chain",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-534ee663-ff15-4fad-a828-cf5943df3275.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "first problem analysis and initial strategy section",
+          "anchor_location": "section-1-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2a815ba1-90bf-4bd6-9307-3cc46aadb9a8.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "looping issue and stopping condition analysis",
+          "anchor_location": "section-1-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-ca8e191e-25c6-4fe7-84f3-0a519cfcb85e.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "conversation_splitter strategy and rationale",
+          "anchor_location": "section-1-2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-8f4c4dfb-8f6f-4194-ad8b-61892ad69e09.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "second problem analysis, tokenization, poisoning, and syntax overfitting",
+          "anchor_location": "section-1-3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2c4870a6-d616-4bc3-b627-2844628ba2c4.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "decoding parameters discussion",
+          "anchor_location": "section-1-4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-6d938a85-1118-4e41-9599-9c701ede2ff3.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "tool_list JSON and prompt-injection discussion",
+          "anchor_location": "section-1-5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-40010e96-4dc1-4d7e-8c57-56d1daea2f69.png",
+      "regions": [
+        {
+          "region_id": "img9-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "final diagnosis heading and continuation of tool_list analysis",
+          "anchor_location": "section-1-5-1-6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-fe8653ec-1b90-41a5-91c6-42341fc61713.png",
+      "regions": [
+        {
+          "region_id": "img10-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "root-cause diagnosis and final action plan",
+          "anchor_location": "section-1-6-1-7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1d8e3f4e-8ec4-43ce-b5a4-2120ddf5706c.png",
+      "regions": [
+        {
+          "region_id": "img11-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "evaluation section opening and test prompt example",
+          "anchor_location": "section-2-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-fe02637d-b13a-4caf-afeb-a25895fea74d.png",
+      "regions": [
+        {
+          "region_id": "img12-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 1 complete tool calls and itinerary output",
+          "anchor_location": "section-2-1-workflow-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-fe274069-ed3c-4d20-ab33-080a105d98b7.png",
+      "regions": [
+        {
+          "region_id": "img13-r1",
+          "region_type": "ui evidence",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 1 before/after terminal evidence",
+          "anchor_location": "section-2-1-workflow-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1dcc0f4f-8164-4880-8fed-88b4b32263bf.png",
+      "regions": [
+        {
+          "region_id": "img14-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 1 completion-type example and workflow 2 heading",
+          "anchor_location": "section-2-1-workflow-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-864caa55-52a3-4e4f-9d85-823c6250a88e.png",
+      "regions": [
+        {
+          "region_id": "img15-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 2 route-query dataset sample",
+          "anchor_location": "section-2-1-workflow-2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b0f2c459-2c23-4bfa-9eb0-7720d02b627d.png",
+      "regions": [
+        {
+          "region_id": "img16-r1",
+          "region_type": "ui evidence",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 2 before/after terminal comparison",
+          "anchor_location": "section-2-1-workflow-2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0dd37138-3013-460d-a241-f542ed2349ab.png",
+      "regions": [
+        {
+          "region_id": "img17-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 3 hotel recommendation and review chain",
+          "anchor_location": "section-2-1-workflow-3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-9f38b94a-2ac7-4ba8-ae2a-8cce102a43e6.png",
+      "regions": [
+        {
+          "region_id": "img18-r1",
+          "region_type": "ui evidence",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 3 before/after evidence and workflow 4 heading",
+          "anchor_location": "section-2-1-workflow-3-4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2887ce97-7659-4c92-ac86-97244fb482dd.png",
+      "regions": [
+        {
+          "region_id": "img19-r1",
+          "region_type": "ui evidence",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 4 chat before/after outputs and completion-type note",
+          "anchor_location": "section-2-1-workflow-4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2c175e39-5b7a-4f02-acbd-dfed7aa759a8.png",
+      "regions": [
+        {
+          "region_id": "img20-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 1 completion-style follow-up sample",
+          "anchor_location": "section-2-1-workflow-1-completion",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b1fd565d-a6d4-44aa-82d6-6bac00106de2.png",
+      "regions": [
+        {
+          "region_id": "img21-r1",
+          "region_type": "quantitative chart",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "systematic evaluation chart with model comparison numbers",
+          "anchor_location": "section-2-2-performance-comparison",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This document has been continued in place across two batches.",
+    "No Mermaid conversion was needed in this document.",
+    "No screenshot crops were retained because the content is primarily prose, code, terminal evidence, and one chart whose values were transcribed into a Markdown table.",
+    "Batch 2 completed the visible continuation of section 2.1 and added section 2.2 systematic evaluation.",
+    "Some repeated system-prompt text across screenshots was intentionally de-duplicated to keep the Markdown readable."
+  ]
+}

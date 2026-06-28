@@ -1,0 +1,115 @@
+{
+  "document_basename": "SKILL解读_03_ralph_loop Skill",
+  "output_markdown": "E:\\LLM_wiki\\LLM_wiki\\01.raw\\00.WorkSpace\\波哥_Skills\\SKILL解读_03_ralph_loop Skill.md",
+  "batch_type": "new_document",
+  "partial": false,
+  "images": [
+    {
+      "image_id": "img01",
+      "regions": [
+        {
+          "region_id": "img01_r1",
+          "region_type": "toc_and_prose_with_code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "目录、概览说明、目录树代码块、YAML前置元数据都已转成 Markdown。",
+          "anchor_location": "文档开头至 3.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img02",
+      "regions": [
+        {
+          "region_id": "img02_r1",
+          "region_type": "prose_and_process_diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "三阶段流程已转为紧凑 Mermaid，Step 1 收集输入已转成 Markdown。",
+          "anchor_location": "3.2 至 3.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img03",
+      "regions": [
+        {
+          "region_id": "img03_r1",
+          "region_type": "table_and_prose_and_code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "输入项表格、需求拆解、PROMPT/AGENTS 说明与 Prompt 模板均已转成 Markdown。",
+          "anchor_location": "3.3 表格至 3.6.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img04",
+      "regions": [
+        {
+          "region_id": "img04_r1",
+          "region_type": "prompt_and_command_prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "BUILDING Prompt、单次迭代命令与输出脚本说明已转成 Markdown。",
+          "anchor_location": "3.6.2 至 3.8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img05",
+      "regions": [
+        {
+          "region_id": "img05_r1",
+          "region_type": "code_and_table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "极简版/受控版脚本、安全指南与设计要点表均已转成 Markdown。",
+          "anchor_location": "3.8.1 至 3.9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "img06",
+      "regions": [
+        {
+          "region_id": "img06_r1",
+          "region_type": "guardrails_and_analysis_table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Guardrails、设计深层分析、对比表与应用场景均已转成 Markdown。",
+          "anchor_location": "3.10 至 4.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "本批截图不需要保留原图裁剪。",
+    "仅 3.2 三阶段流程使用 Mermaid。",
+    "存在一处 OCR 边缘截断不确定项：Auto-approve 示例右侧。"
+  ]
+}

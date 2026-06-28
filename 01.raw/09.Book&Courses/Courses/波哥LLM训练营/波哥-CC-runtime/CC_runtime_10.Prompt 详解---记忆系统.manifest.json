@@ -1,0 +1,211 @@
+{
+  "document": "CC_runtime_10.Prompt 详解---记忆系统.md",
+  "status": "complete",
+  "batches": 2,
+  "images": [
+    {
+      "image_id": "codex-clipboard-b96291d1-04e1-4e4b-bd10-1d579156f36b.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "Overview of the two memory prompt layers and chapter structure.",
+          "anchor_location": "1 / 2 / 3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-3ed52de9-42c6-4f0a-bf78-74cd565b86c7.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "First half of TYPES_SECTION_INDIVIDUAL covering user and feedback.",
+          "anchor_location": "4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-bd90e19e-4e52-42c9-89d0-0500d8ef5845.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Second half of TYPES_SECTION_INDIVIDUAL covering project and reference.",
+          "anchor_location": "4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-c56a76d7-a292-4f9d-9ea5-f50e112d00c9.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Chinese explanation of why the four-type memory split matters.",
+          "anchor_location": "4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-839358f8-aba6-49fa-a66c-5f0894718e92.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "WHAT_NOT_TO_SAVE section, translation, and exclusion principle.",
+          "anchor_location": "5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-38c0a880-a03a-4627-a1d4-84ec9981bf57.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Frontmatter example and two-step save method.",
+          "anchor_location": "6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-fe4908a3-dbd3-44e2-9892-bac008d3afc2.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Chinese save notes plus WHEN_TO_ACCESS trigger rules.",
+          "anchor_location": "7 / 8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-d20e7567-174a-44d7-bc02-f9282c9085a6.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "TRUSTING_RECALL and MEMORY_AND_PERSISTENCE sections.",
+          "anchor_location": "9 / 10",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-742f1b66-520f-49b3-a329-5300135d41f8.png",
+      "regions": [
+        {
+          "region_id": "img9-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Chinese table for Memory Plan Task split and extractor intro.",
+          "anchor_location": "10 / 11",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-e66067a8-8096-4a16-860b-e217a7ffc191.png",
+      "regions": [
+        {
+          "region_id": "img10-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "EXTRACTION_SYSTEM_PROMPT output JSON format and guardrails.",
+          "anchor_location": "11 / 12",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b1402d28-2fb0-4e12-ba43-24a4c7325703.png",
+      "regions": [
+        {
+          "region_id": "img11-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "build_memory_prompt overall assembly order and DIR_EXISTS_GUIDANCE details.",
+          "anchor_location": "13",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-d257adb3-bf7f-4045-af73-1029db5529a9.png",
+      "regions": [
+        {
+          "region_id": "img12-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "MEMORY.md empty and warning branches plus runtime collaboration summary of the two prompt layers.",
+          "anchor_location": "13 / 14",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}

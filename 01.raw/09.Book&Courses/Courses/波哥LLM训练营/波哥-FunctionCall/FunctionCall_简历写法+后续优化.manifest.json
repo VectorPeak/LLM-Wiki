@@ -1,0 +1,46 @@
+{
+  "document": "FunctionCall_简历写法+后续优化.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-a2b0d661-18fa-4b75-9e33-d87203d1d3ae.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "resume writing framework, condensed resume version, follow-up optimization directions",
+          "anchor_location": "sections 1 and 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-a4257190-c4f3-413c-a053-4d73d87642d2.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "homework and reflection questions",
+          "anchor_location": "section 3 / reflection questions",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This batch creates a new document in the existing 波哥-FunctionCall directory.",
+    "The content is primarily prose and resume wording guidance, so no Mermaid or screenshot crops were needed.",
+    "Placeholder metrics visible in the screenshots were preserved as placeholders rather than guessed."
+  ]
+}

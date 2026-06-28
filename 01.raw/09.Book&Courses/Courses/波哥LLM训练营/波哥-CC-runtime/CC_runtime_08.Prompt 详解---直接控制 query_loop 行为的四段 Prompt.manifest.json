@@ -1,0 +1,98 @@
+{
+  "document": "CC_runtime_08.Prompt 详解---直接控制 query_loop 行为的四段 Prompt.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-2bfda427-5a31-4d80-9584-df351682594e.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "title, intro, phase mapping, prompt overview, doing_tasks opening",
+          "anchor_location": "title / section 1 / section 2.1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-cf364cb9-b45f-4934-8027-cd6a3eb07fea.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "doing_tasks continuation, translation, analysis, summary",
+          "anchor_location": "sections 2.1 to 2.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-75daa1fb-747f-4d64-abf4-501281517b08.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "COMPACT_SYSTEM_PROMPT content and analysis",
+          "anchor_location": "sections 3.1 to 3.4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-6e94480b-6b12-4409-b8ff-4ecb537cbb21.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "SUMMARIZE_TOOL_RESULTS content and DEFAULT_AGENT_PROMPT opening",
+          "anchor_location": "sections 4.1 to 4.5 and sections 5.1 and 5.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1d464ff3-4b2f-47d7-a784-9a67896167dc.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "DEFAULT_AGENT_PROMPT continuation, child-agent analysis, final relationship summary",
+          "anchor_location": "sections 5.1 to 8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This batch creates a new document, not a continuation update.",
+    "The screenshots are primarily prompt text and analysis, so Markdown transcription is the primary representation.",
+    "No Mermaid was needed for this batch.",
+    "OCR uncertainty is recorded in the final section of the Markdown document."
+  ]
+}

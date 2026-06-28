@@ -1,0 +1,217 @@
+{
+  "document": "CC_runtime_11.一次请求的全链路时序.md",
+  "status": "complete",
+  "batches": 2,
+  "images": [
+    {
+      "image_id": "codex-clipboard-b1f52efc-6539-44d0-bffc-2d26a2b75c50.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "overview note and end-to-end flow diagram",
+          "anchor_location": "sections 1 and 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-3c983801-696b-4690-bcf4-f976e84e2ad0.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "timeline diagram and messages evolution overview",
+          "anchor_location": "sections 1 to 3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-af24214a-6c7b-49d2-8d2f-a61d95aaddff.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "runtime layers, build_engine setup, first input branch",
+          "anchor_location": "sections 3 to 5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-e35018d4-45ec-4017-a27b-8e614ec8855a.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "T0 snapshot, Phase 1 entry, normalization, tool schema, auto-compact",
+          "anchor_location": "sections 5.1 and 6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-a5174cc2-3d78-4adf-ac39-3f9229fe4870.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "first-round Phase 2, SSE events, ToolUseStart, TurnComplete",
+          "anchor_location": "section 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-bc59828d-b318-41d6-95d8-c571ae8a247b.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Phase 3 and AssistantMessage snapshot T1",
+          "anchor_location": "sections 8 and 9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-ce4dd5cf-d00e-41b2-a311-bcb4d14c5471.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Phase 4 tool-result merge, ToolResultReady, snapshot T2",
+          "anchor_location": "section 10",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b6f71b65-2b5a-4af0-b7b5-fcc83c98fec9.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "second-round Phase 1-2, tool_result to API, second-round input",
+          "anchor_location": "section 11",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b959d657-797d-4d18-8353-3b202f394a72.png",
+      "regions": [
+        {
+          "region_id": "img9-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "second-round summary output, return condition, T3 structure start",
+          "anchor_location": "sections 11 and 12",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-bddb957d-0f6b-4942-ad12-b92ff37c0522.png",
+      "regions": [
+        {
+          "region_id": "img10-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "T3 ending, main.py post-processing, memory extraction, error recovery position",
+          "anchor_location": "sections 12 to 16",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-f02c2d09-25a2-4ce9-87f1-80efe430caaf.png",
+      "regions": [
+        {
+          "region_id": "img11-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "error recovery scenarios, messages timeline table, transcript-perspective summary",
+          "anchor_location": "sections 14 to 16",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-5d5b0b6c-7d9f-4139-8e4b-fb761605a64b.png",
+      "regions": [
+        {
+          "region_id": "img12-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "streaming executor concurrency note and memory extraction slow-path note",
+          "anchor_location": "section 16",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Batch 1 created the document and batch 2 appended follow-up screenshots into the same document.",
+    "Two overview diagrams were converted into compact Mermaid blocks for Obsidian readability.",
+    "No original screenshot crops were retained; the main representation is Markdown plus Mermaid.",
+    "OCR uncertainty is recorded in the final section of the Markdown document."
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "document": "CC_runtime_09.Prompt 详解---工具.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-326ee83a-658a-4c87-98cf-9ac2e06f015f.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "标题、三层架构总览、get_using_tools_section 位置与英文原文开头",
+          "anchor_location": "1 / 2 / 3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2a6b795b-05a1-4a42-b871-bf69b587aed1.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "对 get_using_tools_section 的逐句分析、五组替代对、Schema description 传递路径",
+          "anchor_location": "4 / 5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-917c8e61-de1f-4d1e-accd-50ba78dbbaa0.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "BashTool、FileReadTool、FileEditTool、FileWriteTool、GlobTool 的 description 对比",
+          "anchor_location": "6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-491168e2-17c0-42a7-88d0-073483c1a3bc.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "GrepTool、AgentTool、description 设计规律、Skill Prompt 注入机制开头",
+          "anchor_location": "6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-937ef58b-2172-4e6c-b80a-7f09648fc263.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "SkillTool.execute、两条触发路径、SkillTool 的 description、与 system_prompt 注入的区别",
+          "anchor_location": "7 / 8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-9542baaf-7100-492e-8bb7-1dd61d4d76e7.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Skill 的加载与定义、三层架构协作总结",
+          "anchor_location": "9 / 10",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}

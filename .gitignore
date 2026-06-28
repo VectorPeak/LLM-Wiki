@@ -21,3 +21,15 @@ __pycache__/
 # Local large/transient generated caches
 Clippings/.llmwiki-cache/
 04.output/.cache/
+
+# WorkBuddy internal
+.workbuddy/
+
+# Obsidian workspace (local state, not portable)
+.obsidian/workspace.json
+
+# Codex CLI internals (skill scripts, not vault content)
+.codex/
+
+# Trash/cache area
+._trash&cache/

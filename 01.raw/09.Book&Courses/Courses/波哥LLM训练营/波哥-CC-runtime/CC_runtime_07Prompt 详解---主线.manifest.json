@@ -1,0 +1,92 @@
+{
+  "document": "CC_runtime_07Prompt 详解---主线.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-cad21119-9842-4940-acd9-3c9db994f007.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "总览 build_system_prompt 主线、整体装配位置与本章覆盖范围",
+          "anchor_location": "2 / 3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1dc1a22a-debd-4a82-8418-e4cbe5b263d0.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "get_intro_section 与 get_system_section 的规则说明",
+          "anchor_location": "4 / 5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-254b9390-ff82-4b28-b70c-6900fc76cb98.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "get_actions_section 的风险分类、reversibility 与 blast radius",
+          "anchor_location": "6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b8e168fc-a071-4e12-9b5c-501460ae91e1.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "get_tone_style_section 与 get_output_efficiency_section 的输出规范",
+          "anchor_location": "7 / 8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-793f8fac-8daa-4740-9b3d-db71945510a4.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "compute_env_info 与 CLAUDE.md 注入顺序、优先级覆盖关系",
+          "anchor_location": "9 / 10 / 11",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}

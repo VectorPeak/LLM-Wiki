@@ -1,0 +1,98 @@
+{
+  "document": "FunctionCall_业务背景.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-3699256f-a73f-4df2-876b-c29076c02707.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "title, preface, project background and goals",
+          "anchor_location": "title / preface / sections 1.1 and 1.2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0216d2e0-fe93-438e-8c18-f277e3e0359b.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "core concepts and overall system architecture",
+          "anchor_location": "section 2 / section 3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-aacf1b4a-2644-45bf-90d3-6a93b8c3cc45.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "tool references and workflow 1 and 2 examples",
+          "anchor_location": "section 4 / workflow 1 / workflow 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-ee0b4e75-fd2c-4681-a565-f2d7086ce23a.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "workflow 3, workflow 4, and workflow 5 partial heading",
+          "anchor_location": "workflow 3 / workflow 4 / workflow 5",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-190f0e12-29eb-452b-abce-5bc3fcef3869.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "course application notes and code run steps",
+          "anchor_location": "section 5 / section 6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This batch creates a new document in a newly created target directory.",
+    "The main architecture diagram was converted into Mermaid for Obsidian readability.",
+    "No screenshot crops were retained because the content is primarily prose, code, and a diagram already represented as Mermaid.",
+    "Workflow 5 is visibly incomplete in the provided screenshots, so only the visible text was preserved."
+  ]
+}

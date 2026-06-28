@@ -1,5 +1,11 @@
 # Obsidian Second Brain - Codex CLI Operating Manual
 
+> Local vault overrides: also follow `_CLAUDE.md` for folder conventions and
+> Markdown authoring rules. In particular, `._trash&cache/` is reserved for
+> temporary stitching/cache files and soft trash, and Mermaid diagrams in new
+> Markdown should default to the `forest` theme with compact, whole-graph
+> layouts.
+
 This vault runs the **obsidian-second-brain** skill. The skill ships a set of
 *commands*: each one is a multi-step instruction file that you (the Codex
 agent) should follow when the user's request matches its trigger phrase.

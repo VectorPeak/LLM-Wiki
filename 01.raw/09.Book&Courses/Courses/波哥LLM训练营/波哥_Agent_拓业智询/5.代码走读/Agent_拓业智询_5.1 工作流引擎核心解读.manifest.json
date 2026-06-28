@@ -1,0 +1,111 @@
+{
+  "document_path": "E:\\LLM_wiki\\LLM_wiki\\01.raw\\00.WorkSpace\\波哥_Agent_拓业智询\\5.代码走读\\Agent_拓业智询_5.1 工作流引擎核心解读.md",
+  "source_type": "multi_image_to_markdown",
+  "image_count": 8,
+  "regions": [
+    {
+      "image_id": 1,
+      "region_id": "img01_r1",
+      "region_type": "mixed",
+      "must_markdown": true,
+      "must_mermaid": false,
+      "must_insert_visual": false,
+      "reason": "title toc file overview and method signature are text and code",
+      "anchor_location": "title_overview_method",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 2,
+      "region_id": "img02_r1",
+      "region_type": "code",
+      "must_markdown": true,
+      "must_mermaid": false,
+      "must_insert_visual": false,
+      "reason": "execution overview and internal function code should be transcribed",
+      "anchor_location": "exec_overview_internal_funcs",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 3,
+      "region_id": "img03_r1",
+      "region_type": "mixed",
+      "must_markdown": true,
+      "must_mermaid": false,
+      "must_insert_visual": false,
+      "reason": "design notes plus ui state and checkpoint code",
+      "anchor_location": "design_notes_ui_checkpoint",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 4,
+      "region_id": "img04_r1",
+      "region_type": "code",
+      "must_markdown": true,
+      "must_mermaid": false,
+      "must_insert_visual": false,
+      "reason": "phase 1 to phase 4 code blocks",
+      "anchor_location": "phase1_to_phase4",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 5,
+      "region_id": "img05_r1",
+      "region_type": "mixed",
+      "must_markdown": true,
+      "must_mermaid": false,
+      "must_insert_visual": false,
+      "reason": "review revise loop plus ui state structure and blank table",
+      "anchor_location": "review_loop_ui_state",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 6,
+      "region_id": "img06_r1",
+      "region_type": "process_diagram",
+      "must_markdown": true,
+      "must_mermaid": true,
+      "must_insert_visual": false,
+      "reason": "overall execution flow is an ascii workflow diagram",
+      "anchor_location": "flow_overall",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 7,
+      "region_id": "img07_r1",
+      "region_type": "process_diagram",
+      "must_markdown": true,
+      "must_mermaid": true,
+      "must_insert_visual": false,
+      "reason": "run_agent_with_streaming and review revise decision are ascii flow diagrams",
+      "anchor_location": "flow_internal_and_review",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    },
+    {
+      "image_id": 8,
+      "region_id": "img08_r1",
+      "region_type": "mixed",
+      "must_markdown": true,
+      "must_mermaid": false,
+      "must_insert_visual": false,
+      "reason": "summary and queue polling explanation are text plus small code snippet",
+      "anchor_location": "summary_polling_explanation",
+      "upload_status": "not_needed",
+      "final_url": "",
+      "final_inserted": false
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "document": "CC_runtime_02.目录结构.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-1157d4d0-bb69-4f44-98e4-e08224fbe628.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "标题、目标说明、顶层结构、api/core/models 段落",
+          "anchor_location": "1 / 2.1 / 2.2 / 2.3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        },
+        {
+          "region_id": "img1-r2",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "CC 结构树与模块依赖图",
+          "anchor_location": "3. 模块依赖总览",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b702179c-9260-439e-ad34-2a8ed29b90aa.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "tools/prompts/memory/session/compact/commands 表格与说明",
+          "anchor_location": "2.4 - 2.9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-06580b70-9a33-4278-8015-7aeed9bdd4b2.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "skills/hooks/mcp/permissions/swarm 及 hooks 解释",
+          "anchor_location": "2.10 - 2.14",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-41f7c50d-85be-4f5b-87af-7099fdb9822d.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "swarm/ui/utils 与初学者阅读顺序",
+          "anchor_location": "2.14 - 2.16 / 4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}

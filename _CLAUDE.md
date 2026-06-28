@@ -41,6 +41,7 @@ The full local spec is `.codex/references/ai-first-rules.md`.
 | `02.wiki/` | AI-maintained knowledge workspace | Codex may create and update notes here using AI-first rules. |
 | `03.templates/` | Reusable note templates | Do not modify unless explicitly asked. |
 | `04.output/` | AI-generated results, temporary products, and deliverables | Use for derived exports, cleaned outputs, and intermediate products. |
+| `._trash&cache/` | Temporary stitching cache, disposable working files, and soft trash | Use for transient image/file stitching cache, OCR scratch output, generated intermediates that should not pollute the vault, and trash-like material waiting for possible recovery. Do not treat it as a knowledge source unless the user explicitly points to a file inside it. Never use it for durable notes. |
 | `.codex/references/` | Codex reference docs and secondary operating notes | Keep detailed reference material here; keep root files focused on entrypoints. |
 | `index.md` | Catalog and navigation entrypoint | Regenerate when vault structure changes. |
 | `.codex/references/log.md` | Pointer to operation logs | Keep as pointer only. Daily entries live in `Logs/`. |
@@ -136,3 +137,17 @@ Use ASCII filenames unless the source title or user's existing naming convention
 - Keep external claims source-linked and dated.
 - Propagate important writes to linked notes, `index.md`, today's daily note, and `Logs/YYYY-MM-DD.md` when relevant.
 - Ask before deleting, archiving, moving private material, or changing templates.
+
+## Markdown Diagram Rules
+
+When writing Markdown documents in this vault, Mermaid diagrams should default to the `forest` theme and be authored for easy whole-graph viewing. Prefer compact left-to-right or top-down layouts, short node labels, and explicit Mermaid init blocks such as:
+
+````markdown
+```mermaid
+%%{init: {"theme": "forest", "flowchart": {"useMaxWidth": true, "htmlLabels": true}} }%%
+flowchart LR
+  A["Input"] --> B["Process"] --> C["Output"]
+```
+````
+
+For larger diagrams, split the graph into smaller diagrams or use subgraphs so readers can see the whole structure without heavy horizontal dragging.

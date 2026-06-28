@@ -1,0 +1,82 @@
+[
+  {
+    "image_id": "Image #1",
+    "region_type": "prose-and-code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "Title, TOC, overview, and APScheduler intro are plain text/code.",
+    "anchor_location": "Overview / Section 1"
+  },
+  {
+    "image_id": "Image #2",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "SchedulerService implementation is code-first content.",
+    "anchor_location": "1.2"
+  },
+  {
+    "image_id": "Image #3",
+    "region_type": "architecture",
+    "must_insert_visual": false,
+    "must_mermaid": true,
+    "reason": "NewsCollectionService structure is an architecture/process view and is suitable for Mermaid.",
+    "anchor_location": "2.1"
+  },
+  {
+    "image_id": "Image #4",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "Bocha search and collection pipeline are readable code blocks.",
+    "anchor_location": "2.2 / 2.3"
+  },
+  {
+    "image_id": "Image #5",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "Continuation of collect_news and task status update is code-only.",
+    "anchor_location": "2.3 / 2.4"
+  },
+  {
+    "image_id": "Image #6",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "collect_bidding and helper methods are code-only.",
+    "anchor_location": "2.4 / 2.5"
+  },
+  {
+    "image_id": "Image #7",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "FastAPI lifecycle and init check logic are code-first.",
+    "anchor_location": "3.1 / 3.2"
+  },
+  {
+    "image_id": "Image #8",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "Cron examples and job management APIs are directly transcribable.",
+    "anchor_location": "4.1 / 4.2 / 5.1 / 5.2"
+  },
+  {
+    "image_id": "Image #9",
+    "region_type": "code",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "Task history and retry logic are code and do not need screenshots.",
+    "anchor_location": "5.3 / 6.1"
+  },
+  {
+    "image_id": "Image #10",
+    "region_type": "code-and-summary",
+    "must_insert_visual": false,
+    "must_mermaid": false,
+    "reason": "Concurrency, batch DB ops, and summary are textual.",
+    "anchor_location": "6.2 / 7 / Summary"
+  }
+]

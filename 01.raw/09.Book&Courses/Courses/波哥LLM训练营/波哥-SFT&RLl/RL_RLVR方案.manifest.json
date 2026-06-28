@@ -1,0 +1,234 @@
+{
+  "document": "RL_RLVR方案.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-72b8491a-3f4f-4a2f-9a95-6dfab08e2433.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "title, motivation, RM to RM-R1 overview",
+          "anchor_location": "title / section-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-c5c97895-a4fc-4413-9e55-448360f3ca8b.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "RM-R1 training pipeline and CoR mechanism",
+          "anchor_location": "section-1-4 / section-2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-b9a8900d-9ae6-466d-8dc9-81409a5b1aed.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "formula and prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "task definition and reasoning distillation setup",
+          "anchor_location": "section-2-1 / section-2-2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-5d4d12f4-0d42-494e-9b42-ff4dfe335b4e.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "formula and ui evidence",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "RL objective and CoR prompt flow",
+          "anchor_location": "section-2-3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0dcf8bfa-23e5-4b8f-af1b-b6d70282efd1.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "formula and table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "reward design and stage summary table",
+          "anchor_location": "section-2-3-2 / section-3-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-cad71a2c-b3f5-4492-8620-01df6a7225c0.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "RewardBench pipeline and benchmark description",
+          "anchor_location": "section-3-1",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-46983436-4822-4f1a-88d3-7af296ae77fa.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "table",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "training data sources and main result table",
+          "anchor_location": "section-3-1 / section-3-3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-c57a4de8-4830-465c-8c8c-38265bfdca15.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "table and prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "innovation points, gains, and overall summary table",
+          "anchor_location": "section-3-3 / section-4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-ba0e4606-709b-4b79-ac5b-e499f62d7c4e.png",
+      "regions": [
+        {
+          "region_id": "img9-r1",
+          "region_type": "table and chart",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "ablation study and scaling effects",
+          "anchor_location": "section-4-1 / section-4-2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-075fddb7-d3cc-4d90-8fb3-706b3c1c66c1.png",
+      "regions": [
+        {
+          "region_id": "img10-r1",
+          "region_type": "table and prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "model size, inference-time compute, and reasoning training effectiveness",
+          "anchor_location": "section-4-2 / section-4-3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-8cd99b5d-f68a-47d4-ab90-ba7a453a098b.png",
+      "regions": [
+        {
+          "region_id": "img11-r1",
+          "region_type": "case study",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "case study setup with chatbot A/B",
+          "anchor_location": "section-4-4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0969ec85-ac7d-4788-aca8-514e84814b12.png",
+      "regions": [
+        {
+          "region_id": "img12-r1",
+          "region_type": "case study",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "cold-start RL vs RM-R1 evaluation comparison",
+          "anchor_location": "section-4-4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-0fc5feed-d0a3-47e3-b6d2-62138b987d3c.png",
+      "regions": [
+        {
+          "region_id": "img13-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "future directions and wrap-up",
+          "anchor_location": "section-5 / ending",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "This batch creates a new RLVR/RM-R1 note in the requested workspace directory.",
+    "One process diagram was reconstructed as Mermaid for Obsidian readability.",
+    "Quantitative charts and tables were transcribed into Markdown tables rather than preserved as images.",
+    "No screenshot crops were retained because the content is primarily prose, formulas, and tables already reconstructed in Markdown."
+  ]
+}

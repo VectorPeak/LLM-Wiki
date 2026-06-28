@@ -1,0 +1,160 @@
+{
+  "document": "CC_runtime_04.query_loop 详解.md",
+  "status": "partial",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-385cb43c-ddb2-44cd-a18a-de523ad07763.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "标题、角色定义、四阶段、continue/退出条件、6个写点、一句话定义",
+          "anchor_location": "1 / 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-520a4a3e-2f8e-4779-a7a1-1b7d28a88d6f.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "architecture diagram",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "完整状态机和一次完整 Query 执行道路",
+          "anchor_location": "3",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-eb59917f-d01a-4575-9700-55ac29bfab4e.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "process diagram",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "第二轮循环、流式提前执行、参数语义开头",
+          "anchor_location": "4 / 8",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-402d7ae1-1f39-4478-8c4d-97d24bef34f9.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "参数语义、局部状态变量、Phase 1/2",
+          "anchor_location": "4 / 5 / 6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-5c302fc1-d27a-4c5c-b68e-99b69635551e.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Phase 3/4、ToolUseStart 重要性",
+          "anchor_location": "8 / 9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-727e6d63-45ff-465e-b4d9-230d28b63dfd.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Phase 5 恢复、8.1-8.4、Phase 6 工具结果包装",
+          "anchor_location": "10 / 11",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-3e6bfd0b-cbfb-4dec-a497-aced205a9ed0.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "stop_reason、伪代码、6个写点前半",
+          "anchor_location": "12 / 13 / 14",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-2fd0becf-a496-4d21-9d5a-659731c37a8f.png",
+      "regions": [
+        {
+          "region_id": "img8-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "6个写点后半、streaming一致性、TurnComplete、算法抽象",
+          "anchor_location": "14 / 15 / 16 / 17",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-56a23071-61dc-4d6d-b7c3-916fe367034a.png",
+      "regions": [
+        {
+          "region_id": "img9-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "源码阅读顺序",
+          "anchor_location": "18",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}

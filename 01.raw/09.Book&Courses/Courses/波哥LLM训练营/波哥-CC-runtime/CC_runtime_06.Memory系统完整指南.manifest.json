@@ -1,0 +1,126 @@
+{
+  "document": "CC_runtime_06.Memory系统完整指南.md",
+  "status": "complete",
+  "batches": 1,
+  "images": [
+    {
+      "image_id": "codex-clipboard-bc1401cc-573e-44b8-a902-f011e87a9913.png",
+      "regions": [
+        {
+          "region_id": "img1-r1",
+          "region_type": "prose",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "Memory 解决的问题、存储目录、文件类型",
+          "anchor_location": "1 / 2",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-5d71475a-ef21-4dfe-9592-11fe6ecf60ed.png",
+      "regions": [
+        {
+          "region_id": "img2-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "四种记忆类型、注入路径、build_memory_prompt 拼接内容",
+          "anchor_location": "3 / 4",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-189df519-e090-4929-b8e0-c1c71dd6093a.png",
+      "regions": [
+        {
+          "region_id": "img3-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "两条写入路径、后台自动提取入口、ExtractionCoordinator 总览",
+          "anchor_location": "5 / 6",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-8491eb88-9d4a-4345-adf7-18e909077562.png",
+      "regions": [
+        {
+          "region_id": "img4-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "ExtractionCoordinator 状态变量与 extract_memories 前三步",
+          "anchor_location": "6 / 7",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-179deefc-175d-4d94-9b3e-9f6327033d82.png",
+      "regions": [
+        {
+          "region_id": "img5-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "解析持久化、去重机制、与 compact 的关系、信任策略",
+          "anchor_location": "7 / 8 / 9",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-1b3bb5b8-b35b-4cdd-8091-a6dc24819d89.png",
+      "regions": [
+        {
+          "region_id": "img6-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": true,
+          "must_insert_visual": false,
+          "reason": "完整生命周期、设计边界、启动加载机制",
+          "anchor_location": "10 / 11",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    },
+    {
+      "image_id": "codex-clipboard-3ccc9b8c-c96f-4553-9b9e-2b9ec5272895.png",
+      "regions": [
+        {
+          "region_id": "img7-r1",
+          "region_type": "code",
+          "must_markdown": true,
+          "must_mermaid": false,
+          "must_insert_visual": false,
+          "reason": "MEMORY.md 示例、渐进式加载说明",
+          "anchor_location": "11",
+          "upload_status": "not_needed",
+          "final_url": "",
+          "final_inserted": true
+        }
+      ]
+    }
+  ]
+}
