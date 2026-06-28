@@ -111,4 +111,4 @@ LLM-Wiki/
 
 ## 📄 License
 
-本仓库内容仅供个人学习使用。部分内容来源于公开博客、论文和课程，版权归原作者所有。
+[MIT License](./LICENSE)
