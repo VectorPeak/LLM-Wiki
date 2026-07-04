@@ -2,9 +2,9 @@
 
 # LLM-Wiki
 
-### 大语言模型知识图谱 & AI-first Second Brain
+### 大语言模型知识图谱 & AI 协作型个人知识库
 
-面向 **LLM / Agent / RAG / Post-training / AI Engineering** 的中文 Obsidian 知识库，服务系统学习、面试准备、论文精读、工程实践与长期知识复利。
+面向 **LLM / Agent / RAG / Post-training / AI Engineering** 的中文 Obsidian 知识库，用来沉淀系统学习、面试准备、论文精读、工程实践与长期知识复利。
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-VectorPeak%2FLLM--Wiki-181717?logo=github&logoColor=white)](https://github.com/VectorPeak/LLM-Wiki)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
@@ -24,7 +24,7 @@
 
 LLM 学习的难点通常不是「资料太少」，而是「资料过多但缺少坐标系」：课程、论文、公众号、知乎、GitHub 项目、面试题和日常灵感会不断涌入，如果没有结构化沉淀，很容易变成一堆不可复用的收藏夹。
 
-本项目把这些材料整理成一个 **AI-first 的第二大脑**：人可以通过 Obsidian 阅读、链接和复习，AI Agent 也可以按约定读取、改写、总结和维护。它更像一座「知识仓库 + 导航系统」，而不是一篇线性教程。
+本项目把这些材料整理成一个 **AI 协作型个人知识库**：人可以通过 Obsidian 阅读、链接和复习，AI Agent 也可以按约定读取、改写、总结和维护。它更像一座「知识仓库 + 导航系统」，而不是一篇线性教程。
 
 - **对抗碎片化**：把微信、知乎、课程、论文、面试题等原始材料统一放入 `01.raw/`，先保证资料可追溯。
 - **从素材到知识**：`01.raw/` 是矿石，`02.wiki/` 是提炼后的金属；前者保存上下文，后者沉淀概念、实体、项目和决策。
@@ -39,7 +39,7 @@ LLM 学习的难点通常不是「资料太少」，而是「资料过多但缺�
 | Knowledge Graph | 用链接把概念、论文、项目、人物、问题连接起来 | 单篇孤立笔记、无上下文摘抄 |
 | Raw Layer | 原始材料层，尽量保留来源、语境和证据 | 过早总结导致信息丢失 |
 | Wiki Layer | AI 和人共同维护的结构化知识层 | 未整理素材、一次性输出 |
-| AI-first | 写给未来的人和 AI 都能读懂、能接续维护 | 只给当前作者看的随手记 |
+| AI 协作型知识库 | 写给未来的人和 AI 都能读懂、能接续维护 | 只给当前作者看的随手记 |
 
 ---
 
