@@ -1,26 +1,26 @@
 ---
 date: 2026-06-30
-type: mentor-progress
-tags: [mentor, progress, mastery]
+type: mentor-active-dashboard
+tags: [mentor, active-dashboard, mastery]
 ai-first: true
 ---
 
 ## For future Claude
 
-This file is the active memory of the Mentor system. Keep it short and current. Move stale or completed details to `session_archive.md`. Use this file to decide what the next lesson should review, test, or continue.
+This file is the Memory Layer L3 active dashboard of the Mentor system. Keep it short and current. Move stale or completed details to `20_session_index.md`. Use this file to decide what the next lesson should review, test, or continue.
 
-# Progress
+# L3 Active Learning Dashboard
 
 ## Active Learning Tracks
 
 | Track | Current focus | Mastery | Next action | Status |
 |---|---|---:|---|---|
 | AI-era learning system | Mentor architecture and learning loop | 2 | Turn design into repeatable session workflow | active |
-| Interview preparation | TBD | 0 | Select first interview topic | pending |
+| Interview preparation | No real session evidence yet | 0 | Select first interview topic | pending |
 
 ## Current Weak Points
 
-- TBD: weak points should be added only after a real session.
+- No real session evidence yet. Add weak points only after a real session.
 
 ## Next Session Candidates
 

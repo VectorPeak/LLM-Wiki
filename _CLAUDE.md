@@ -39,8 +39,7 @@ The full local spec is `.codex/references/ai-first-rules.md`.
 |---|---|---|
 | `01.raw/` | Original source material | Add new source files only when ingesting or capturing originals. Avoid rewriting existing raw files unless the user asks for cleanup or migration. |
 | `02.wiki/` | AI-maintained knowledge workspace | Codex may create and update notes here using AI-first rules. |
-| `03.templates/` | Reusable note templates | Do not modify unless explicitly asked. |
-| `04.output/` | AI-generated results, temporary products, and deliverables | Use for derived exports, cleaned outputs, and intermediate products. |
+| `03.Mentor/` | Active Mentor learning system | Use for AI-assisted learning sessions, active dashboard, session index, mastery cards, question bank, personas, and Mentor templates. |
 | `._trash&cache/` | Temporary stitching cache, disposable working files, and soft trash | Use for transient image/file stitching cache, OCR scratch output, generated intermediates that should not pollute the vault, and trash-like material waiting for possible recovery. Do not treat it as a knowledge source unless the user explicitly points to a file inside it. Never use it for durable notes. |
 | `.codex/references/` | Codex reference docs and secondary operating notes | Keep detailed reference material here; keep root files focused on entrypoints. |
 | `index.md` | Catalog and navigation entrypoint | Regenerate when vault structure changes. |

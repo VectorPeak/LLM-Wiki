@@ -6,7 +6,7 @@ ai-first: true
 ---
 
 ## For future Claude
-This is the navigation entrypoint for the LLM_wiki vault. The vault uses numbered top-level layers: immutable source material under `01.raw/`, maintained notes under `02.wiki/`, reusable templates under `03.templates/`, and generated deliverables under `04.output/`.
+This is the navigation entrypoint for the LLM_wiki vault. The vault uses numbered top-level layers: immutable source material under `01.raw/`, maintained notes under `02.wiki/`, and the active Mentor learning system under `03.Mentor/`.
 
 ## Core Files
 
@@ -47,8 +47,6 @@ This is the navigation entrypoint for the LLM_wiki vault. The vault uses numbere
 ## Operational Folders
 
 - `boards/` - kanban boards
-- `03.templates/` - note templates
-- `04.output/` - AI-generated results, temporary products, and deliverables
 - `Bases/` - Obsidian Bases views
 - `Logs/` - append-only operation logs
 - `_trash/` - soft-deleted notes
@@ -56,3 +54,10 @@ This is the navigation entrypoint for the LLM_wiki vault. The vault uses numbere
 ## Current Catalog
 
 `02.wiki/` is scaffolded but currently empty. `01.raw/` already contains imported source material across the major source folders, so start there when orienting yourself. Use `/obsidian-save`, `/obsidian-capture`, `/obsidian-ingest`, or `/research` to begin turning raw material into maintained notes.
+
+
+## Wiki Layer Protocol
+
+- [[LLM_wiki Wiki Layer Protocol]] - stable `/ingest`, `/query`, `/lint` operating protocol.
+- [[Wiki Write Plan]] - `/ingest` routing object for `02.wiki` sublayers.
+- [[Knowledge Diff]] - comparison output between raw source and existing wiki knowledge.

@@ -86,6 +86,7 @@ cd LLM-Wiki
 
 ```text
 LLM-Wiki/
+<<<<<<< HEAD
 ├── .obsidian/                 # Obsidian 本地配置
 ├── 01.raw/                    # 原始素材层：先保存证据，再逐步提炼知识
 │   ├── 00.WorkSpace/          # 项目包装、草稿、临时工作区
@@ -106,6 +107,26 @@ LLM-Wiki/
 ├── 04.output/                 # AI 生成结果、整理稿、导出物
 ├── 05.Mentor/                 # 学习导师、复盘和辅助学习材料
 ├── Bases/                     # Obsidian Bases 视图配置
+=======
+├── 01.raw/                    # 原始素材（核心内容）
+│   ├── 00.WorkSpace/          #   项目包装、面试生存指南
+│   ├── 01.Inbox/              #   收件箱（临时存放）
+│   ├── 02.DailyNotes/         #   日记 / 每日记录
+│   ├── 03.SelfNotes/          #   自学笔记（八股生存指北等）
+│   ├── 04.Interview/          #   面试相关（真题题库、简历模板）
+│   ├── 05.Wechat/             #   微信文章剪藏（汐绫惠夜、骑猪撞宝马等）
+│   ├── 06.Zhihu/              #   知乎剪藏
+│   ├── 07.Website/            #   网页剪藏
+│   ├── 08.Research/           #   论文精读笔记
+│   ├── 09.Book&Courses/       #   书籍 & 课程资料（波哥LLM训练营等）
+│   ├── 10.GitHub/             #   GitHub 相关笔记
+│   ├── 11.Leetcode/           #   LeetCode 刷题笔记
+│   ├── 12.Others/             #   其他杂项
+│   └── 13.Videos/             #   视频笔记
+├── 02.wiki/                   # 知识条目（Obsidian wiki 链接）
+├── 03.Mentor/                 # AI Mentor 学习系统
+├── Bases/                     # Obsidian Dataview 基础定义
+>>>>>>> 26d8694 (Reorganize Mentor vault layer)
 ├── boards/                    # 看板数据
 ├── Excalidraw/                # 手绘图、白板和可视化草图
 ├── Logs/                      # 操作日志与工作记录
