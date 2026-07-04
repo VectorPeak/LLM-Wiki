@@ -43,6 +43,43 @@ LLM 学习的难点通常不是「资料太少」，而是「资料过多但缺�
 
 ---
 
+## 快速开始
+
+如果只是想快速使用这个知识库，可以按下面路径进入：
+
+### 1. 克隆仓库
+
+```bash
+git clone https://github.com/VectorPeak/LLM-Wiki.git
+cd LLM-Wiki
+```
+
+### 2. 用 Obsidian 打开
+
+在 [Obsidian](https://obsidian.md/) 中选择 **Open folder as vault**，打开本仓库根目录即可。仓库使用 Markdown、`[[wikilinks]]` 和目录化结构组织内容，在 Obsidian 中阅读和检索体验最好。
+
+### 3. 选择阅读入口
+
+| 目标 | 推荐入口 |
+|---|---|
+| 了解整个知识库 | `index.md` |
+| 准备 LLM / Agent / RAG 面试 | `01.raw/04.Interview/` |
+| 系统学习大模型基础 | `01.raw/03.SelfNotes/` |
+| 阅读课程和训练营材料 | `01.raw/09.Book&Courses/` |
+| 查看论文与研究材料 | `01.raw/08.Research/` |
+| 整理微信、知乎、网页剪藏 | `01.raw/05.Wechat/`、`01.raw/06.Zhihu/`、`01.raw/07.Website/` |
+
+### 4. 让 AI Agent 协作维护
+
+如果需要让 AI Agent 帮忙整理、迁移或生成笔记，建议先让它读取：
+
+- `AGENTS.md`：Agent 操作手册和命令路由。
+- `_CLAUDE.md`：Vault 写作规范、目录约定和 AI-first 规则。
+- `CRITICAL_FACTS.md`：最小必要背景信息。
+
+一个实用原则是：**先把原始资料放进 `01.raw/`，再逐步提炼到 `02.wiki/`**。这样既保留证据，也能沉淀可复用的知识结构。
+
+---
 ## 目录结构
 
 当前仓库是一个 Obsidian Vault，核心内容主要在 `01.raw/`，`02.wiki/` 是后续知识蒸馏与结构化维护的目标层。
