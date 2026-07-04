@@ -1,0 +1,2836 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>5.10 MCP 工具 - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#510-mcp" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.10 MCP 工具
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5.10 MCP 工具
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link md-nav__link--active">
+        5.10 MCP 工具
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建 / 修改的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5101-mcp" class="md-nav__link">
+    5.10.1 MCP 是什么
+  </a>
+  
+    <nav class="md-nav" aria-label="5.10.1 MCP 是什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    没有 MCP 之前
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    MCP 的解法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_2" class="md-nav__link">
+    MCP 通信格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fastmcpmcp-python" class="md-nav__link">
+    FastMCP：MCP 协议的 Python 高层实现
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5102-mcp-server" class="md-nav__link">
+    5.10.2 知识库 MCP Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5103-web-mcp-server" class="md-nav__link">
+    5.10.3 Web 搜索 MCP Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5104-mcp-client" class="md-nav__link">
+    5.10.4 MCP Client
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5105-fastapi" class="md-nav__link">
+    5.10.5 挂载到 FastAPI 主进程（集成部署）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ✅ 测试
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    阶段一：单独测试知识库 MCP Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-mcp-server" class="md-nav__link">
+    阶段二：单独测试 Web 搜索 MCP Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-fastapi" class="md-nav__link">
+    阶段三：集成测试（两个 MCP Server 挂载在 FastAPI）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建 / 修改的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5101-mcp" class="md-nav__link">
+    5.10.1 MCP 是什么
+  </a>
+  
+    <nav class="md-nav" aria-label="5.10.1 MCP 是什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    没有 MCP 之前
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    MCP 的解法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_2" class="md-nav__link">
+    MCP 通信格式
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fastmcpmcp-python" class="md-nav__link">
+    FastMCP：MCP 协议的 Python 高层实现
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5102-mcp-server" class="md-nav__link">
+    5.10.2 知识库 MCP Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5103-web-mcp-server" class="md-nav__link">
+    5.10.3 Web 搜索 MCP Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5104-mcp-client" class="md-nav__link">
+    5.10.4 MCP Client
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5105-fastapi" class="md-nav__link">
+    5.10.5 挂载到 FastAPI 主进程（集成部署）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ✅ 测试
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    阶段一：单独测试知识库 MCP Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web-mcp-server" class="md-nav__link">
+    阶段二：单独测试 Web 搜索 MCP Server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-fastapi" class="md-nav__link">
+    阶段三：集成测试（两个 MCP Server 挂载在 FastAPI）
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="510-mcp">5.10 MCP 工具<a class="headerlink" href="#510-mcp" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解 MCP（Model Context Protocol）是什么，以及它解决了什么问题</li>
+<li>掌握 MCP Server / Client 架构，理解 FastMCP 如何用一个装饰器注册工具</li>
+<li>实现知识库 MCP Server 和 Web 搜索 MCP Server</li>
+<li>实现通用 MCP Client，理解 JSON-RPC 调用格式和关键响应头</li>
+</ul>
+<blockquote>
+<p>💡 <strong>本节写三个文件：</strong> <code>mcp/knowledge_base_server.py</code>、<code>mcp/web_search_server.py</code>、<code>mcp/client.py</code>。MCP 工具为低置信度分支提供 Web 兜底能力，也让知识库以标准接口对外暴露。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📁 本节要创建 / 修改的文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/mcp/knowledge_base_server.py</code></td>
+<td>🆕 新建</td>
+<td>知识库 MCP Server（<code>search_knowledge_base</code> 工具）</td>
+</tr>
+<tr>
+<td><code>backend/mcp/web_search_server.py</code></td>
+<td>🆕 新建</td>
+<td>Web 搜索 MCP Server（<code>web_search</code> 工具）</td>
+</tr>
+<tr>
+<td><code>backend/mcp/client.py</code></td>
+<td>🆕 新建</td>
+<td>通用 MCP Client（<code>call_mcp_tool</code> 函数）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5101-mcp">5.10.1 MCP 是什么<a class="headerlink" href="#5101-mcp" title="Permanent link">&para;</a></h2>
+<h3 id="mcp">没有 MCP 之前<a class="headerlink" href="#mcp" title="Permanent link">&para;</a></h3>
+<p>AI Agent 需要调用外部工具时，每个工具都要写一套定制代码：搜索引擎有搜索引擎的调用方式，数据库有数据库的调用方式，换一个 Agent 框架，这套代码还要重写一遍。</p>
+<div class="highlight"><pre><span></span><code>LangGraph Agent  ─── 定制代码 ──→  Milvus 知识库
+                 ─── 定制代码 ──→  DuckDuckGo 搜索
+                 ─── 定制代码 ──→  数据库查询
+
+Claude Desktop   ─── 完全不同的代码 ──→  同样的工具
+</code></pre></div>
+<p>工具越多，胶水代码越多，维护成本越高，跨框架复用几乎不可能。</p>
+<h3 id="mcp_1">MCP 的解法<a class="headerlink" href="#mcp_1" title="Permanent link">&para;</a></h3>
+<p>MCP（Model Context Protocol）是 Anthropic 制定的 <strong>AI 工具调用标准协议</strong>。思路和 USB-C 一样：定一个统一接口，工具方实现 MCP Server，调用方实现 MCP Client，两端只认协议，互不关心对方的内部实现。</p>
+<div class="highlight"><pre><span></span><code>任意 MCP Client                  任意 MCP Server
+─────────────────────────────────────────────────
+LangGraph Node  ┐               ┌ EduAgent 知识库
+Claude Desktop  ├─ JSON-RPC ──→ ├ Web 搜索
+Claude Code     ┘   POST /mcp   └ 数据库查询
+</code></pre></div>
+<p><strong>一个工具实现一次，所有 Client 通用。</strong></p>
+<h3 id="mcp_2">MCP 通信格式<a class="headerlink" href="#mcp_2" title="Permanent link">&para;</a></h3>
+<p>MCP 使用 <strong>JSON-RPC 2.0 over HTTP</strong>，请求和响应都是固定结构：</p>
+<div class="highlight"><pre><span></span><code>Client → Server（调用工具）：
+POST /mcp
+{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: 1,
+  &quot;method&quot;: &quot;tools/call&quot;,
+  &quot;params&quot;: {
+    &quot;name&quot;: &quot;web_search&quot;,
+    &quot;arguments&quot;: {&quot;query&quot;: &quot;Python 异步编程&quot;, &quot;max_results&quot;: 5}
+  }
+}
+
+Server → Client（返回结果）：
+{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: 1,
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;[{\&quot;title\&quot;: \&quot;...\&quot;, \&quot;url\&quot;: \&quot;...\&quot;}]&quot;}
+    ]
+  }
+}
+</code></pre></div>
+<p>注意结果嵌套在 <code>result.content[0].text</code> 里，且是 JSON 字符串，Client 需要再做一次 <code>json.loads</code>。</p>
+<h3 id="fastmcpmcp-python">FastMCP：MCP 协议的 Python 高层实现<a class="headerlink" href="#fastmcpmcp-python" title="Permanent link">&para;</a></h3>
+<p>直接实现 MCP 协议细节较繁琐。<code>FastMCP</code> 封装了协议层，只需要：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">mcp.server.fastmcp</span> <span class="kn">import</span> <span class="n">FastMCP</span>
+
+<span class="n">mcp</span> <span class="o">=</span> <span class="n">FastMCP</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;MyServer&quot;</span><span class="p">,</span> <span class="n">stateless_http</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">json_response</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nd">@mcp</span><span class="o">.</span><span class="n">tool</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">my_tool</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;工具描述（这段 docstring 会自动生成 MCP inputSchema）&quot;&quot;&quot;</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="n">results</span>
+</code></pre></div>
+<ul>
+<li><code>stateless_http=True</code>：每次请求完全自包含，无需建立 session，适合 Agent 调用</li>
+<li><code>json_response=True</code>：工具返回值自动序列化为 JSON 字符串放入 TextContent</li>
+<li><code>@mcp.tool()</code>：函数签名自动生成 JSON Schema，docstring 作为工具描述</li>
+</ul>
+<hr />
+<h2 id="5102-mcp-server">5.10.2 知识库 MCP Server<a class="headerlink" href="#5102-mcp-server" title="Permanent link">&para;</a></h2>
+<p>封装 5.7 实现的 <code>retrieve()</code> Pipeline，让外部任意 MCP Client 都能搜索 EduAgent 知识库。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/mcp/knowledge_base_server.py</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">mcp.server.fastmcp</span> <span class="kn">import</span> <span class="n">FastMCP</span>
+
+<span class="n">mcp</span> <span class="o">=</span> <span class="n">FastMCP</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;EduAgent-KnowledgeBase&quot;</span><span class="p">,</span>
+    <span class="n">stateless_http</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">json_response</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="nd">@mcp</span><span class="o">.</span><span class="n">tool</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">search_knowledge_base</span><span class="p">(</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">tenant_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">course_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Hybrid semantic + keyword search over the EduAgent Milvus knowledge base.</span>
+
+<span class="sd">    Uses BGE-M3 dual-vector encoding combined with Milvus hybrid_search</span>
+<span class="sd">    and WeightedRanker fusion, followed by BGE-Reranker cross-encoder reranking.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        query:     Search query in Chinese or English</span>
+<span class="sd">        tenant_id: Tenant identifier for data isolation (e.g. &quot;tenant_default&quot;)</span>
+<span class="sd">        course_id: Optional course UUID to restrict search scope</span>
+<span class="sd">        top_k:     Number of documents to return after reranking (default: 3)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of ranked documents, each with:</span>
+<span class="sd">        - content:            chunk text</span>
+<span class="sd">        - source_name:        document name and chapter</span>
+<span class="sd">        - score:              reranker confidence score [0, 1]</span>
+<span class="sd">        - confidence:         top document confidence score</span>
+<span class="sd">        - is_high_confidence: whether confidence &gt;= 0.75</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">backend.core.reranker</span> <span class="kn">import</span> <span class="n">retrieve</span>
+    <span class="kn">from</span> <span class="nn">backend.core.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="c1"># retrieve() 内部包含 BGE-M3 编码（CPU-bound）和 CrossEncoder 推理（CPU-bound），</span>
+    <span class="c1"># 两者都是同步阻塞操作，用 run_in_executor 避免阻塞 async 事件循环</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span>
+    <span class="n">ranked_docs</span><span class="p">,</span> <span class="n">confidence</span> <span class="o">=</span> <span class="k">await</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="n">retrieve</span><span class="p">(</span>
+            <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+            <span class="n">tenant_id</span><span class="o">=</span><span class="n">tenant_id</span><span class="p">,</span>
+            <span class="n">course_id</span><span class="o">=</span><span class="n">course_id</span><span class="p">,</span>
+            <span class="n">rerank_top_k</span><span class="o">=</span><span class="n">top_k</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;kb_mcp.search_done&quot;</span><span class="p">,</span>
+        <span class="n">query_preview</span><span class="o">=</span><span class="n">query</span><span class="p">[:</span><span class="mi">50</span><span class="p">],</span>
+        <span class="n">hits</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ranked_docs</span><span class="p">),</span>
+        <span class="n">confidence</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span>            <span class="n">doc</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+            <span class="s2">&quot;source_name&quot;</span><span class="p">:</span>        <span class="n">doc</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;score&quot;</span><span class="p">:</span>              <span class="nb">round</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="s2">&quot;confidence&quot;</span><span class="p">:</span>         <span class="nb">round</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="s2">&quot;is_high_confidence&quot;</span><span class="p">:</span> <span class="n">confidence</span> <span class="o">&gt;=</span> <span class="mf">0.75</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">ranked_docs</span>
+    <span class="p">]</span>
+
+
+<span class="c1"># ── 独立运行入口 ──────────────────────────────────────────────────</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">uvicorn</span>
+    <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/backend/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">load_dotenv</span><span class="p">(</span><span class="s2">&quot;.env.local&quot;</span><span class="p">)</span>
+
+    <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;KB_MCP_SERVER_PORT&quot;</span><span class="p">,</span> <span class="s2">&quot;8001&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Knowledge Base MCP Server → http://localhost:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/mcp&quot;</span><span class="p">)</span>
+    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mcp</span><span class="o">.</span><span class="n">streamable_http_app</span><span class="p">(),</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>为什么 <code>retrieve()</code> 要用 <code>run_in_executor</code>？</strong></p>
+<p><code>search_knowledge_base</code> 是 <code>async</code> 函数，运行在 asyncio 事件循环中。
+<code>retrieve()</code> 内部的 BGE-M3 编码和 CrossEncoder 推理都是同步的 CPU 密集操作，
+直接调用会阻塞整个事件循环，导致其他并发请求全部卡住。
+<code>run_in_executor</code> 把同步操作交给线程池运行，事件循环继续处理其他任务。</p>
+</blockquote>
+<hr />
+<h2 id="5103-web-mcp-server">5.10.3 Web 搜索 MCP Server<a class="headerlink" href="#5103-web-mcp-server" title="Permanent link">&para;</a></h2>
+<p>为低置信度分支提供互联网搜索能力。支持两个后端：Tavily（质量高）和 DuckDuckGo（完全免费）。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/mcp/web_search_server.py</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">httpx</span>
+<span class="kn">from</span> <span class="nn">mcp.server.fastmcp</span> <span class="kn">import</span> <span class="n">FastMCP</span>
+
+<span class="n">mcp</span> <span class="o">=</span> <span class="n">FastMCP</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;EduAgent-WebSearch&quot;</span><span class="p">,</span>
+    <span class="n">stateless_http</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">json_response</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ── 搜索后端 ──────────────────────────────────────────────────────</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_search_tavily</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Tavily 搜索（结构化结果，需 API key，https://tavily.com）&quot;&quot;&quot;</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">15.0</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s2">&quot;https://api.tavily.com/search&quot;</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;api_key&quot;</span><span class="p">:</span>             <span class="n">api_key</span><span class="p">,</span>
+                <span class="s2">&quot;query&quot;</span><span class="p">:</span>               <span class="n">query</span><span class="p">,</span>
+                <span class="s2">&quot;max_results&quot;</span><span class="p">:</span>         <span class="n">max_results</span><span class="p">,</span>
+                <span class="s2">&quot;include_answer&quot;</span><span class="p">:</span>      <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;include_raw_content&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span>   <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span>     <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;snippet&quot;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[:</span><span class="mi">500</span><span class="p">],</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="p">]</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_search_duckduckgo</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;DuckDuckGo 搜索（免费，无需 API key）</span>
+
+<span class="sd">    duckduckgo-search 6.x+ 移除了 AsyncDDGS，统一使用同步 DDGS。</span>
+<span class="sd">    用 asyncio.to_thread 包装避免阻塞事件循环（与 run_in_executor 效果相同，写法更简洁）。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">duckduckgo_search</span> <span class="kn">import</span> <span class="n">DDGS</span>
+
+    <span class="k">def</span> <span class="nf">_sync_search</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="n">DDGS</span><span class="p">()</span> <span class="k">as</span> <span class="n">ddgs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">ddgs</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">):</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">&quot;title&quot;</span><span class="p">:</span>   <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;url&quot;</span><span class="p">:</span>     <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;snippet&quot;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[:</span><span class="mi">500</span><span class="p">],</span>
+                    <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="p">})</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">to_thread</span><span class="p">(</span><span class="n">_sync_search</span><span class="p">)</span>
+
+
+<span class="c1"># ── MCP 工具 ──────────────────────────────────────────────────────</span>
+
+<span class="nd">@mcp</span><span class="o">.</span><span class="n">tool</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">web_search</span><span class="p">(</span>
+    <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Search the web for current information not available in the knowledge base.</span>
+
+<span class="sd">    Automatically selects the best available backend:</span>
+<span class="sd">    - Tavily (preferred): structured results; requires TAVILY_API_KEY in .env.local</span>
+<span class="sd">    - DuckDuckGo (fallback): free, no API key required</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        query:       Search query string</span>
+<span class="sd">        max_results: Maximum number of results to return (default: 5)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of search results, each with title / url / snippet / content</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">backend.config</span> <span class="kn">import</span> <span class="n">get_settings</span>
+    <span class="kn">from</span> <span class="nn">backend.core.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+
+    <span class="c1"># 优先 Tavily，失败后降级 DuckDuckGo</span>
+    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">tavily_api_key</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_search_tavily</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">max_results</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">tavily_api_key</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;web_search_mcp.tavily_done&quot;</span><span class="p">,</span> <span class="n">hits</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">results</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;web_search_mcp.tavily_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_search_duckduckgo</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">max_results</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;web_search_mcp.ddgs_done&quot;</span><span class="p">,</span> <span class="n">hits</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">results</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;web_search_mcp.ddgs_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+
+<span class="c1"># ── 独立运行入口 ──────────────────────────────────────────────────</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">uvicorn</span>
+    <span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/backend/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">load_dotenv</span><span class="p">(</span><span class="s2">&quot;.env.local&quot;</span><span class="p">)</span>
+
+    <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WEB_SEARCH_MCP_SERVER_PORT&quot;</span><span class="p">,</span> <span class="s2">&quot;8002&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Web Search MCP Server → http://localhost:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/mcp&quot;</span><span class="p">)</span>
+    <span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mcp</span><span class="o">.</span><span class="n">streamable_http_app</span><span class="p">(),</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong><code>asyncio.to_thread</code> vs <code>run_in_executor</code></strong></p>
+<p>两者都把同步代码交给线程池运行，效果相同。
+<code>asyncio.to_thread(fn)</code> 是 Python 3.9+ 的简洁写法，等价于
+<code>loop.run_in_executor(None, fn)</code>。
+同步库（如 <code>DDGS</code>）在 async 函数里必须用其中一种包装，否则阻塞整个事件循环。</p>
+</blockquote>
+<hr />
+<h2 id="5104-mcp-client">5.10.4 MCP Client<a class="headerlink" href="#5104-mcp-client" title="Permanent link">&para;</a></h2>
+<p>Agent 节点通过此函数调用 MCP Server，无需关心 JSON-RPC 细节。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/mcp/client.py</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span> <span class="nn">httpx</span>
+
+<span class="kn">from</span> <span class="nn">backend.core.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">call_mcp_tool</span><span class="p">(</span>
+    <span class="n">server_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">arguments</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    调用 stateless MCP Server 的单个工具。</span>
+
+<span class="sd">    stateless_http=True 的 Server 每次 POST 完全自包含，无需先发 initialize 握手。</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        server_url: MCP Server 基础 URL，例如 &quot;http://localhost:8000/mcp/kb&quot;</span>
+<span class="sd">        tool_name:  工具名称，与 @mcp.tool() 注册名一致</span>
+<span class="sd">        arguments:  工具参数字典</span>
+<span class="sd">        timeout:    请求超时（秒）</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        工具返回值（JSON 反序列化后的 Python 对象）</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        httpx.HTTPStatusError:  Server 返回 4xx/5xx</span>
+<span class="sd">        ValueError:             JSON-RPC 错误（工具内部异常）</span>
+<span class="sd">        httpx.TimeoutException: 请求超时</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span>      <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;method&quot;</span><span class="p">:</span>  <span class="s2">&quot;tools/call&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span>      <span class="n">tool_name</span><span class="p">,</span>
+            <span class="s2">&quot;arguments&quot;</span><span class="p">:</span> <span class="n">arguments</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="c1"># json_response=True 的 Server 要求客户端声明 Accept: application/json，</span>
+    <span class="c1"># 否则 Server 返回 -32600 &quot;Not Acceptable&quot; 错误</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Accept&quot;</span><span class="p">:</span>        <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># trust_env=False：禁止 httpx 读取 HTTP_PROXY / ALL_PROXY 等环境变量和系统代理。</span>
+    <span class="c1"># macOS 系统代理或 PyCharm/Charles 等工具设置的代理不会排除 localhost，</span>
+    <span class="c1"># 导致本地 MCP 调用被路由到代理后返回 502。对 localhost 的内部调用永远不需要代理。</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">trust_env</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">server_url</span><span class="si">}</span><span class="s2">/mcp&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="c1"># JSON-RPC 错误信封</span>
+    <span class="k">if</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;MCP tool &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; error: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]))</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># FastMCP 对 list[dict] 的序列化行为：</span>
+    <span class="c1">#   - 每个 dict 单独放进一个 TextContent 条目（最常见）</span>
+    <span class="c1">#   - 或整个列表序列化成一个 TextContent 条目（部分版本）</span>
+    <span class="c1"># 必须遍历所有 content 条目，不能只取 content[0]，否则多条结果只返回第一条。</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">content</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parsed</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">parsed</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parsed</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="c1"># 整个列表在一个 TextContent 里，直接返回</span>
+            <span class="k">return</span> <span class="n">parsed</span>
+        <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">items</span> <span class="k">if</span> <span class="n">items</span> <span class="k">else</span> <span class="n">content</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">list_mcp_tools</span><span class="p">(</span><span class="n">server_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    列出 MCP Server 提供的所有工具（调试 / 验证用）。</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        工具列表，每项含 name / description / inputSchema</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;tools/list&quot;</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span> <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">trust_env</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">server_url</span><span class="si">}</span><span class="s2">/mcp&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tools&quot;</span><span class="p">,</span> <span class="p">[])</span>
+</code></pre></div>
+<hr />
+<h2 id="5105-fastapi">5.10.5 挂载到 FastAPI 主进程（集成部署）<a class="headerlink" href="#5105-fastapi" title="Permanent link">&para;</a></h2>
+<p>FastMCP 的 <code>StreamableHTTPSessionManager</code> 在处理请求前必须先调用 <code>run()</code> 初始化 anyio task group。独立运行时，Starlette 会自动触发子应用的 lifespan；但 FastAPI 的 <code>app.mount()</code> 不会向下传播 lifespan 事件，导致 task group 未初始化，第一个请求就抛出 <code>RuntimeError: Task group is not initialized</code>。</p>
+<p><strong>修复方式</strong>：在 FastAPI 的 <code>lifespan</code> 里显式启动两个 MCP 的 session manager：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/main.py</span>
+
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">asynccontextmanager</span>
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))))</span>
+
+<span class="kn">from</span> <span class="nn">backend.api.v1</span> <span class="kn">import</span> <span class="n">resume</span>
+<span class="kn">from</span> <span class="nn">backend.api.v1</span> <span class="kn">import</span> <span class="n">auth</span>
+<span class="kn">from</span> <span class="nn">backend.mcp.knowledge_base_server</span> <span class="kn">import</span> <span class="n">mcp</span> <span class="k">as</span> <span class="n">kb_mcp</span>
+<span class="kn">from</span> <span class="nn">backend.mcp.web_search_server</span> <span class="kn">import</span> <span class="n">mcp</span> <span class="k">as</span> <span class="n">ws_mcp</span>
+
+<span class="nd">@asynccontextmanager</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">lifespan</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">):</span>
+    <span class="c1"># app.mount() 不会自动传播子应用 lifespan，必须在这里手动启动</span>
+    <span class="c1"># _session_manager.run() 初始化 anyio task group，MCP 请求依赖它</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">kb_mcp</span><span class="o">.</span><span class="n">_session_manager</span><span class="o">.</span><span class="n">run</span><span class="p">():</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">ws_mcp</span><span class="o">.</span><span class="n">_session_manager</span><span class="o">.</span><span class="n">run</span><span class="p">():</span>
+            <span class="k">yield</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">(</span><span class="n">lifespan</span><span class="o">=</span><span class="n">lifespan</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">router</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">include_router</span><span class="p">(</span><span class="n">resume</span><span class="o">.</span><span class="n">router</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;/resume&quot;</span><span class="p">)</span>
+
+<span class="n">app</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;/mcp/kb&quot;</span><span class="p">,</span>     <span class="n">kb_mcp</span><span class="o">.</span><span class="n">streamable_http_app</span><span class="p">())</span>
+<span class="n">app</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;/mcp/search&quot;</span><span class="p">,</span> <span class="n">ws_mcp</span><span class="o">.</span><span class="n">streamable_http_app</span><span class="p">())</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/health&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">health</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p>挂载后端点地址（FastMCP 自动在挂载路径后追加 <code>/mcp</code>）：</p>
+<table>
+<thead>
+<tr>
+<th>MCP Server</th>
+<th>挂载路径</th>
+<th>实际端点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>知识库</td>
+<td><code>/mcp/kb</code></td>
+<td><code>http://localhost:8000/mcp/kb/mcp</code></td>
+</tr>
+<tr>
+<td>Web 搜索</td>
+<td><code>/mcp/search</code></td>
+<td><code>http://localhost:8000/mcp/search/mcp</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>日后添加更多路由</strong>（QA / exam / interview）时，直接在 <code>app.include_router(...)</code> 里追加即可，lifespan 不需要改动。</p>
+</blockquote>
+<hr />
+<h2 id="_3">✅ 测试<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><strong>测试分三个阶段，按顺序执行：先单独验证每个 MCP Server，确认没问题后再做集成测试。</strong></p>
+<p>两种运行方式的端点 URL 不同，这是理解整个测试流程的关键：</p>
+<table>
+<thead>
+<tr>
+<th>运行方式</th>
+<th>启动命令</th>
+<th>知识库端点</th>
+<th>Web 搜索端点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>独立运行</strong></td>
+<td><code>python xxx_server.py</code></td>
+<td><code>localhost:8001/mcp</code></td>
+<td><code>localhost:8002/mcp</code></td>
+</tr>
+<tr>
+<td><strong>集成（FastAPI）</strong></td>
+<td><code>uvicorn backend.main:app</code></td>
+<td><code>localhost:8000/mcp/kb/mcp</code></td>
+<td><code>localhost:8000/mcp/search/mcp</code></td>
+</tr>
+</tbody>
+</table>
+<p>独立运行时 MCP app 是根应用，端点是 <code>/mcp</code>；集成模式挂载在子路径下，FastMCP 自动追加 <code>/mcp</code>，所以路径变成 <code>/mcp/kb/mcp</code>。<code>client.py</code> 的 <code>call_mcp_tool</code> 里 <code>f"{server_url}/mcp"</code> 正是按这个规律拼接的。</p>
+<hr />
+<h3 id="mcp-server">阶段一：单独测试知识库 MCP Server<a class="headerlink" href="#mcp-server" title="Permanent link">&para;</a></h3>
+<p><strong>终端 1 — 启动：</strong></p>
+<div class="highlight"><pre><span></span><code>conda activate edu_agent
+python backend/mcp/knowledge_base_server.py
+<span class="c1"># 输出：Knowledge Base MCP Server → http://localhost:8001/mcp</span>
+</code></pre></div>
+<p><strong>终端 2 — 第一步：curl 验证工具列表（不触发模型加载，先确认服务进程存活）</strong></p>
+<div class="highlight"><pre><span></span><code>curl -s -X POST http://localhost:8001/mcp <span class="se">\</span>
+  -H <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
+  -H <span class="s2">&quot;Accept: application/json&quot;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:1,&quot;method&quot;:&quot;tools/list&quot;,&quot;params&quot;:{}}&#39;</span> <span class="se">\</span>
+  <span class="p">|</span> python -m json.tool --no-ensure-ascii
+</code></pre></div>
+<p>预期：返回 <code>search_knowledge_base</code> 工具的 name / description / inputSchema。</p>
+<blockquote>
+<p><strong>关于 <code>--no-ensure-ascii</code></strong>：JSON 规范允许将 Unicode 字符转义为 <code>\uXXXX</code>（如 <code>中文</code> 显示为 <code>中文</code>），<code>python -m json.tool</code> 默认开启此转义。加 <code>--no-ensure-ascii</code> 参数后直接显示中文。这是**显示问题**，不影响数据正确性，所有 curl 命令都加上即可。</p>
+</blockquote>
+<p><strong>终端 2 — 第二步：curl 调用工具（会触发 BGE 模型懒加载，同时观察终端 1 的输出）</strong></p>
+<div class="highlight"><pre><span></span><code>curl -s -X POST http://localhost:8001/mcp <span class="se">\</span>
+  -H <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
+  -H <span class="s2">&quot;Accept: application/json&quot;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{</span>
+<span class="s1">    &quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1,</span>
+<span class="s1">    &quot;method&quot;: &quot;tools/call&quot;,</span>
+<span class="s1">    &quot;params&quot;: {</span>
+<span class="s1">      &quot;name&quot;: &quot;search_knowledge_base&quot;,</span>
+<span class="s1">      &quot;arguments&quot;: {</span>
+<span class="s1">        &quot;query&quot;: &quot;AI学科大纲有什么内容&quot;,</span>
+<span class="s1">        &quot;tenant_id&quot;: &quot;tenant_default&quot;</span>
+<span class="s1">      }</span>
+<span class="s1">    }</span>
+<span class="s1">  }&#39;</span> <span class="p">|</span> python -m json.tool --no-ensure-ascii
+</code></pre></div>
+<blockquote>
+<p><strong>如果返回 502 Bad Gateway</strong>：<code>tools/call</code> 首次触发 BGE-M3 / BGE-Reranker 懒加载，加载失败（路径错误、内存不足、Milvus 连不上）会导致服务进程崩溃。端口仍被占着但后端已挂，所以返回 502 而非 connection refused。诊断步骤：①看终端 1 的报错 traceback；②<code>lsof -i :8001</code> 确认端口状态；③检查 <code>.env.local</code> 中的 <code>RERANKER_MODEL_PATH</code> / <code>BGE_M3_MODEL_PATH</code> 是否正确。</p>
+</blockquote>
+<p><strong>Python 脚本（独立模式，<code>server_url</code> 直接指向 8001，不带路径前缀）：</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># scripts/test_mcp_kb.py</span>
+<span class="c1"># 前提：python backend/mcp/knowledge_base_server.py 已在终端 1 运行</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="s2">&quot;.env.local&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">backend.mcp.client</span> <span class="kn">import</span> <span class="n">call_mcp_tool</span><span class="p">,</span> <span class="n">list_mcp_tools</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;http://localhost:8001&quot;</span>          <span class="c1"># 独立模式：直接指向端口，无路径前缀</span>
+
+    <span class="n">tools</span> <span class="o">=</span> <span class="k">await</span> <span class="n">list_mcp_tools</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;已注册工具：</span><span class="si">{</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_mcp_tool</span><span class="p">(</span>
+        <span class="n">server_url</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;search_knowledge_base&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;Spring IOC 容器&quot;</span><span class="p">,</span> <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;tenant_default&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;命中 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> 条&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] score=</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  confidence=</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;confidence&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     来源：</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;source_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][:</span><span class="mi">80</span><span class="p">]</span><span class="si">}</span><span class="s2">...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<blockquote>
+<p><strong><code>KB_MCP_SERVER_PORT</code></strong>：<code>.env.local</code> 里不需要设置，默认端口 8001。只有 8001 被占用时才在 <code>.env.local</code> 里加 <code>KB_MCP_SERVER_PORT=8003</code>。</p>
+</blockquote>
+<hr />
+<h3 id="web-mcp-server">阶段二：单独测试 Web 搜索 MCP Server<a class="headerlink" href="#web-mcp-server" title="Permanent link">&para;</a></h3>
+<p><strong>终端 1 — 启动（新开一个终端，8001 可以同时运行也可以关掉）：</strong></p>
+<div class="highlight"><pre><span></span><code>conda activate edu_agent
+python backend/mcp/web_search_server.py
+<span class="c1"># 输出：Web Search MCP Server → http://localhost:8002/mcp</span>
+</code></pre></div>
+<p><strong>终端 2 — curl 调用工具：</strong></p>
+<div class="highlight"><pre><span></span><code>curl -s -X POST http://localhost:8002/mcp <span class="se">\</span>
+  -H <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
+  -H <span class="s2">&quot;Accept: application/json&quot;</span> <span class="se">\</span>
+  -d <span class="s1">&#39;{</span>
+<span class="s1">    &quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1,</span>
+<span class="s1">    &quot;method&quot;: &quot;tools/call&quot;,</span>
+<span class="s1">    &quot;params&quot;: {</span>
+<span class="s1">      &quot;name&quot;: &quot;web_search&quot;,</span>
+<span class="s1">      &quot;arguments&quot;: {&quot;query&quot;: &quot;BGE-M3 向量模型&quot;, &quot;max_results&quot;: 3}</span>
+<span class="s1">    }</span>
+<span class="s1">  }&#39;</span> <span class="p">|</span> python -m json.tool --no-ensure-ascii
+</code></pre></div>
+<p><strong>Python 脚本（独立模式，端口 8002）：</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># scripts/test_mcp_search.py</span>
+<span class="c1"># 前提：python backend/mcp/web_search_server.py 已在终端 1 运行</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="s2">&quot;.env.local&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">backend.mcp.client</span> <span class="kn">import</span> <span class="n">call_mcp_tool</span><span class="p">,</span> <span class="n">list_mcp_tools</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="s2">&quot;http://localhost:8002&quot;</span>          <span class="c1"># 独立模式：直接指向端口，无路径前缀</span>
+
+    <span class="n">tools</span> <span class="o">=</span> <span class="k">await</span> <span class="n">list_mcp_tools</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;已注册工具：</span><span class="si">{</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_mcp_tool</span><span class="p">(</span>
+        <span class="n">server_url</span><span class="o">=</span><span class="n">base</span><span class="p">,</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;web_search&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;BGE-M3 向量模型&quot;</span><span class="p">,</span> <span class="s2">&quot;max_results&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;搜索结果 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> 条&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;snippet&#39;</span><span class="p">][:</span><span class="mi">80</span><span class="p">]</span><span class="si">}</span><span class="s2">...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<hr />
+<h3 id="mcp-server-fastapi">阶段三：集成测试（两个 MCP Server 挂载在 FastAPI）<a class="headerlink" href="#mcp-server-fastapi" title="Permanent link">&para;</a></h3>
+<p>阶段一、二都通过后，关闭独立进程，启动 FastAPI：</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 关闭阶段一、二的独立进程（Ctrl+C）</span>
+<span class="c1"># 然后：</span>
+conda activate edu_agent
+uvicorn backend.main:app --reload --port <span class="m">8000</span>
+</code></pre></div>
+<p><strong>Python 脚本（集成模式，<code>server_url</code> 带路径前缀）：</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># scripts/test_mcp_integrated.py</span>
+<span class="c1"># 前提：uvicorn backend.main:app 已在 8000 端口运行</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="s2">&quot;.env.local&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">backend.mcp.client</span> <span class="kn">import</span> <span class="n">call_mcp_tool</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># ── 知识库 MCP（路径前缀 /mcp/kb，实际端点 /mcp/kb/mcp）────────</span>
+    <span class="n">kb_results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_mcp_tool</span><span class="p">(</span>
+        <span class="n">server_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/mcp/kb&quot;</span><span class="p">,</span>      <span class="c1"># 集成模式：带路径前缀</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;search_knowledge_base&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;Spring IOC 容器&quot;</span><span class="p">,</span> <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="s2">&quot;tenant_default&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[KB] 命中 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">kb_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> 条&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kb_results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] score=</span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;source_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># ── Web 搜索 MCP（路径前缀 /mcp/search，实际端点 /mcp/search/mcp）─</span>
+    <span class="n">search_results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_mcp_tool</span><span class="p">(</span>
+        <span class="n">server_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:8000/mcp/search&quot;</span><span class="p">,</span>  <span class="c1"># 集成模式：带路径前缀</span>
+        <span class="n">tool_name</span><span class="o">=</span><span class="s2">&quot;web_search&quot;</span><span class="p">,</span>
+        <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;BGE-M3 向量模型&quot;</span><span class="p">,</span> <span class="s2">&quot;max_results&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Search] 搜索结果 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">search_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> 条&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">search_results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<p>集成测试的核心验证点：两个工具都通过同一个 8000 端口响应，<code>server_url</code> 路径前缀不同但都能正确路由到各自的 MCP Server。</p>
+<hr />
+<h2 id="_4">章节总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>MCP 解决什么问题</strong>：统一 AI 工具调用标准，工具实现一次，所有 MCP Client 通用，无需为每个框架重写胶水代码</li>
+<li><strong>FastMCP 核心配置</strong>：<code>stateless_http=True</code>（无 session）+ <code>json_response=True</code>（结果为 JSON 字符串）+ <code>@mcp.tool()</code> 自动生成 Schema</li>
+<li><strong>同步阻塞操作的 async 包装</strong>：<code>run_in_executor</code>（通用）或 <code>asyncio.to_thread</code>（Python 3.9+，更简洁）；CPU-bound 和同步 IO 都必须包装</li>
+<li><strong>Client 两个细节</strong>：<code>Accept: application/json</code> 头不能省；结果在 <code>result.content[0].text</code> 里，需要 <code>json.loads</code></li>
+<li><strong>部署方式</strong>：挂载在 FastAPI 主进程，一个端口提供所有服务，不需要额外进程</li>
+</ul>
+<p><strong>下一节 <code>5.11 State 与 Prompts</code></strong> 定义 <code>state.py</code> 和 <code>prompts.py</code>：QA Agent 的完整状态结构和各节点使用的提示词模板。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 5.9 记忆管理（Memory）" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              5.9 记忆管理（Memory）
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="05-11-State%E4%B8%8EPrompts.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 5.11 State 与 Prompts" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              5.11 State 与 Prompts
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

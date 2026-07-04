@@ -1,0 +1,2307 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>2.5 FastAPI 速成 - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#25-fastapi" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2.5 FastAPI 速成
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          2.5 FastAPI 速成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link md-nav__link--active">
+        2.5 FastAPI 速成
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#251-fastapi" class="md-nav__link">
+    2.5.1 FastAPI 是什么、在项目里干什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#252" class="md-nav__link">
+    2.5.2 第一个接口：最小应用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#253-pydantic" class="md-nav__link">
+    2.5.3 用 Pydantic 接收请求体
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#254" class="md-nav__link">
+    2.5.4 路径参数与查询参数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#255-depends" class="md-nav__link">
+    2.5.5 依赖注入 Depends（核心）
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.5 依赖注入 Depends（核心）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_db-yield" class="md-nav__link">
+    依赖一：get_db —— 获取数据库会话（yield 型）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_current_user" class="md-nav__link">
+    依赖二：get_current_user —— 校验登录（鉴权）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    在接口里使用这两个依赖
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#256" class="md-nav__link">
+    2.5.6 文件上传
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#257-sse" class="md-nav__link">
+    2.5.7 SSE 流式响应（重点）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#258" class="md-nav__link">
+    2.5.8 错误处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#251-fastapi" class="md-nav__link">
+    2.5.1 FastAPI 是什么、在项目里干什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#252" class="md-nav__link">
+    2.5.2 第一个接口：最小应用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#253-pydantic" class="md-nav__link">
+    2.5.3 用 Pydantic 接收请求体
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#254" class="md-nav__link">
+    2.5.4 路径参数与查询参数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#255-depends" class="md-nav__link">
+    2.5.5 依赖注入 Depends（核心）
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.5 依赖注入 Depends（核心）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_db-yield" class="md-nav__link">
+    依赖一：get_db —— 获取数据库会话（yield 型）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_current_user" class="md-nav__link">
+    依赖二：get_current_user —— 校验登录（鉴权）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    在接口里使用这两个依赖
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#256" class="md-nav__link">
+    2.5.6 文件上传
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#257-sse" class="md-nav__link">
+    2.5.7 SSE 流式响应（重点）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#258" class="md-nav__link">
+    2.5.8 错误处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="25-fastapi">2.5 FastAPI 速成<a class="headerlink" href="#25-fastapi" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>了解 FastAPI 在 EduAgent 里的角色：系统对外的「大门」</li>
+<li>掌握用 <code>@app.get</code> / <code>@app.post</code> 定义接口，并用自动文档 <code>/docs</code> 调试</li>
+<li>掌握用 Pydantic 模型接收请求体、用 <code>response_model</code> 约束响应</li>
+<li>掌握路径参数与查询参数</li>
+<li><strong>掌握依赖注入 <code>Depends</code>：复用「数据库连接」「登录校验」等通用逻辑（重点）</strong></li>
+<li>掌握文件上传 <code>UploadFile</code></li>
+<li>掌握 SSE 流式响应 <code>EventSourceResponse</code>（问答 / 面试的打字机效果）</li>
+</ul>
+<blockquote>
+<p>📌 <strong>运行说明</strong>：FastAPI 应用要用 <code>uvicorn</code> 启动。把示例存成 <code>demo.py</code> 后，在终端运行：
+<div class="highlight"><pre><span></span><code>pip install <span class="s2">&quot;fastapi[standard]&quot;</span> uvicorn sse-starlette
+uvicorn demo:app --reload
+</code></pre></div>
+启动后浏览器打开 <code>http://localhost:8000/docs</code>，FastAPI 会**自动生成一个可交互的 API 文档页面**，你能直接在网页上点按钮测试每个接口——这是 FastAPI 最贴心的特性之一。</p>
+</blockquote>
+<hr />
+<h2 id="251-fastapi">2.5.1 FastAPI 是什么、在项目里干什么<a class="headerlink" href="#251-fastapi" title="Permanent link">&para;</a></h2>
+<p>回顾第一章的架构图：<strong>API 层是整个系统的「大门」</strong>。前端发来的每一个请求（登录、提问、上传简历……）都先经过这道门。FastAPI 就是用来建这道门的 Web 框架，它负责：</p>
+<ol>
+<li><strong>接收并校验请求</strong>——把前端发来的 JSON、文件、URL 参数解析成 Python 对象，并自动校验格式；</li>
+<li><strong>调用业务逻辑</strong>——比如调用某个 Agent；</li>
+<li><strong>返回结果</strong>——普通 JSON，或者「一个字一个字往外吐」的流式响应。</li>
+</ol>
+<p>FastAPI 的两大招牌优势，正好契合本项目：</p>
+<ul>
+<li><strong>基于类型注解自动校验</strong>：你用 Pydantic 写清楚「请求该长什么样」，校验它全包了（这就是 2.2 学的东西派上用场的地方）。</li>
+<li><strong>全异步</strong>：天然支持 <code>async def</code> 接口，和我们 2.1 学的异步、以及大模型调用无缝配合。</li>
+</ul>
+<hr />
+<h2 id="252">2.5.2 第一个接口：最小应用<a class="headerlink" href="#252" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;EduAgent Demo&quot;</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/health&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">health_check</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p>把它存成 <code>demo.py</code>，运行 <code>uvicorn demo:app --reload</code>，然后：</p>
+<ul>
+<li>访问 <code>http://localhost:8000/health</code>，会看到 <code>{"status":"ok"}</code>；</li>
+<li>访问 <code>http://localhost:8000/docs</code>，会看到自动生成的交互式文档。</li>
+</ul>
+<p>要点：</p>
+<ul>
+<li><strong><code>app = FastAPI()</code></strong> 创建应用实例。</li>
+<li><strong><code>@app.get("/health")</code></strong> 这个装饰器把下面的函数注册成「处理 <code>GET /health</code> 请求」的接口。常用的还有 <code>@app.post</code>（提交数据）、<code>@app.put</code>、<code>@app.delete</code>。</li>
+<li>接口函数**返回一个字典**，FastAPI 会自动把它转成 JSON 响应。</li>
+</ul>
+<blockquote>
+<p><strong>EduAgent 里的真实应用</strong>：<code>main.py</code> 里就有一个一模一样的 <code>/health</code> 健康检查接口，用来确认服务是否正常启动。</p>
+</blockquote>
+<hr />
+<h2 id="253-pydantic">2.5.3 用 Pydantic 接收请求体<a class="headerlink" href="#253-pydantic" title="Permanent link">&para;</a></h2>
+<p>当前端要「提交数据」（比如登录时提交用户名密码），我们用一个 <strong>Pydantic 模型作为接口函数的参数</strong>。FastAPI 会自动把请求体里的 JSON 解析成这个模型，并完成校验：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="c1"># 请求体模型：前端要发来的数据长这样</span>
+<span class="k">class</span> <span class="nc">LoginRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;用户名或邮箱&quot;</span><span class="p">)</span>
+    <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;密码&quot;</span><span class="p">)</span>
+
+<span class="c1"># 响应模型：我们会返回的数据长这样</span>
+<span class="k">class</span> <span class="nc">TokenResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">token_type</span><span class="p">:</span>   <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;bearer&quot;</span>
+    <span class="n">role</span><span class="p">:</span>         <span class="nb">str</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">TokenResponse</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">LoginRequest</span><span class="p">):</span>           <span class="c1"># 参数类型是 Pydantic 模型</span>
+    <span class="c1"># req 已经是解析并校验好的对象，直接用 req.username / req.password</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s2">&quot;student01&quot;</span> <span class="ow">and</span> <span class="n">req</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="s2">&quot;Student@123456&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">TokenResponse</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="s2">&quot;fake-token-abc&quot;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;student&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;access_token&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;token_type&quot;</span><span class="p">:</span> <span class="s2">&quot;bearer&quot;</span><span class="p">,</span> <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;guest&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p>要点：</p>
+<ul>
+<li><strong><code>req: LoginRequest</code></strong>：把 Pydantic 模型写成参数类型，FastAPI 就知道「请求体应该是这个结构」，并自动解析 + 校验。如果前端少传了 <code>password</code>，FastAPI 会自动返回一个清晰的 422 错误，<strong>你一行校验代码都不用写</strong>。</li>
+<li><strong><code>response_model=TokenResponse</code></strong>：声明这个接口返回的数据结构。它会让自动文档更准确，也会过滤掉不该返回的多余字段。</li>
+<li><code>Field(..., description=...)</code> 里的 <code>...</code> 表示「必填」（回顾 2.2）。</li>
+</ul>
+<blockquote>
+<p><strong>EduAgent 里的真实应用</strong>：登录接口 <code>api/v1/auth.py</code> 用的正是 <code>LoginRequest</code> → <code>TokenResponse</code> 这套，校验通过后签发 JWT Token。我们会在第三章实现完整版。</p>
+</blockquote>
+<hr />
+<h2 id="254">2.5.4 路径参数与查询参数<a class="headerlink" href="#254" title="Permanent link">&para;</a></h2>
+<p>除了请求体，还有两种常见的传参方式：</p>
+<p><strong>路径参数</strong>——把参数嵌在 URL 路径里，用 <code>{}</code> 占位，函数里同名参数自动接收：</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/reviews/</span><span class="si">{review_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_review</span><span class="p">(</span><span class="n">review_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;review_id&quot;</span><span class="p">:</span> <span class="n">review_id</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;completed&quot;</span><span class="p">}</span>
+<span class="c1"># 访问 GET /reviews/abc-123 → review_id 自动等于 &quot;abc-123&quot;</span>
+</code></pre></div>
+<p><strong>查询参数</strong>——URL 问号后面的 <code>?key=value</code>，在函数里写成「带默认值的普通参数」：</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/reviews&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">list_reviews</span><span class="p">(</span><span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="n">page</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">size</span><span class="p">}</span>
+<span class="c1"># 访问 GET /reviews?page=2&amp;size=20 → page=2, size=20</span>
+<span class="c1"># 不传则用默认值 page=1, size=10</span>
+</code></pre></div>
+<blockquote>
+<p><strong>EduAgent 里的真实应用</strong>：简历审查的「查询某条审查结果」用路径参数 <code>/reviews/{review_id}</code>，「分页列出所有审查」用查询参数 <code>?page=...</code>。</p>
+</blockquote>
+<hr />
+<h2 id="255-depends">2.5.5 依赖注入 Depends（核心）<a class="headerlink" href="#255-depends" title="Permanent link">&para;</a></h2>
+<p>很多接口都需要做一些**相同的前置工作**：拿一个数据库连接、校验用户有没有登录……如果在每个接口里都重复写这些，既啰嗦又难维护。FastAPI 用**依赖注入（<code>Depends</code>）**优雅地解决了这个问题：</p>
+<blockquote>
+<p>把「通用的前置逻辑」写成一个函数（叫「依赖」），在接口参数里用 <code>Depends(依赖函数)</code> 声明一下，FastAPI 就会在执行接口前**自动先跑这个依赖、把结果喂给接口**。</p>
+</blockquote>
+<p>本项目有两个最重要的依赖：</p>
+<h3 id="get_db-yield">依赖一：get_db —— 获取数据库会话（yield 型）<a class="headerlink" href="#get_db-yield" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">AsyncGenerator</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.ext.asyncio</span> <span class="kn">import</span> <span class="n">AsyncSession</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_db</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">AsyncGenerator</span><span class="p">[</span><span class="n">AsyncSession</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>   <span class="c1"># AsyncSessionLocal 见 2.6 / 第三章</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">session</span>            <span class="c1"># yield 之前=准备连接；把 session 交给接口用</span>
+            <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>   <span class="c1"># 接口正常结束后：提交事务</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span> <span class="c1"># 出错则回滚</span>
+            <span class="k">raise</span>
+</code></pre></div>
+<p>注意它用了 <code>yield</code>（回顾 2.1.6 的「yield 上面是准备、下面是收尾」）：<code>yield</code> 把数据库会话交给接口使用，接口跑完后再自动提交或回滚、关闭连接。<strong>接口完全不用操心连接的开关，拿来就用。</strong></p>
+<h3 id="get_current_user">依赖二：get_current_user —— 校验登录（鉴权）<a class="headerlink" href="#get_current_user" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">Depends</span><span class="p">,</span> <span class="n">HTTPException</span><span class="p">,</span> <span class="n">status</span>
+<span class="kn">from</span> <span class="nn">fastapi.security</span> <span class="kn">import</span> <span class="n">HTTPBearer</span><span class="p">,</span> <span class="n">HTTPAuthorizationCredentials</span>
+
+<span class="n">bearer_scheme</span> <span class="o">=</span> <span class="n">HTTPBearer</span><span class="p">()</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_current_user</span><span class="p">(</span>
+    <span class="n">credentials</span><span class="p">:</span> <span class="n">HTTPAuthorizationCredentials</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">bearer_scheme</span><span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">credentials</span><span class="o">.</span><span class="n">credentials</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">verify_jwt</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>              <span class="c1"># 解析并校验 JWT（伪代码，第三章实现）</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span>
+            <span class="n">status_code</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_401_UNAUTHORIZED</span><span class="p">,</span>
+            <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;无效的认证凭证&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]}</span>
+</code></pre></div>
+<p>它负责从请求头里取出 JWT Token、校验合法性，合法就返回用户信息，不合法就抛出 <code>401</code> 错误。</p>
+<h3 id="_2">在接口里使用这两个依赖<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/my-reviews&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">my_reviews</span><span class="p">(</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_db</span><span class="p">),</span>                       <span class="c1"># 自动注入数据库会话</span>
+    <span class="n">current_user</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_current_user</span><span class="p">),</span>  <span class="c1"># 自动注入当前用户（顺便完成鉴权）</span>
+<span class="p">):</span>
+    <span class="c1"># 走到这里，说明用户已登录，且 db 已就绪</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">current_user</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">],</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p>这个接口什么校验代码都没写，但因为声明了 <code>Depends(get_current_user)</code>，<strong>未登录的请求会被自动挡在 401</strong>；同时 <code>db</code> 也已经准备好。这就是依赖注入的威力：<strong>通用逻辑写一次，处处复用。</strong></p>
+<blockquote>
+<p><strong>EduAgent 里的真实应用</strong>：<code>dependencies.py</code> 定义了这两个依赖，几乎每个需要登录的接口都会写 <code>current_user: dict = Depends(get_current_user)</code> 来保护，并用 <code>db = Depends(get_db)</code> 拿数据库连接。我们会在第三章实现它们的完整版。</p>
+</blockquote>
+<hr />
+<h2 id="256">2.5.6 文件上传<a class="headerlink" href="#256" title="Permanent link">&para;</a></h2>
+<p>简历审查、试卷批改都需要上传文件。FastAPI 用 <code>UploadFile</code> 接收上传的文件：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span><span class="p">,</span> <span class="n">File</span><span class="p">,</span> <span class="n">UploadFile</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/upload&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">202</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">UploadFile</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="o">...</span><span class="p">)):</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="k">await</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>                  <span class="c1"># 异步读取文件内容（bytes）</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">file</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)}</span>
+</code></pre></div>
+<p>要点：</p>
+<ul>
+<li><strong><code>file: UploadFile = File(...)</code></strong>：声明这是一个上传文件参数。</li>
+<li><strong><code>await file.read()</code></strong>：异步读出文件的二进制内容。</li>
+<li><strong><code>status_code=202</code></strong>：自定义返回的 HTTP 状态码。<code>202</code> 表示「已接受，正在后台处理」——很适合「先收下文件、后台慢慢批改」的场景（回顾 2.1.5 的后台任务）。</li>
+</ul>
+<blockquote>
+<p><strong>EduAgent 里的真实应用</strong>：简历上传接口 <code>/resume/upload</code> 收到 PDF 后返回 <code>202</code>，然后用后台任务（<code>create_task</code>）异步跑审查流程，用户无需在前端干等。</p>
+</blockquote>
+<hr />
+<h2 id="257-sse">2.5.7 SSE 流式响应（重点）<a class="headerlink" href="#257-sse" title="Permanent link">&para;</a></h2>
+<p>普通接口是「算完一次性返回」。但智能问答、模拟面试希望答案**像打字机一样逐字蹦出来**，这就要用 <strong>SSE（Server-Sent Events，服务器推送事件）</strong>：服务器和浏览器保持连接，持续不断地往外推送一小段一小段内容。</p>
+<p>本项目用 <code>sse-starlette</code> 库的 <code>EventSourceResponse</code> 实现。它接收一个**异步生成器**（回顾生成器：能不断 <code>yield</code> 产出值的函数），每 <code>yield</code> 一次就向前端推送一个事件：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+<span class="kn">from</span> <span class="nn">sse_starlette.sse</span> <span class="kn">import</span> <span class="n">EventSourceResponse</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">FastAPI</span><span class="p">()</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/chat/stream&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">chat_stream</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">event_generator</span><span class="p">():</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="s2">&quot;装饰器是一种包装函数的语法。&quot;</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">answer</span><span class="p">:</span>                       <span class="c1"># 模拟逐字生成</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="c1"># 每个事件是一个字典，data 里放 JSON 字符串</span>
+            <span class="k">yield</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">char</span><span class="p">})}</span>
+        <span class="k">yield</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;done&quot;</span><span class="p">})}</span>   <span class="c1"># 结束标志</span>
+
+    <span class="k">return</span> <span class="n">EventSourceResponse</span><span class="p">(</span><span class="n">event_generator</span><span class="p">())</span>
+</code></pre></div>
+<p>要点：</p>
+<ul>
+<li><strong><code>event_generator</code> 是一个异步生成器</strong>：它用 <code>yield</code> 一次次产出事件，<code>EventSourceResponse</code> 负责把每个事件实时推给前端。</li>
+<li>每个事件是形如 <code>{"data": "..."}</code> 的字典，<code>data</code> 里通常放一段 JSON，前端解析后渲染。</li>
+<li>真实场景里，<code>for char in answer</code> 会换成「<code>async for chunk in llm.astream(...)</code>」——也就是 2.3 学的大模型流式输出，把模型吐出的每个 token 实时转发给前端。</li>
+</ul>
+<blockquote>
+<p><strong>EduAgent 里的真实应用</strong>：问答接口 <code>/qa/chat/stream</code> 和面试接口都用 <code>EventSourceResponse</code> 实现流式。项目里更进一步，用 LangGraph 的事件流（<code>graph.astream_events</code>）捕获图中生成节点产出的 token，再通过 SSE 推送。完整实现见第五章和第八章。</p>
+</blockquote>
+<hr />
+<h2 id="258">2.5.8 错误处理<a class="headerlink" href="#258" title="Permanent link">&para;</a></h2>
+<p>需要返回错误时，抛出 <code>HTTPException</code> 即可，FastAPI 会把它转成对应的 HTTP 错误响应：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">HTTPException</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/reviews/</span><span class="si">{review_id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_review</span><span class="p">(</span><span class="n">review_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">review</span> <span class="o">=</span> <span class="n">find_review</span><span class="p">(</span><span class="n">review_id</span><span class="p">)</span>     <span class="c1"># 伪代码</span>
+    <span class="k">if</span> <span class="n">review</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;审查记录不存在&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">review</span>
+</code></pre></div>
+<p><code>status_code</code> 是 HTTP 状态码（404 = 找不到，401 = 未授权，400 = 请求有误……），<code>detail</code> 是给前端看的错误说明。</p>
+<hr />
+<h2 id="_3">章节总结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>本节我们学会了用 FastAPI 把功能暴露成 Web 接口：</p>
+<ul>
+<li><strong>角色</strong>：API 层是系统的大门，负责接收校验请求、调用业务、返回结果，并自动生成 <code>/docs</code> 交互文档。</li>
+<li><strong>定义接口</strong>：<code>@app.get</code> / <code>@app.post</code> + <code>async def</code>，返回字典自动转 JSON。</li>
+<li><strong>请求与响应</strong>：用 Pydantic 模型接收请求体（自动校验）、用 <code>response_model</code> 约束响应；路径参数 <code>{id}</code> 与查询参数 <code>?key=</code>。</li>
+<li><strong>依赖注入（核心）</strong>：<code>Depends</code> 复用通用逻辑——<code>get_db</code> 提供数据库会话、<code>get_current_user</code> 完成登录校验。</li>
+<li><strong>文件上传</strong>：<code>UploadFile = File(...)</code> + <code>await file.read()</code>，配合 <code>202</code> 状态码做后台处理。</li>
+<li><strong>SSE 流式</strong>：<code>EventSourceResponse</code> + 异步生成器，实现问答 / 面试的打字机效果。</li>
+<li><strong>错误处理</strong>：<code>raise HTTPException(status_code, detail)</code>。</li>
+</ul>
+<p>下一节 <code>2.6 PostgreSQL + SQLAlchemy 异步速成</code>，是预备篇的最后一块拼图：学会用异步方式操作数据库，把数据真正存下来、查出来。学完它，我们就正式进入第三章的项目实战。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="04-LangGraph%E9%80%9F%E6%88%90.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2.4 LangGraph 速成" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              2.4 LangGraph 速成
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 2.6 PostgreSQL 实操：MySQL 用户快速上手" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              2.6 PostgreSQL 实操：MySQL 用户快速上手
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

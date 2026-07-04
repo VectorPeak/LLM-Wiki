@@ -1,0 +1,2172 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>4.1 简历审查 Agent：全景与数据流 - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#41-agent" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4.1 简历审查 Agent：全景与数据流
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          4.1 简历审查 Agent：全景与数据流
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link md-nav__link--active">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#411-agent" class="md-nav__link">
+    4.1.1 这个 Agent 做什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#412-http" class="md-nav__link">
+    4.1.2 请求的一生（HTTP 视角）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#413-8-agent" class="md-nav__link">
+    4.1.3 8 节点流水线（Agent 内部视角）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#414-agent" class="md-nav__link">
+    4.1.4 对应回「Agent = 图」心智模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#415" class="md-nav__link">
+    4.1.5 本章规划与要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#411-agent" class="md-nav__link">
+    4.1.1 这个 Agent 做什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#412-http" class="md-nav__link">
+    4.1.2 请求的一生（HTTP 视角）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#413-8-agent" class="md-nav__link">
+    4.1.3 8 节点流水线（Agent 内部视角）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#414-agent" class="md-nav__link">
+    4.1.4 对应回「Agent = 图」心智模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#415" class="md-nav__link">
+    4.1.5 本章规划与要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="41-agent">4.1 简历审查 Agent：全景与数据流<a class="headerlink" href="#41-agent" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解简历审查 Agent 做什么、整体处理流程是怎样的</li>
+<li>看懂它的 8 节点流水线，以及数据如何在节点间流动（State 贯穿全程）</li>
+<li>把它和第二章学的「Agent = 图」心智模型对应起来</li>
+<li>了解本章的整体规划与要创建的文件</li>
+</ul>
+<blockquote>
+<p>🎉 <strong>这是你的第一个真实 Agent。</strong> 前面两章学的东西——LangGraph 的图与 State（2.4）、LLM 工厂与结构化输出（3.4 / 2.3）、Pydantic 建模（2.2）、异步并行（2.1）、数据库 JSONB 读写（3.2）、FastAPI 上传与后台任务（2.5 / 2.1）——本章会**全部用上、串成一个能跑的完整系统**。学完你会真切体会到："原来前面那些零件是为了拼这个。"</p>
+</blockquote>
+<hr />
+<h2 id="411-agent">4.1.1 这个 Agent 做什么<a class="headerlink" href="#411-agent" title="Permanent link">&para;</a></h2>
+<p>一句话：<strong>学员上传一份 PDF 简历，系统自动给出一份专业的审查报告。</strong> 报告包含三部分：</p>
+<ol>
+<li><strong>六维度评分</strong>：项目深度、技术匹配度、表达规范性、简历结构、量化程度、真实可信度，每维度 0–100 分，加权出一个综合分；</li>
+<li><strong>逐条问题诊断</strong>：定位到简历的具体位置（如"项目经历-电商系统-第2句"），标注优先级（high/medium/low），并给出可操作的修改建议；</li>
+<li><strong>整体评价</strong>：核心亮点、最重要的改进方向、综合评语、与目标岗位的匹配度。</li>
+</ol>
+<p>它有几个鲜明特点，决定了它是「第一个 Agent」的原因：</p>
+<ul>
+<li><strong>全自动、一条直线</strong>：从解析到出报告，8 个节点顺序执行，<strong>没有分支、没有人工介入（interrupt）、没有断点续传（checkpointer）</strong>——是最简单的 Agent 形态，适合入门。</li>
+<li><strong>结构化输出贯穿全程</strong>：每一步 LLM 的产出都是严格的 Pydantic 结构（回顾 2.3 的 <code>with_structured_output</code>），而不是自由文本。</li>
+<li><strong>并行是性能关键</strong>：六维度评分是 6 次独立的 LLM 调用，用 <code>asyncio.gather</code> 并行（回顾 2.1），把总耗时从"6 次相加"压成"1 次最慢的"。</li>
+</ul>
+<hr />
+<h2 id="412-http">4.1.2 请求的一生（HTTP 视角）<a class="headerlink" href="#412-http" title="Permanent link">&para;</a></h2>
+<p>先从用户视角看整个流程是怎么走的：</p>
+<div class="highlight"><pre><span></span><code>① 学员 POST /resume/upload（带 PDF 文件 + JWT）
+        │
+        ▼
+② API 把文件存到本地 /tmp，在 resume_reviews 表插入一条记录（status=processing）
+        │
+        ▼
+③ API 立即返回 202 + review_id（不等审查完成！）
+        │   同时在后台启动 LangGraph 图执行（异步任务）
+        ▼
+④ 学员拿着 review_id 轮询 GET /resume/reviews/{review_id}
+        │
+        ├── 还在审查 → 返回 {status: &quot;processing&quot;}
+        └── 审查完成 → 返回完整报告（六维度+诊断+评价）
+</code></pre></div>
+<p>这里有个重要的设计——<strong>上传接口不会"卡住"等审查跑完</strong>（审查要调好几次大模型，约 30–60 秒）。它把活儿丢到后台异步任务，立刻返回 <code>review_id</code>，让前端轮询。这正是 2.1.5 学的"后台任务 + GC 保护"和 2.5 学的"202 Accepted"的真实应用。</p>
+<hr />
+<h2 id="413-8-agent">4.1.3 8 节点流水线（Agent 内部视角）<a class="headerlink" href="#413-8-agent" title="Permanent link">&para;</a></h2>
+<p>第 ③ 步在后台启动的那张「图」，内部是这样一条流水线。每个节点读取 State、做一件事、把结果写回 State：</p>
+<div class="highlight"><pre><span></span><code>         ┌──────────────────────────────────────────────────────────┐
+         │                      ResumeState（贯穿全程）                │
+         └──────────────────────────────────────────────────────────┘
+START
+  │
+  ▼  ① upload_to_minio   （本地模式空跑，占位）
+  ▼  ② download_pdf       （本地模式空跑，占位）
+  ▼  ③ extract_text       PDF → raw_text、page_count
+  ▼  ④ extract_structured raw_text → structured（结构化简历 JSON）
+  ▼  ⑤ run_six_dimensions structured + raw_text → dimension_scores、weighted_score
+  │                        （6 个维度 LLM 调用并行！）
+  ▼  ⑥ diagnose_issues    汇总各维度问题 → issues（带优先级，排序）
+  ▼  ⑦ generate_summary   综合一切 → summary（亮点/改进/评语/匹配度）
+  ▼  ⑧ save_results       把 structured/scores/issues/summary 写入 resume_reviews
+  │
+  ▼
+END
+</code></pre></div>
+<p>逐个节点说一句它干什么、产出什么（写进 State 的哪个字段）：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>节点</th>
+<th>干什么</th>
+<th>写入 State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>①</td>
+<td><code>upload_to_minio</code></td>
+<td><strong>本地模式空跑</strong>（原为上传对象存储，已简化）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>②</td>
+<td><code>download_pdf</code></td>
+<td><strong>本地模式空跑</strong>（文件已在本地 <code>/tmp</code>）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>③</td>
+<td><code>extract_text</code></td>
+<td>用 PyMuPDF 提取 PDF 文本，处理双栏布局</td>
+<td><code>raw_text</code>、<code>page_count</code></td>
+</tr>
+<tr>
+<td>④</td>
+<td><code>extract_structured</code></td>
+<td>LLM 把原始文本提取成结构化简历</td>
+<td><code>structured</code></td>
+</tr>
+<tr>
+<td>⑤</td>
+<td><code>run_six_dimensions</code></td>
+<td>**并行**评 6 个维度，算加权分</td>
+<td><code>dimension_scores</code>、<code>weighted_score</code></td>
+</tr>
+<tr>
+<td>⑥</td>
+<td><code>diagnose_issues</code></td>
+<td>汇总问题、去重、标优先级、排序</td>
+<td><code>issues</code></td>
+</tr>
+<tr>
+<td>⑦</td>
+<td><code>generate_summary</code></td>
+<td>生成整体评价</td>
+<td><code>summary</code></td>
+</tr>
+<tr>
+<td>⑧</td>
+<td><code>save_results</code></td>
+<td>写入数据库、清理临时文件</td>
+<td>（持久化）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>关于 ① ② 两个空跑节点</strong>：它们在真实代码里就是 <code>return {}</code>（什么都不做），保留只是为了让图结构完整、并标明"这里原本是对象存储的位置"。本课程本地模式不用 MinIO（回顾第一章），文件直接存在本地 <code>/tmp</code>，所以这两步无事可做。<strong>我们如实保留它们，与真实代码一致</strong>，你不用纠结。</p>
+</blockquote>
+<hr />
+<h2 id="414-agent">4.1.4 对应回「Agent = 图」心智模型<a class="headerlink" href="#414-agent" title="Permanent link">&para;</a></h2>
+<p>回顾 2.4 学的：一个 Agent = State + Node + Edge（+ 可选 Checkpointer）。简历 Agent 正好是这个模型最干净的体现：</p>
+<ul>
+<li><strong>State</strong> = <code>ResumeState</code>（一个 <code>TypedDict</code>）：那张贯穿 8 个节点的"工单"，前面填 PDF 路径，中间逐步填上文本、结构化数据、评分、问题，最后填上评价。</li>
+<li><strong>Node</strong> = 8 个节点函数：每个都遵循 2.4 的约定——接收 State、返回"要更新的字段"字典。</li>
+<li><strong>Edge</strong> = 8 条固定边（<code>START → ① → ② → … → ⑧ → END</code>）：没有条件边，因为这是一条直线。</li>
+<li><strong>Checkpointer</strong> = 无：这是一次性任务，不需要记忆或断点续传，所以 <code>compile()</code> 时不传 checkpointer。</li>
+</ul>
+<blockquote>
+<p>换句话说，<strong>简历 Agent 就是 2.4.4「搭一条直线图」的放大版</strong>——只不过把当时节点里的简单逻辑，换成了"调大模型做结构化提取/评分"的真实业务。你已经具备读懂它的全部基础。</p>
+</blockquote>
+<hr />
+<h2 id="415">4.1.5 本章规划与要创建的文件<a class="headerlink" href="#415" title="Permanent link">&para;</a></h2>
+<p>本章我们按"数据流顺序"逐块构建这个 Agent。每节都是"逐行注释的完整文件 + 写完即测"。</p>
+<blockquote>
+<p>📁 <strong>本章要创建的文件</strong>（目录骨架已在 3.1.2 建好）：</p>
+<table>
+<thead>
+<tr>
+<th>文件路径</th>
+<th>作用</th>
+<th>在哪节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/agents/resume/state.py</code></td>
+<td>State 与所有 Pydantic 数据模型</td>
+<td>4.2</td>
+</tr>
+<tr>
+<td><code>backend/agents/resume/prompts.py</code></td>
+<td>各阶段提示词</td>
+<td>4.3</td>
+</tr>
+<tr>
+<td><code>backend/agents/resume/nodes.py</code></td>
+<td>8 个节点函数</td>
+<td>4.4 / 4.5 / 4.6 / 4.7</td>
+</tr>
+<tr>
+<td><code>backend/agents/resume/graph.py</code></td>
+<td>图装配</td>
+<td>4.7</td>
+</tr>
+<tr>
+<td><code>backend/api/v1/resume.py</code></td>
+<td>上传 / 查询 / 删除 / 列表 接口</td>
+<td>4.8</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>各节安排：</p>
+<ul>
+<li><strong>4.2</strong> 先定义数据"长什么样"（<code>state.py</code> 的 Pydantic 模型 + State）；</li>
+<li><strong>4.3</strong> 写好与大模型对话的"剧本"（<code>prompts.py</code>）；</li>
+<li><strong>4.4</strong> 解析 PDF、提取结构化信息（前 4 个节点）；</li>
+<li><strong>4.5</strong> 六维度并行评审（本章性能重点）；</li>
+<li><strong>4.6</strong> 问题诊断与整体评价；</li>
+<li><strong>4.7</strong> 持久化 + 把 8 个节点装配成图；</li>
+<li><strong>4.8</strong> 暴露成 HTTP 接口，并端到端跑通。</li>
+</ul>
+<hr />
+<h2 id="_2">章节总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>本节我们从全景上认识了第一个真实 Agent——简历审查 Agent：</p>
+<ul>
+<li><strong>它做什么</strong>：PDF 简历 → 六维度评分 + 逐条诊断 + 整体评价。</li>
+<li><strong>请求的一生</strong>：上传立即返回 202 + <code>review_id</code>，后台异步审查，前端轮询取结果。</li>
+<li><strong>8 节点流水线</strong>：解析文本 → 结构化提取 → 六维度并行评审 → 问题诊断 → 整体评价 → 持久化（含两个本地模式空跑节点）。</li>
+<li><strong>本质</strong>：就是 2.4「直线图」的放大版——State 贯穿、节点返回增量、固定边相连、无分支无记忆。</li>
+</ul>
+<p>下一节 <code>4.2 State 与数据模型</code>，我们从最基础的"定义数据长什么样"开始，写 <code>state.py</code>——所有 LLM 结构化输出的 Pydantic 模型，以及贯穿全程的 <code>ResumeState</code>。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3.6 认证与依赖注入" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              3.6 认证与依赖注入
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 4.2 State 与数据模型（state.py）" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              4.2 State 与数据模型（state.py）
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

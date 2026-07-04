@@ -1,0 +1,3675 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="基于 LangChain + Milvus Hybrid Search 的 KnowForge RAG Platform — 19 讲系统课程">
+      
+      
+      
+      
+        <link rel="prev" href="18-testing-system.html">
+      
+      
+        <link rel="next" href="appendix/appendix-a-pydantic.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>19 LangSmith 观测、Trace 与生产化部署 - KnowForge RAG Platform — 系统讲义</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/site-overrides.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#19langsmith-trace" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="index.html" title="KnowForge RAG Platform — 系统讲义" class="md-header__button md-logo" aria-label="KnowForge RAG Platform — 系统讲义" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KnowForge RAG Platform — 系统讲义
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              19 LangSmith 观测、Trace 与生产化部署
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="KnowForge RAG Platform — 系统讲义" class="md-nav__button md-logo" aria-label="KnowForge RAG Platform — 系统讲义" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KnowForge RAG Platform — 系统讲义
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="course-outline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程大纲
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="animation/business-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 业务流程图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一阶段：基础概念
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第一阶段：基础概念
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-project-overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 项目概述与环境搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-rag-fundamentals.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 RAG 核心概念深入
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二阶段：核心 RAG 链路
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第二阶段：核心 RAG 链路
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-langchain-ecosystem.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 LangChain 生态系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-milvus-index-and-operations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 Milvus 索引机制与基本操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-intent-classification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 意图分类
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-retrieval-strategy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 检索策略与动态计划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-query-rewrite-variants.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 查询改写与变体生成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-milvus-hybrid-search.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 Milvus 混合检索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="09-qaservice-orchestration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 QAService 核心编排
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="10-rag-pipeline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 RAG Pipeline 主流程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="11-prompt-engineering.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 Prompt 工程与 Profile 系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三阶段：Web 服务基础设施
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第三阶段：Web 服务基础设施
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="12-fastapi-async.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 FastAPI 与异步 Web 框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="13-app-entry-preflight.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 应用入口与环境前置校验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四阶段：治理与运维
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第四阶段：治理与运维
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="14-kb-versioning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 知识库多版本管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="15-data-isolation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 数据隔离与多租户
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="16-ingestion-pipeline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 文档入库与索引链路
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="17-quality-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 RAG 回归验收与入库质量
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="18-testing-system.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 测试与接口验收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 LangSmith 观测、Trace 与生产化部署
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="19-observability-tracing.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 LangSmith 观测、Trace 与生产化部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲地图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲地图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图 1：第 19 讲功能闭环地图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        节点与代码对齐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：前置知识 — 可观测性的三个支柱
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第一部分：前置知识 — 可观测性的三个支柱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 什么是可观测性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 本项目的可观测架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#langsmith_adapterpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：langsmith_adapter.py — 核心代码
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二部分：langsmith_adapter.py — 核心代码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-configure_langsmith_environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 环境配置：configure_langsmith_environment()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-langsmith_enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 开关检测：langsmith_enabled()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-langsmith_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 状态查询：langsmith_status()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-record_query_trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 核心函数：record_query_trace()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-langsmith-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 写入 LangSmith 的业务 metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三部分：线上 Trace 如何交接给质量闭环
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第三部分：线上 Trace 如何交接给质量闭环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 线上定位先看哪些字段
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Trace 到质量闭环的交接规则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 一个线上排查示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 与第 17 讲的分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ragquerycontext-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第四部分：RAGQueryContext 中的 trace 调用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第五部分：工程收口 — 生产部署、容量评估与监控
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第五部分：工程收口 — 生产部署、容量评估与监控">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 生产部署拓扑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 并发访问量怎么估算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 容量分档和硬件选型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 什么时候需要升级硬件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 压测方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 监控与告警
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 生产发布流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 生产事故排查案例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#59" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 二期规划边界
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#510" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 工程表达模板
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲实践闭环
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲实践闭环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲从 0 到 1 实现闭环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重点掌握
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术附录
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术附录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-a-pydantic.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A Pydantic 数据校验与 Settings 管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-b-sha256-fingerprint.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    B SHA256 文件指纹
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-c-hnsw-index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C HNSW 索引参数调优
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-d-crossencoder-reranker.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    D CrossEncoder Reranker 原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-e-recursive-splitter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E RecursiveCharacterTextSplitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-f-embedding-models.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F Embedding 模型选型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-g-chunking-strategy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G 文档切分策略 Parent-Child Chunking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-h-tool-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    H 项目工具类开发详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲地图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲地图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图 1：第 19 讲功能闭环地图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        节点与代码对齐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：前置知识 — 可观测性的三个支柱
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第一部分：前置知识 — 可观测性的三个支柱">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 什么是可观测性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 本项目的可观测架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#langsmith_adapterpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：langsmith_adapter.py — 核心代码
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二部分：langsmith_adapter.py — 核心代码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-configure_langsmith_environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 环境配置：configure_langsmith_environment()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-langsmith_enabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 开关检测：langsmith_enabled()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-langsmith_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 状态查询：langsmith_status()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-record_query_trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 核心函数：record_query_trace()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-langsmith-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 写入 LangSmith 的业务 metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三部分：线上 Trace 如何交接给质量闭环
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第三部分：线上 Trace 如何交接给质量闭环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 线上定位先看哪些字段
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Trace 到质量闭环的交接规则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 一个线上排查示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 与第 17 讲的分工
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ragquerycontext-trace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第四部分：RAGQueryContext 中的 trace 调用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第五部分：工程收口 — 生产部署、容量评估与监控
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第五部分：工程收口 — 生产部署、容量评估与监控">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 生产部署拓扑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 并发访问量怎么估算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 容量分档和硬件选型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 什么时候需要升级硬件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 压测方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 监控与告警
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 生产发布流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 生产事故排查案例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#59" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 二期规划边界
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#510" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 工程表达模板
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲实践闭环
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲实践闭环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲从 0 到 1 实现闭环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重点掌握
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="19langsmith-trace">第19讲：LangSmith 观测、Trace 与生产化部署<a class="headerlink" href="#19langsmith-trace" title="Permanent link">&para;</a></h1>
+<p><strong>上一讲</strong>：<a href="18-testing-system.html">测试与接口验收</a></p>
+<h2 id="_1">本讲目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解 RAG 系统为什么必须具备可观测性</li>
+<li>掌握 LangSmith Trace 的核心字段和业务 metadata 设计</li>
+<li>掌握线上 Trace 如何发现问题、定位问题，并交接给第 17 讲的质量闭环</li>
+<li>了解项目如何通过轻量 adapter 接入 LangSmith，而非自建 LLMOps 平台</li>
+<li>掌握生产部署、容量评估、压测和监控告警的工程表达</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">本讲边界</p>
+<p>第 19 讲是全课的生产化收口：第 17 讲证明“质量好不好”，第 18 讲证明“代码坏没坏”，本讲回答“上线后怎么观察问题、定位瓶颈、压测扩容、对外解释生产部署方案”。</p>
+</div>
+<!-- chapter-map:start -->
+<h2 id="_2">本讲地图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>本图对应本讲功能闭环，展示从输入到本讲交付物的主干路径。节点与主项目代码文件和函数保持一致，后续章节消费的能力只作为交付边界出现。</p>
+<h3 id="1-19">图 1：第 19 讲功能闭环地图<a class="headerlink" href="#1-19" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    C19_CONFIG["环境配置&lt;br/&gt;configure_langsmith_environment()"]
+    C19_STATUS["观测状态&lt;br/&gt;langsmith_enabled() / langsmith_status()"]
+    C19_CTX["Trace 上下文&lt;br/&gt;RAGQueryContext"]
+    C19_STAGE["阶段计时&lt;br/&gt;run_stage() / stage()"]
+    C19_TOKEN["首 token&lt;br/&gt;mark_first_token()"]
+    C19_CITE["引用补强&lt;br/&gt;enforce_answer_citations()"]
+    C19_FINALIZE["汇总耗时&lt;br/&gt;finalize_timings()"]
+    C19_TRACE["Trace 写入&lt;br/&gt;record_trace()"]
+    C19_FINISH["成功/失败收口&lt;br/&gt;finish_success() / finish_error()"]
+    C19_DEMO{{"运行验证&lt;br/&gt;main()"}}
+    C19_CONFIG --&gt; C19_STATUS
+    C19_STATUS --&gt; C19_TRACE
+    C19_CTX --&gt; C19_STAGE
+    C19_STAGE --&gt; C19_TOKEN
+    C19_TOKEN --&gt; C19_CITE
+    C19_CITE --&gt; C19_FINALIZE
+    C19_FINALIZE --&gt; C19_TRACE
+    C19_TRACE --&gt; C19_FINISH
+    C19_FINISH --&gt; C19_DEMO
+    style C19_CONFIG fill:#F8FAFC,stroke:#64748B,stroke-width:2px
+    style C19_STATUS fill:#DBEAFE,stroke:#2563EB,stroke-width:2px
+    style C19_CTX fill:#F5F3FF,stroke:#7C3AED,stroke-width:2px
+    style C19_STAGE fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style C19_TOKEN fill:#DBEAFE,stroke:#2563EB,stroke-width:2px
+    style C19_CITE fill:#F5F3FF,stroke:#7C3AED,stroke-width:2px
+    style C19_FINALIZE fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style C19_TRACE fill:#DBEAFE,stroke:#2563EB,stroke-width:2px
+    style C19_FINISH fill:#F5F3FF,stroke:#7C3AED,stroke-width:2px
+    style C19_DEMO fill:#DCFCE7,stroke:#16A34A,stroke-width:2px</code></pre>
+<h3 id="_3">节点与代码对齐<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>对齐文件</th>
+<th>函数/对象</th>
+<th>本章职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境配置</td>
+<td><code>qa_core/observability/langsmith_adapter.py</code></td>
+<td><code>configure_langsmith_environment()</code></td>
+<td>把 Settings 中的 LangSmith 配置写入环境变量。</td>
+</tr>
+<tr>
+<td>观测状态</td>
+<td><code>qa_core/observability/langsmith_adapter.py</code></td>
+<td><code>langsmith_enabled() / langsmith_status()</code></td>
+<td>判断 trace 是否启用并返回状态信息。</td>
+</tr>
+<tr>
+<td>Trace 上下文</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>RAGQueryContext</code></td>
+<td>新增 trace_id、stage_timings_ms 和 first_token_ms。</td>
+</tr>
+<tr>
+<td>阶段计时</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>run_stage() / stage()</code></td>
+<td>记录每个阶段耗时。</td>
+</tr>
+<tr>
+<td>首 token</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>mark_first_token()</code></td>
+<td>记录首 token 延迟。</td>
+</tr>
+<tr>
+<td>引用补强</td>
+<td><code>qa_core/pipeline/citations.py</code></td>
+<td><code>enforce_answer_citations()</code></td>
+<td>回答补充来源后仍进入同一条 trace。</td>
+</tr>
+<tr>
+<td>汇总耗时</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>finalize_timings()</code></td>
+<td>写入 total_elapsed_ms、slowest_stage 等诊断字段。</td>
+</tr>
+<tr>
+<td>Trace 写入</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>record_trace()</code></td>
+<td>统一调用 record_query_trace()。</td>
+</tr>
+<tr>
+<td>成功/失败收口</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>finish_success() / finish_error()</code></td>
+<td>end/error 事件和 trace metadata 一起落地。</td>
+</tr>
+<tr>
+<td>运行验证</td>
+<td><code>scripts/demo_observability.py</code></td>
+<td><code>main()</code></td>
+<td>执行真实问答事件流，并通过 LangSmith adapter 暴露 trace 启用状态。</td>
+</tr>
+</tbody>
+</table>
+<!-- chapter-map:end -->
+
+<hr />
+<h2 id="_4">第一部分：前置知识 — 可观测性的三个支柱<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 什么是可观测性<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<p>在 RAG 系统中，用户说"答案不对"，单看最终回答无法判断问题出在哪里：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>答案不对的 5 种可能原因：
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>1. 意图识别错了（本该 FAQ 直出，却走了文档 RAG）
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>2. source 推断错了（该搜 HR 文档却搜了 IT 文档）
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>3. 检索召回了无关内容（Embedding 或 BM25 失效）
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>4. 上下文构建截断了关键信息（max_context_chars 太小）
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>5. LLM 生成了幻觉（Prompt 约束不够）
+</code></pre></div></td></tr></table></div>
+<p>没有可观测数据，你只能<strong>猜测</strong>。有了可观测数据，你可以<strong>定位</strong>。</p>
+<h3 id="12">1.2 本项目的可观测架构<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<p>本项目采用 <strong>LangSmith 委托</strong> 架构——业务代码只负责写入领域 metadata，存储、查询、可视化、评测和标注全部由 LangSmith 平台完成。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>RAG 运行时                     LangSmith 平台
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>┌──────────────────┐          ┌─────────────────────┐
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>│ record_query_trace│  ───→   │ Trace 存储 + 过滤    │
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>│ (147行 adapter)   │  metadata│ Dataset 管理         │
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>│                  │          │ Evaluation 自动评分   │
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>│ langsmith_status()│          │ Annotation 人工标注   │
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>└──────────────────┘          └─────────────────────┘
+</code></pre></div></td></tr></table></div>
+<p><strong>核心原则</strong>：项目不复刻 LLMOps 平台。自研追踪存储、状态页 Dashboard 和评测 UI 属于平台级工程，超出当前 RAG 项目的范围。企业路线下，LangSmith 提供成熟的 tracing、dataset、evaluation 和 annotation 能力，项目只负责写入业务 metadata。</p>
+<hr />
+<h2 id="langsmith_adapterpy">第二部分：langsmith_adapter.py — 核心代码<a class="headerlink" href="#langsmith_adapterpy" title="Permanent link">&para;</a></h2>
+<p>项目中与 LangSmith 交互的唯一模块是 <code>qa_core/observability/langsmith_adapter.py</code>（147 行）。它包含四个函数：</p>
+<h3 id="21-configure_langsmith_environment">2.1 环境配置：configure_langsmith_environment()<a class="headerlink" href="#21-configure_langsmith_environment" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># qa_core/observability/langsmith_adapter.py</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">configure_langsmith_environment</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_TRACING&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_tracing</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_api_key</span><span class="p">:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_API_KEY&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_api_key</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_project</span><span class="p">:</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_PROJECT&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_project</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_endpoint</span><span class="p">:</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_ENDPOINT&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_endpoint</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>在 <code>app.py</code> 启动时调用一次，将 Pydantic Settings 中的 LangSmith 配置写入环境变量，使 LangChain 集成能自动感知。</p>
+<h3 id="22-langsmith_enabled">2.2 开关检测：langsmith_enabled()<a class="headerlink" href="#22-langsmith_enabled" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">langsmith_enabled</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">langsmith_tracing</span> <span class="ow">and</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_api_key</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>所有 trace 写入操作的守卫。LangSmith 未启用时直接跳过，不影响请求主链路。</p>
+<h3 id="23-langsmith_status">2.3 状态查询：langsmith_status()<a class="headerlink" href="#23-langsmith_status" title="Permanent link">&para;</a></h3>
+<p>返回轻量状态字典供状态页使用，包含 <code>provider</code>、<code>enabled</code>、<code>project</code>、<code>endpoint</code> 和项目 URL。</p>
+<h3 id="24-record_query_trace">2.4 核心函数：record_query_trace()<a class="headerlink" href="#24-record_query_trace" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">record_query_trace</span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="n">trace_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="n">question</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="n">answer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="n">hit_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="n">scenario</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="n">data_scope</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="n">source_filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="n">kb_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="n">rewritten_query</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>    <span class="n">intent</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>    <span class="n">retrieval</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>    <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>    <span class="n">elapsed_ms</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</code></pre></div></td></tr></table></div>
+<p><strong>执行流程</strong>：</p>
+<ol>
+<li><code>configure_langsmith_environment()</code> — 确保环境变量已注入</li>
+<li><code>langsmith_enabled()</code> 检查 → 未启用直接返回</li>
+<li>构建 <code>metadata</code> 字典（18 个业务字段，见下方）</li>
+<li>构建 <code>inputs</code>（question / scenario_id / source_filter / kb_version）</li>
+<li>构建 <code>outputs</code>（answer_preview[:800] / hit_type / sources / error）</li>
+<li>通过 <code>langsmith.run_helpers.trace()</code> 上下文管理器写入 LangSmith</li>
+<li>异常只记日志不抛出——trace 写入失败不影响用户请求</li>
+</ol>
+<h3 id="25-langsmith-metadata">2.5 写入 LangSmith 的业务 metadata<a class="headerlink" href="#25-langsmith-metadata" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span>
+<span class="normal"><a href="#__codelineno-5-12">12</a></span>
+<span class="normal"><a href="#__codelineno-5-13">13</a></span>
+<span class="normal"><a href="#__codelineno-5-14">14</a></span>
+<span class="normal"><a href="#__codelineno-5-15">15</a></span>
+<span class="normal"><a href="#__codelineno-5-16">16</a></span>
+<span class="normal"><a href="#__codelineno-5-17">17</a></span>
+<span class="normal"><a href="#__codelineno-5-18">18</a></span>
+<span class="normal"><a href="#__codelineno-5-19">19</a></span>
+<span class="normal"><a href="#__codelineno-5-20">20</a></span>
+<span class="normal"><a href="#__codelineno-5-21">21</a></span>
+<span class="normal"><a href="#__codelineno-5-22">22</a></span>
+<span class="normal"><a href="#__codelineno-5-23">23</a></span>
+<span class="normal"><a href="#__codelineno-5-24">24</a></span>
+<span class="normal"><a href="#__codelineno-5-25">25</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="s2">&quot;trace_id&quot;</span><span class="p">:</span> <span class="n">trace_id</span><span class="p">,</span>           <span class="c1"># 与项目内部 trace_id 一致，可跨系统关联</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="s2">&quot;session_id&quot;</span><span class="p">:</span> <span class="n">session_id</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>    <span class="s2">&quot;scenario_id&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>             <span class="c1"># 当前业务场景</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="s2">&quot;scenario_name&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>    <span class="s2">&quot;source_filter&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>           <span class="c1"># 前端选择的业务分类</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>    <span class="s2">&quot;effective_source&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>        <span class="c1"># 最终生效的 source 过滤</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="s2">&quot;kb_version&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>              <span class="c1"># 知识库版本号</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>               <span class="c1"># 数据隔离四维</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12"></a>    <span class="s2">&quot;user_role&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13"></a>    <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>                  <span class="c1"># 意图分类结果</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14"></a>    <span class="s2">&quot;intent_reason&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>           <span class="c1"># 意图判断原因（rule / llm_structured）</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15"></a>    <span class="s2">&quot;hit_type&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>                <span class="c1"># faq_direct / rag / insufficient_context</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="s2">&quot;prompt_profile&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>          <span class="c1"># 使用的 Prompt 档位</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17"></a>    <span class="s2">&quot;question_category&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>       <span class="c1"># 风险类别（pricing / compliance / ...）</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="s2">&quot;sources_count&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>           <span class="c1"># 引用来源数量</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19"></a>    <span class="s2">&quot;top_source_score&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>        <span class="c1"># 最高召回分数</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20"></a>    <span class="s2">&quot;first_token_ms&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>          <span class="c1"># 首 token 延迟</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="s2">&quot;stage_timings_ms&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>        <span class="c1"># 各阶段耗时</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22"></a>    <span class="s2">&quot;slowest_stage&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>           <span class="c1"># 最慢阶段</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23"></a>    <span class="s2">&quot;elapsed_ms&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>              <span class="c1"># 总耗时</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24"></a>    <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>                   <span class="c1"># 错误信息（如有）</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p><strong>设计要点</strong>：</p>
+<ul>
+<li><strong>metadata 不存完整 prompt/上下文</strong>——敏感资料（合同条款、薪酬信息）不应进入外部平台</li>
+<li><strong>trace_id 使用项目 UUID</strong>——可在 LangSmith UI 中搜索 <code>trace_id</code> 直接定位</li>
+<li><strong>tags</strong> 自动包含 <code>scenario_id</code> 和 <code>hit_type</code>，支持在 LangSmith 中按场景和命中路径过滤</li>
+</ul>
+<hr />
+<h2 id="trace">第三部分：线上 Trace 如何交接给质量闭环<a class="headerlink" href="#trace" title="Permanent link">&para;</a></h2>
+<p>第 17 讲已经完整讲过 Bad Case 如何标注、进入 Dataset、参与 Evaluation 和 Gate。本讲不重复评测闭环，只回答生产现场更常见的问题：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>线上出现一次异常回答，如何快速判断问题出在哪里？
+</code></pre></div></td></tr></table></div>
+<h3 id="31">3.1 线上定位先看哪些字段<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>一次线上问答写入 LangSmith 后，先按下面顺序看 Trace metadata：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">排查顺序</th>
+<th>字段</th>
+<th>判断什么</th>
+<th>常见结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td><code>error</code></td>
+<td>是否运行异常</td>
+<td>代码、依赖、模型服务或网络问题</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td><code>hit_type</code></td>
+<td>命中路径是否合理</td>
+<td>FAQ 直出、RAG 生成、信息不足是否符合预期</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td><code>sources_count</code></td>
+<td>是否召回到来源</td>
+<td>0 通常优先排查知识库版本、过滤条件或召回策略</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td><code>top_source_score</code></td>
+<td>最高来源是否可信</td>
+<td>分数低时优先排查 query rewrite、embedding、资料覆盖</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td><code>kb_version</code></td>
+<td>是否查到当前 active 版本</td>
+<td>active 指针、重建版本或部署环境可能不一致</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td><code>source_filter</code> / <code>effective_source</code></td>
+<td>是否查错业务分类</td>
+<td>前端选择、source 推断或场景配置可能有问题</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td><code>prompt_profile</code></td>
+<td>回答模板是否正确</td>
+<td>费用、合规、排障类问题是否走保护模板</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td><code>first_token_ms</code> / <code>stage_timings_ms</code></td>
+<td>慢在哪里</td>
+<td>LLM、Reranker、Milvus 或历史加载慢</td>
+</tr>
+</tbody>
+</table>
+<p>这一步的目标不是立刻修复，而是把“答案不对”拆成可定位的工程事实。</p>
+<h3 id="32-trace">3.2 Trace 到质量闭环的交接规则<a class="headerlink" href="#32-trace" title="Permanent link">&para;</a></h3>
+<p>第 19 讲负责发现和定位，第 17 讲负责沉淀和回归。交接规则可以这样定：</p>
+<table>
+<thead>
+<tr>
+<th>Trace 现象</th>
+<th>先归因</th>
+<th>交接到第 17 讲后的动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sources_count=0</code>，但业务上应有资料</td>
+<td>检索或入库覆盖问题</td>
+<td>补入库质量样本，检查 expected source 与 Recall@K</td>
+</tr>
+<tr>
+<td><code>top_source_score</code> 长期偏低</td>
+<td>query rewrite / embedding / 切分问题</td>
+<td>加入回归样本，观察 MRR 和关键词覆盖</td>
+</tr>
+<tr>
+<td><code>hit_type=insufficient_context</code> 但资料实际存在</td>
+<td>召回阈值、过滤条件或版本问题</td>
+<td>形成 Bad Case，验证 active <code>kb_version</code> 与 DataScope</td>
+</tr>
+<tr>
+<td><code>prompt_profile</code> 不符合问题风险等级</td>
+<td>Prompt 路由问题</td>
+<td>增加 expected_prompt_profile 评测项</td>
+</tr>
+<tr>
+<td><code>source_filter</code> 明显选错</td>
+<td>source 边界或场景配置问题</td>
+<td>增加 source 推断和边界提示样本</td>
+</tr>
+<tr>
+<td>LLM 答案漏关键信息，但来源正确</td>
+<td>生成质量问题</td>
+<td>增加 expected_keywords / grading_notes</td>
+</tr>
+<tr>
+<td>某阶段耗时异常</td>
+<td>性能或依赖问题</td>
+<td>进入性能基线和压测排查，不一定进入质量样本</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33">3.3 一个线上排查示例<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>用户问题：VPN 客户端版本、账号锁定、公网 IP 这些排查项分别应该怎么处理？
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>Trace 现象：
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>- hit_type = rag
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>- sources_count = 3
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>- top_source_score = 0.91
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>- prompt_profile = troubleshooting_steps
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>- slowest_stage = llm_generation
+</code></pre></div></td></tr></table></div>
+<p>这说明检索和 Prompt 路由基本正常，问题更可能在生成耗时或模型服务侧。此时第 19 讲的处理重点是看 <code>llm_generation</code>、首 token、模型服务日志和网络连接，不需要立刻把它当作 Bad Case 加入第 17 讲。</p>
+<p>再看另一种情况：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>用户问题：新人入职异地办理需要哪些材料？
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>Trace 现象：
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>- hit_type = insufficient_context
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>- sources_count = 0
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>- kb_version = kb_enterprise_knowledge_xxx
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>- effective_source = hr
+</code></pre></div></td></tr></table></div>
+<p>这更像资料覆盖、版本或过滤条件问题。第 19 讲负责确认 trace 证据；确认后交给第 17 讲，把它沉淀为回归样本，标注 <code>expected_source=hr</code>、<code>expected_hit_type=rag</code>、<code>expected_keywords=["入职材料", "劳动合同", "审批"]</code>。</p>
+<h3 id="34-17">3.4 与第 17 讲的分工<a class="headerlink" href="#34-17" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>第 19 讲：发现问题、定位问题、判断问题属于质量/性能/部署/依赖哪一类。
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>第 17 讲：把质量类问题结构化标注，沉淀为 Dataset，并纳入 Evaluation 和 Gate。
+</code></pre></div></td></tr></table></div>
+<p>因此本讲只保留 Trace 侧的定位方法；Annotation、Dataset、Evaluation 的完整做法统一回到第 17 讲。</p>
+<hr />
+<h2 id="ragquerycontext-trace">第四部分：RAGQueryContext 中的 trace 调用<a class="headerlink" href="#ragquerycontext-trace" title="Permanent link">&para;</a></h2>
+<p>trace 不只是在问答结束时写一次，而是在整个 Pipeline 生命周期中逐步累积数据。调用链：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>app.py 启动时
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>  └── configure_langsmith_environment()   ← 注入环境变量
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>Pipeline 执行中（qa_core/pipeline/runtime.py）
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>  └── RAGQueryContext.run_stage()         ← 每个阶段自动计时
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>  └── RAGQueryContext.retrieval_info      ← 累积检索诊断数据
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>  └── RAGQueryContext.mark_first_token()  ← 记录首 token 时刻
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>Pipeline 结束时（qa_core/pipeline/rag.py）
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>  └── finish_success() / finish_error()
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>      └── RAGQueryContext.record_trace()
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>          └── record_query_trace()        ← 汇总所有数据写入 LangSmith
+</code></pre></div></td></tr></table></div>
+<p><code>RAGQueryContext.run_stage()</code> 是阶段自动计时的关键：它执行回调并记录 <code>time.perf_counter()</code> 差值，最终汇总为 <code>stage_timings_ms</code>。</p>
+<hr />
+<h2 id="_5">第五部分：工程收口 — 生产部署、容量评估与监控<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>只说“项目用了 LangChain + Milvus + FastAPI”是不够的。更完整的工程表达是：这个系统不仅能回答问题，还考虑了上线后的容量、压测、扩容、监控和故障定位。</p>
+<h3 id="51">5.1 生产部署拓扑<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<p>本项目当前适合中小规模知识库和企业内部门户场景，推荐的最小生产拓扑如下：</p>
+<pre class="mermaid"><code>flowchart LR
+    User["用户 / 企业内网"] --&gt; Nginx["Nginx / 网关&lt;br/&gt;TLS、限流、访问日志"]
+    Nginx --&gt; API["FastAPI API&lt;br/&gt;1-2 个实例"]
+
+    API --&gt; MySQL["MySQL 8&lt;br/&gt;会话、反馈、版本状态"]
+    API --&gt; Milvus["Milvus Standalone&lt;br/&gt;向量与 BM25 检索"]
+    Milvus --&gt; Etcd["etcd&lt;br/&gt;元数据"]
+    Milvus --&gt; MinIO["MinIO&lt;br/&gt;segment/index 文件"]
+
+    API --&gt; Embed["BGE-M3 Embedding&lt;br/&gt;本地模型"]
+    API --&gt; Rerank["BGE Reranker&lt;br/&gt;本地模型"]
+    API --&gt; LLM["DashScope / OpenAI 兼容 LLM&lt;br/&gt;云端推理"]
+    API --&gt; LS["LangSmith&lt;br/&gt;Trace + Evaluation"]</code></pre>
+<p>组件分工：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>部署建议</th>
+<th>主要瓶颈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastAPI</td>
+<td>1-2 个 API 容器，后续水平扩容</td>
+<td>Python worker 数、外部 LLM 等待、WebSocket 长连接</td>
+</tr>
+<tr>
+<td>Milvus</td>
+<td>小规模用 Standalone，中大规模改 Cluster</td>
+<td>内存、segment 数、索引加载、磁盘 IO</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>单实例起步，生产建议独立数据盘和备份</td>
+<td>连接数、慢 SQL、磁盘</td>
+</tr>
+<tr>
+<td>Embedding/Reranker</td>
+<td>有 GPU 优先本地 GPU；无 GPU 可 CPU 小并发</td>
+<td>模型推理延迟和并发队列</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>云端 API，配置超时和重试</td>
+<td>首 token 延迟、限流、费用</td>
+</tr>
+<tr>
+<td>LangSmith</td>
+<td>外部平台</td>
+<td>Trace 采样率、敏感字段脱敏</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52">5.2 并发访问量怎么估算<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p>RAG 系统的并发不能只看 HTTP QPS，因为一次请求通常会经历多阶段：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>总耗时 = 意图识别 + Embedding + Milvus 检索 + Reranker + Prompt 构建 + LLM 首 token + 流式生成
+</code></pre></div></td></tr></table></div>
+<p>如果平均一次完整问答耗时 6 秒，系统同时有 30 个请求在处理，那么粗略吞吐是：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>QPS ≈ 并发请求数 / 平均请求耗时 = 30 / 6 = 5 QPS
+</code></pre></div></td></tr></table></div>
+<p>但是 WebSocket 流式请求会长时间占用连接，需要区分：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>含义</th>
+<th>为什么重要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>并发连接数</td>
+<td>同时保持的 HTTP/WS 连接</td>
+<td>决定 API worker、网关和系统 fd 上限</td>
+</tr>
+<tr>
+<td>请求 QPS</td>
+<td>每秒新进来的问题数</td>
+<td>决定排队压力</td>
+</tr>
+<tr>
+<td>首 token 延迟</td>
+<td>用户多久看到第一个字</td>
+<td>直接决定体感速度</td>
+</tr>
+<tr>
+<td>完整回答耗时</td>
+<td>一个回答全部结束需要多久</td>
+<td>决定总体吞吐</td>
+</tr>
+<tr>
+<td>Milvus P95 检索耗时</td>
+<td>检索是否成为瓶颈</td>
+<td>决定是否调索引/扩 Milvus</td>
+</tr>
+<tr>
+<td>Reranker P95 耗时</td>
+<td>重排是否成为瓶颈</td>
+<td>决定是否降候选数或上 GPU</td>
+</tr>
+<tr>
+<td>LLM P95 首 token</td>
+<td>云端模型是否稳定</td>
+<td>决定是否切模型/供应商/限流</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53">5.3 容量分档和硬件选型<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p>下面是容量估算的经验分档，真实项目必须以压测结果为准。表里的并发、chunk 数和机器配置不是官方标准，也不是本项目承诺的容量，只是说明“如何估算、如何验证、如何扩容”的起点。</p>
+<table>
+<thead>
+<tr>
+<th>规模</th>
+<th>典型场景</th>
+<th>建议配置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本地验证</td>
+<td>少量并发，几千到几万 chunk</td>
+<td>4C8G，SSD，CPU 推理可用</td>
+<td>适合本项目 Docker Compose 单机运行</td>
+</tr>
+<tr>
+<td>小团队内部门户</td>
+<td>十级并发，十万级 chunk</td>
+<td>8C32G，NVMe SSD，Embedding/Reranker 可 CPU 或单 GPU</td>
+<td>Milvus、MySQL、API 可同机但要限制资源</td>
+</tr>
+<tr>
+<td>企业部门级</td>
+<td>数十到百级并发，几十万到数百万 chunk</td>
+<td>16C64G+，NVMe SSD，至少一张 16-24GB 显存 GPU</td>
+<td>API 与 Milvus/MySQL 建议拆机，模型服务独立</td>
+</tr>
+<tr>
+<td>企业级多部门</td>
+<td>更高并发，百万到千万级 chunk</td>
+<td>Milvus Cluster，多 API 实例，独立 MySQL，GPU 模型服务池</td>
+<td>需要网关限流、队列、监控告警和容量预案</td>
+</tr>
+</tbody>
+</table>
+<p>扩容优先级建议：</p>
+<ol>
+<li><strong>先看 LLM 延迟和限流</strong>：如果慢在云端 LLM，本地加 CPU 没用。</li>
+<li><strong>再看 Reranker</strong>：CrossEncoder 最容易成为本地推理瓶颈，候选数越多越慢。</li>
+<li><strong>再看 Milvus</strong>：检索 P95 高时，检查索引、collection 是否 load、segment 是否过碎、内存是否不足。</li>
+<li><strong>最后看 API worker</strong>：API 本身通常不是最重的计算点，但会受 WebSocket 长连接影响。</li>
+</ol>
+<h3 id="54">5.4 什么时候需要升级硬件<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<p>不要用“访问量大了就加机器”这种笼统说法。更专业的判断方式是看指标阈值：</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU 长期高位</td>
+<td>API worker、Embedding CPU 推理、Reranker CPU 推理吃满</td>
+<td>增加 API 实例，或将模型推理迁移到 GPU</td>
+</tr>
+<tr>
+<td>内存长期高位</td>
+<td>Milvus index/segment 占用过高</td>
+<td>增加内存，拆分 collection，或升级 Milvus 部署</td>
+</tr>
+<tr>
+<td>Milvus 检索 P95 明显高于基线</td>
+<td>索引不合适、未 load、segment 过碎、内存不足</td>
+<td>检查索引参数、compact/load 状态、增加内存</td>
+</tr>
+<tr>
+<td>Reranker P95 明显高于基线</td>
+<td>候选文档过多或 CPU 推理慢</td>
+<td>降低 rerank_top_k，上 GPU，或做 batch 推理</td>
+</tr>
+<tr>
+<td>LLM 首 token P95 明显高于基线</td>
+<td>云端模型慢或被限流</td>
+<td>更换模型档位、增加供应商、做排队和降并发保护</td>
+</tr>
+<tr>
+<td>WebSocket 断连增加</td>
+<td>网关超时、worker 被阻塞、网络抖动</td>
+<td>调整网关超时，拆分 worker，增加心跳</td>
+</tr>
+<tr>
+<td>MySQL 连接数打满</td>
+<td>会话存储连接未复用或并发过高</td>
+<td>配连接池、调 max_connections、读写拆分</td>
+</tr>
+</tbody>
+</table>
+<h3 id="55">5.5 压测方式<a class="headerlink" href="#55" title="Permanent link">&para;</a></h3>
+<p>RAG 压测要分层做，不能只压健康检查，也不能只看单次人工提问。</p>
+<p>第一层：健康检查和普通 HTTP 接口。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>hey<span class="w"> </span>-n<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-c<span class="w"> </span><span class="m">20</span><span class="w"> </span>http://192.168.88.100:8001/health
+</code></pre></div></td></tr></table></div>
+<p>第二层：HTTP 检索诊断接口，用来测不含最终 LLM 生成的检索半链路。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>hey<span class="w"> </span>-n<span class="w"> </span><span class="m">200</span><span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;query&quot;:&quot;新人入职需要完成哪些流程？&quot;,&quot;scenario_id&quot;:&quot;enterprise_knowledge&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">  </span>http://192.168.88.100:8001/api/retrieval/debug
+</code></pre></div></td></tr></table></div>
+<p>第三层：WebSocket 流式问答主链路。<code>hey</code> 不适合测 WebSocket，可以用 Python 脚本模拟多用户连接：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span>
+<span class="normal"><a href="#__codelineno-15-18">18</a></span>
+<span class="normal"><a href="#__codelineno-15-19">19</a></span>
+<span class="normal"><a href="#__codelineno-15-20">20</a></span>
+<span class="normal"><a href="#__codelineno-15-21">21</a></span>
+<span class="normal"><a href="#__codelineno-15-22">22</a></span>
+<span class="normal"><a href="#__codelineno-15-23">23</a></span>
+<span class="normal"><a href="#__codelineno-15-24">24</a></span>
+<span class="normal"><a href="#__codelineno-15-25">25</a></span>
+<span class="normal"><a href="#__codelineno-15-26">26</a></span>
+<span class="normal"><a href="#__codelineno-15-27">27</a></span>
+<span class="normal"><a href="#__codelineno-15-28">28</a></span>
+<span class="normal"><a href="#__codelineno-15-29">29</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">websockets</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a><span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;ws://192.168.88.100:8001/api/stream&quot;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="n">PAYLOAD</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a>    <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;新人入职需要完成哪些流程？&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a>    <span class="s2">&quot;scenario_id&quot;</span><span class="p">:</span> <span class="s2">&quot;enterprise_knowledge&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="p">}</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">one_user</span><span class="p">(</span><span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a>    <span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a>    <span class="n">first_token</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">websockets</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">ping_interval</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="k">as</span> <span class="n">ws</span><span class="p">:</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a>        <span class="k">await</span> <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">PAYLOAD</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a>        <span class="k">async</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">ws</span><span class="p">:</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18"></a>            <span class="n">event</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19"></a>            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;token&quot;</span> <span class="ow">and</span> <span class="n">first_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20"></a>                <span class="n">first_token</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21"></a>            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">}:</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22"></a>                <span class="n">total</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">started</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23"></a>                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;first_token&quot;</span><span class="p">:</span> <span class="n">first_token</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="n">total</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)}</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24"></a>
+<a id="__codelineno-15-25" name="__codelineno-15-25"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26"></a>    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">one_user</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">)))</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28"></a>
+<a id="__codelineno-15-29" name="__codelineno-15-29"></a><span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div></td></tr></table></div>
+<p>压测报告至少要给出：</p>
+<ul>
+<li>成功率 / 错误率</li>
+<li>P50 / P95 / P99 首 token 延迟</li>
+<li>P50 / P95 / P99 完整回答耗时</li>
+<li>每阶段耗时：intent、embedding、milvus、rerank、llm</li>
+<li>CPU、内存、磁盘 IO、网络</li>
+<li>Milvus collection 是否 load、查询 P95、segment 数</li>
+<li>LLM API 错误、限流、超时次数</li>
+</ul>
+<h3 id="56">5.6 监控与告警<a class="headerlink" href="#56" title="Permanent link">&para;</a></h3>
+<p>生产环境建议把监控分成四层：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>监控项</th>
+<th>工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主机层</td>
+<td>CPU、内存、磁盘、网络、文件句柄</td>
+<td>node_exporter / Docker stats</td>
+</tr>
+<tr>
+<td>容器层</td>
+<td>API/Milvus/MySQL/MinIO/etcd 健康状态、重启次数</td>
+<td>Docker Compose / cAdvisor</td>
+</tr>
+<tr>
+<td>应用层</td>
+<td>请求数、错误率、首 token、阶段耗时、命中路径</td>
+<td>FastAPI middleware + LangSmith metadata</td>
+</tr>
+<tr>
+<td>RAG 质量层</td>
+<td>sources_count、top_source_score、hit_type、Evaluation 分数</td>
+<td>LangSmith Trace/Evaluation + 本地 Gate</td>
+</tr>
+</tbody>
+</table>
+<p>告警建议：</p>
+<p>下面的阈值是示例起点，不是通用生产标准。真正上线时应先压测得到本项目的正常基线，再按“明显偏离基线 + 持续一段时间”设置告警。</p>
+<table>
+<thead>
+<tr>
+<th>告警</th>
+<th>阈值设置方式</th>
+<th>处理动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API 5xx 错误率</td>
+<td>高于压测或线上历史基线</td>
+<td>查看错误日志和 LangSmith error trace</td>
+</tr>
+<tr>
+<td>首 token P95</td>
+<td>持续高于基线</td>
+<td>检查 LLM、Embedding、Reranker 阶段耗时</td>
+</tr>
+<tr>
+<td>Milvus 检索 P95</td>
+<td>持续高于基线</td>
+<td>检查 collection load、内存和索引状态</td>
+</tr>
+<tr>
+<td>insufficient_context 比例</td>
+<td>单场景持续高于基线</td>
+<td>检查知识库版本、召回阈值和资料覆盖</td>
+</tr>
+<tr>
+<td>active 版本缺失</td>
+<td>任意场景 active=None</td>
+<td>阻断启动或立即重新激活版本</td>
+</tr>
+<tr>
+<td>磁盘使用率</td>
+<td>接近容量红线</td>
+<td>清理旧日志、旧 segment、备份后扩容</td>
+</tr>
+</tbody>
+</table>
+<h3 id="57">5.7 生产发布流程<a class="headerlink" href="#57" title="Permanent link">&para;</a></h3>
+<p>推荐把上线流程讲成一条稳定流水线：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span>
+<span class="normal"><a href="#__codelineno-16-6">6</a></span>
+<span class="normal"><a href="#__codelineno-16-7">7</a></span>
+<span class="normal"><a href="#__codelineno-16-8">8</a></span>
+<span class="normal"><a href="#__codelineno-16-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>代码变更
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>  → pytest 单元测试
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>  → 文档/配置一致性检查
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>  → 构建 API 镜像
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a>  → 预发环境 rebuild_kb_version.py --quality-gate
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a>  → 本地 Evaluation / LangSmith Evaluation
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a>  → 小流量压测
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a>  → 生产 docker compose --env-file .env.compose pull + up -d
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a>  → 观察 LangSmith Trace、错误率、首 token、Milvus P95
+</code></pre></div></td></tr></table></div>
+<p>如果只是 <code>.env.compose</code> 变化，例如更换模型地址、LangSmith 配置、DashScope Key：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="n">docker</span> <span class="n">compose</span> <span class="p">-</span><span class="n">-env</span><span class="o">-file</span> <span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">compose</span> <span class="n">up</span> <span class="n">-d</span> <span class="p">-</span><span class="n">-force-recreate</span> <span class="n">api</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="n">docker</span> <span class="n">logs</span> <span class="o">-f</span> <span class="n">knowforge-api</span>
+</code></pre></div></td></tr></table></div>
+<p>如果 Milvus schema 或入库逻辑变化，必须先重建知识库。已有知识库只更新资料内容时不加
+<code>--reset-collections</code>；只有旧 collection schema 不兼容时才删除 collection 重建：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="n">docker</span> <span class="n">compose</span> <span class="p">-</span><span class="n">-env</span><span class="o">-file</span> <span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">compose</span> <span class="n">run</span> <span class="p">-</span><span class="n">-rm</span> <span class="n">api</span> <span class="n">python</span> <span class="n">scripts</span><span class="p">/</span><span class="n">rebuild_kb_version</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-scenario</span> <span class="n">enterprise_knowledge</span> <span class="p">-</span><span class="n">-new-version</span> <span class="p">-</span><span class="n">-force</span> <span class="p">-</span><span class="n">-reset-collections</span> <span class="p">-</span><span class="n">-quality-gate</span> <span class="p">-</span><span class="n">-activate</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="58">5.8 生产事故排查案例<a class="headerlink" href="#58" title="Permanent link">&para;</a></h3>
+<p>生产环境排查要从“现象”走到“证据”，不要只看最后的错误消息。下面这些案例可以作为常见问题排查模板。</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>优先看哪里</th>
+<th>常见原因</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API 启动失败</td>
+<td><code>docker logs knowforge-api</code>、preflight 输出</td>
+<td>LLM Key 无效、active 版本为空、Milvus/MySQL 未就绪、模型目录不存在</td>
+<td>修复配置或依赖后 <code>docker compose --env-file .env.compose up -d --force-recreate api</code></td>
+</tr>
+<tr>
+<td>页面提示信息不足</td>
+<td>右侧诊断、LangSmith trace、top_source_score、sources_count</td>
+<td>知识库没覆盖、active 版本错、过滤条件过窄、召回阈值过高</td>
+<td>查 active 版本、检索诊断、必要时重建知识库或补资料</td>
+</tr>
+<tr>
+<td>Milvus 查询慢</td>
+<td>trace 中 retrieval 耗时、Milvus 日志、collection load 状态</td>
+<td>collection 未 load、segment 过多、过滤表达式复杂、top_k 过大</td>
+<td>预热 collection、控制 top_k、优化过滤字段和索引</td>
+</tr>
+<tr>
+<td>首 token 慢</td>
+<td>trace 中 intent / embedding / rerank / llm 阶段耗时</td>
+<td>LLM 排队、Reranker 耗时高、Embedding 在 CPU 上跑</td>
+<td>分离模型服务、降低候选数、增加 GPU 或并发实例</td>
+</tr>
+<tr>
+<td>回答引用不对</td>
+<td>trace 中 retrieval hits、context docs、final references</td>
+<td>召回到了相似但错误的 chunk，Reranker 没压下去</td>
+<td>补 query variants、调整 rerank 策略、修正资料和 source</td>
+</tr>
+<tr>
+<td>重建后仍是旧答案</td>
+<td>页面当前版本、active kb_version、API 容器环境</td>
+<td>新版本未激活、API 未重建、连了另一套 Milvus</td>
+<td>重新激活版本，force recreate API，确认 Milvus URI</td>
+</tr>
+<tr>
+<td>并发升高后大量超时</td>
+<td>HTTP/WS 错误率、LLM API 错误、连接池、CPU/GPU</td>
+<td>LLM 限流、线程池饱和、MySQL 连接池不足</td>
+<td>限流排队、扩 API 实例、拆分模型服务、调整连接池</td>
+</tr>
+</tbody>
+</table>
+<p>一个通用排查顺序：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span>
+<span class="normal"><a href="#__codelineno-19-5">5</a></span>
+<span class="normal"><a href="#__codelineno-19-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a>1. 看服务是否活着：docker compose --env-file .env.compose ps / healthcheck
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a>2. 看启动校验：preflight 是否全部通过
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a>3. 看业务状态：scenario、active kb_version、collection 名称
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a>4. 看 trace：命中路径、阶段耗时、top score、sources_count
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a>5. 看依赖：Milvus/MySQL/LLM/Embedding/Reranker
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a>6. 看数据：资料是否入库、source 是否正确、质量门禁是否通过
+</code></pre></div></td></tr></table></div>
+<h3 id="59">5.9 二期规划边界<a class="headerlink" href="#59" title="Permanent link">&para;</a></h3>
+<p>一期目标是把企业级多场景 RAG 主链路做稳。二期不要把所有热门能力一次性塞进主线，建议采用“主线必做 + 亮点选做”的边界。</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>建议范围</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一期</td>
+<td>多场景 RAG、Milvus Hybrid、Reranker、版本、隔离、质量门禁、Trace、生产部署</td>
+<td>当前课程主线，保证可讲、可跑、可验收</td>
+</tr>
+<tr>
+<td>二期主线</td>
+<td>受控 Agentic RAG：Router/Planner + RAG Tool + SQL Tool + 状态/重建工具 + Trace</td>
+<td>主控 Agent 统一调度，工具权限受控，避免自由多智能体失控</td>
+</tr>
+<tr>
+<td>二期选做</td>
+<td>轻量 GraphRAG Agent、OCR/VLM 入库增强、自动评测集扩展</td>
+<td>作为企业项目亮点，不影响现有 RAG 主链路</td>
+</tr>
+<tr>
+<td>暂不主推</td>
+<td>自由多智能体、完整视觉聊天、强依赖 Neo4j 的重图谱平台</td>
+<td>成本和不可控性较高，容易冲淡主线</td>
+</tr>
+</tbody>
+</table>
+<p>二期边界可以这样理解：</p>
+<blockquote>
+<p>二期不是把系统改成“多个 Agent 自由聊天”，而是把当前可靠的 RAG Pipeline 封装成可调用工具，由主控 Agent 按意图选择 RAG、SQL、GraphRAG 或运维工具。GraphRAG 可以作为独立专家 Agent 存在，但不强依赖 Neo4j；基础版可以先用 MySQL 存实体和关系，Neo4j 作为增强方案。多模态也不做任意图片聊天，而是作为 OCR/VLM 文档入库增强。</p>
+</blockquote>
+<h3 id="510">5.10 工程表达模板<a class="headerlink" href="#510" title="Permanent link">&para;</a></h3>
+<p>生产环境部署和容量评估可以这样表达：</p>
+<blockquote>
+<p>我不会直接说一个固定 QPS，因为 RAG 的瓶颈取决于 LLM 首 token、Embedding/Reranker 推理、Milvus 检索和 WebSocket 长连接。我的做法是先定义指标：并发连接数、请求 QPS、首 token P95、完整回答 P95、Milvus P95、Reranker P95 和错误率。小规模可以用单机 Docker Compose，8C32G 起步；部门级会把 API、Milvus/MySQL、模型推理拆开，Reranker 尽量放 GPU；更大规模再上 Milvus Cluster 和多 API 实例。上线前分别压 HTTP 诊断接口和 WebSocket 在线问答主链路，线上用 LangSmith Trace 记录阶段耗时和命中质量，再配合主机/容器监控和质量告警判断是否扩容。</p>
+</blockquote>
+<hr />
+<h2 id="_6">本讲实践闭环<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本讲类型</td>
+<td>工程治理</td>
+</tr>
+<tr>
+<td>实践产物</td>
+<td>LangSmith Trace、生产部署、压测指标、监控告警、事故排查和二期边界</td>
+</tr>
+<tr>
+<td>是否进入最终项目</td>
+<td>是</td>
+</tr>
+<tr>
+<td>验收方式</td>
+<td>发起一次问答能看到 trace；能复述部署、压测、扩容和排查流程</td>
+</tr>
+<tr>
+<td>后续落点</td>
+<td>课程收口；二期进入受控 Agentic RAG、GraphRAG/OCR 可插拔增强</td>
+</tr>
+</tbody>
+</table>
+<p>通过标准：能把项目从“本地能跑”讲到“生产可观测、可压测、可扩容、可排查”。</p>
+<h3 id="0-1">本讲从 0 到 1 实现闭环<a class="headerlink" href="#0-1" title="Permanent link">&para;</a></h3>
+<p>这一讲把项目从“能跑”收束到“可观测、可部署、可压测、可排查”。实现顺序如下：</p>
+<pre class="mermaid"><code>flowchart TD
+    Query["一次线上问答"] --&gt; Trace["LangSmith Trace&lt;br/&gt;输入/输出/metadata"]
+    Query --&gt; Timing["阶段耗时&lt;br/&gt;intent/retrieval/rerank/llm/history"]
+    Query --&gt; Logs["服务日志&lt;br/&gt;异常栈/启动校验/依赖状态"]
+    Trace --&gt; Diagnose["问题定位"]
+    Timing --&gt; Diagnose
+    Logs --&gt; Diagnose
+    Diagnose --&gt; Case{"问题类型"}
+    Case --&gt; Data["数据问题&lt;br/&gt;回到入库/质量评估"]
+    Case --&gt; Perf["性能问题&lt;br/&gt;压测/扩容/缓存"]
+    Case --&gt; Code["代码问题&lt;br/&gt;测试补用例"]
+    Data --&gt; Eval["Evaluation / Gate"]
+    Perf --&gt; Monitor["监控告警"]
+    Code --&gt; Tests["pytest / guardrails"]</code></pre>
+<ol>
+<li>先配置 LangSmith 环境变量，让 LangChain/项目代码能把 trace 发出去。</li>
+<li>再封装 <code>record_query_trace()</code>，统一记录场景、版本、命中路径、耗时、错误信息。</li>
+<li>然后把阶段耗时写入 <code>RAGQueryContext</code>，定位慢在检索、重排、LLM 还是历史。</li>
+<li>最后补生产部署、压测、监控和事故排查流程。</li>
+</ol>
+<p>实现完成后，相关代码结构应该是下面这张图：</p>
+<pre class="mermaid"><code>flowchart LR
+    App["app.py&lt;br/&gt;启动时配置 LangSmith"] --&gt; Adapter["qa_core/observability/langsmith_adapter.py&lt;br/&gt;Trace 环境变量&lt;br/&gt;record_query_trace()"]
+    Context["qa_core/pipeline/context.py&lt;br/&gt;阶段耗时&lt;br/&gt;first_token"] --&gt; Adapter
+    Rag["qa_core/pipeline/rag.py&lt;br/&gt;finish_success / finish_error"] --&gt; Adapter
+    Compose["docker-compose.yml / .env.compose&lt;br/&gt;生产部署配置"] --&gt; App
+    Smoke["scripts/acceptance_smoke.py&lt;br/&gt;部署冒烟"] -. 验证 .-&gt; Compose</code></pre>
+<p>来源：真实代码节选，见 <code>qa_core/observability/langsmith_adapter.py::configure_langsmith_environment()</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span>
+<span class="normal"><a href="#__codelineno-20-5">5</a></span>
+<span class="normal"><a href="#__codelineno-20-6">6</a></span>
+<span class="normal"><a href="#__codelineno-20-7">7</a></span>
+<span class="normal"><a href="#__codelineno-20-8">8</a></span>
+<span class="normal"><a href="#__codelineno-20-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">configure_langsmith_environment</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a>    <span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a>    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_TRACING&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span> <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_tracing</span> <span class="k">else</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_api_key</span><span class="p">:</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_API_KEY&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_api_key</span><span class="p">)</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_project</span><span class="p">:</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_PROJECT&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_project</span><span class="p">)</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_endpoint</span><span class="p">:</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;LANGSMITH_ENDPOINT&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">langsmith_endpoint</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Trace 的价值不只是“看到一次调用”，而是把业务维度记录进去。排查时可以按场景、版本、意图、source、命中路径过滤。</p>
+<p>来源：真实代码逻辑压缩版，对应 <code>qa_core/observability/langsmith_adapter.py::record_query_trace()</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span>
+<span class="normal"><a href="#__codelineno-21-11">11</a></span>
+<span class="normal"><a href="#__codelineno-21-12">12</a></span>
+<span class="normal"><a href="#__codelineno-21-13">13</a></span>
+<span class="normal"><a href="#__codelineno-21-14">14</a></span>
+<span class="normal"><a href="#__codelineno-21-15">15</a></span>
+<span class="normal"><a href="#__codelineno-21-16">16</a></span>
+<span class="normal"><a href="#__codelineno-21-17">17</a></span>
+<span class="normal"><a href="#__codelineno-21-18">18</a></span>
+<span class="normal"><a href="#__codelineno-21-19">19</a></span>
+<span class="normal"><a href="#__codelineno-21-20">20</a></span>
+<span class="normal"><a href="#__codelineno-21-21">21</a></span>
+<span class="normal"><a href="#__codelineno-21-22">22</a></span>
+<span class="normal"><a href="#__codelineno-21-23">23</a></span>
+<span class="normal"><a href="#__codelineno-21-24">24</a></span>
+<span class="normal"><a href="#__codelineno-21-25">25</a></span>
+<span class="normal"><a href="#__codelineno-21-26">26</a></span>
+<span class="normal"><a href="#__codelineno-21-27">27</a></span>
+<span class="normal"><a href="#__codelineno-21-28">28</a></span>
+<span class="normal"><a href="#__codelineno-21-29">29</a></span>
+<span class="normal"><a href="#__codelineno-21-30">30</a></span>
+<span class="normal"><a href="#__codelineno-21-31">31</a></span>
+<span class="normal"><a href="#__codelineno-21-32">32</a></span>
+<span class="normal"><a href="#__codelineno-21-33">33</a></span>
+<span class="normal"><a href="#__codelineno-21-34">34</a></span>
+<span class="normal"><a href="#__codelineno-21-35">35</a></span>
+<span class="normal"><a href="#__codelineno-21-36">36</a></span>
+<span class="normal"><a href="#__codelineno-21-37">37</a></span>
+<span class="normal"><a href="#__codelineno-21-38">38</a></span>
+<span class="normal"><a href="#__codelineno-21-39">39</a></span>
+<span class="normal"><a href="#__codelineno-21-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">record_query_trace</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">trace_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">question</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">hit_type</span><span class="p">,</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a>                       <span class="n">scenario</span><span class="p">,</span> <span class="n">data_scope</span><span class="p">,</span> <span class="n">source_filter</span><span class="p">,</span> <span class="n">kb_version</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a>                       <span class="n">rewritten_query</span><span class="p">,</span> <span class="n">intent</span><span class="p">,</span> <span class="n">retrieval</span><span class="p">,</span> <span class="n">sources</span><span class="p">,</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a>                       <span class="n">elapsed_ms</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a>    <span class="n">configure_langsmith_environment</span><span class="p">()</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">langsmith_enabled</span><span class="p">():</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7"></a>        <span class="k">return</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8"></a>
+<a id="__codelineno-21-9" name="__codelineno-21-9"></a>    <span class="n">retrieval_payload</span> <span class="o">=</span> <span class="n">retrieval</span> <span class="ow">or</span> <span class="p">{}</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10"></a>    <span class="n">intent_payload</span> <span class="o">=</span> <span class="n">intent</span> <span class="ow">or</span> <span class="p">{}</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11"></a>    <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12"></a>        <span class="s2">&quot;trace_id&quot;</span><span class="p">:</span> <span class="n">trace_id</span><span class="p">,</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13"></a>        <span class="s2">&quot;session_id&quot;</span><span class="p">:</span> <span class="n">session_id</span><span class="p">,</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14"></a>        <span class="s2">&quot;scenario_id&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="s2">&quot;scenario_id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15"></a>        <span class="s2">&quot;scenario_name&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="s2">&quot;display_name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-16" name="__codelineno-21-16"></a>        <span class="s2">&quot;source_filter&quot;</span><span class="p">:</span> <span class="n">source_filter</span><span class="p">,</span>
+<a id="__codelineno-21-17" name="__codelineno-21-17"></a>        <span class="s2">&quot;effective_source&quot;</span><span class="p">:</span> <span class="n">retrieval_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_filter&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">source_filter</span><span class="p">,</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18"></a>        <span class="s2">&quot;kb_version&quot;</span><span class="p">:</span> <span class="n">kb_version</span><span class="p">,</span>
+<a id="__codelineno-21-19" name="__codelineno-21-19"></a>        <span class="s2">&quot;tenant_id&quot;</span><span class="p">:</span> <span class="n">data_scope</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tenant_id&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20"></a>        <span class="s2">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="n">data_scope</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataset_id&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-21" name="__codelineno-21-21"></a>        <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="n">data_scope</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visibility&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-22" name="__codelineno-21-22"></a>        <span class="s2">&quot;allowed_roles&quot;</span><span class="p">:</span> <span class="n">data_scope</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allowed_roles&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-23" name="__codelineno-21-23"></a>        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">intent_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;intent&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-24" name="__codelineno-21-24"></a>        <span class="s2">&quot;intent_reason&quot;</span><span class="p">:</span> <span class="n">intent_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;reason&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-25" name="__codelineno-21-25"></a>        <span class="s2">&quot;hit_type&quot;</span><span class="p">:</span> <span class="n">hit_type</span><span class="p">,</span>
+<a id="__codelineno-21-26" name="__codelineno-21-26"></a>        <span class="s2">&quot;prompt_profile&quot;</span><span class="p">:</span> <span class="n">retrieval_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;prompt_profile_name&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-27" name="__codelineno-21-27"></a>        <span class="s2">&quot;question_category&quot;</span><span class="p">:</span> <span class="n">retrieval_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;question_category&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-28" name="__codelineno-21-28"></a>        <span class="s2">&quot;rewritten_query&quot;</span><span class="p">:</span> <span class="n">rewritten_query</span><span class="p">,</span>
+<a id="__codelineno-21-29" name="__codelineno-21-29"></a>        <span class="s2">&quot;sources_count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">sources</span><span class="p">),</span>
+<a id="__codelineno-21-30" name="__codelineno-21-30"></a>        <span class="s2">&quot;top_source_score&quot;</span><span class="p">:</span> <span class="n">sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">sources</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-21-31" name="__codelineno-21-31"></a>        <span class="s2">&quot;first_token_ms&quot;</span><span class="p">:</span> <span class="n">retrieval_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;first_token_ms&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-32" name="__codelineno-21-32"></a>        <span class="s2">&quot;stage_timings_ms&quot;</span><span class="p">:</span> <span class="n">retrieval_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stage_timings_ms&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-33" name="__codelineno-21-33"></a>        <span class="s2">&quot;slowest_stage&quot;</span><span class="p">:</span> <span class="n">retrieval_payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;slowest_stage&quot;</span><span class="p">),</span>
+<a id="__codelineno-21-34" name="__codelineno-21-34"></a>        <span class="s2">&quot;elapsed_ms&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">elapsed_ms</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<a id="__codelineno-21-35" name="__codelineno-21-35"></a>        <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">error</span><span class="p">,</span>
+<a id="__codelineno-21-36" name="__codelineno-21-36"></a>    <span class="p">}</span>
+<a id="__codelineno-21-37" name="__codelineno-21-37"></a>
+<a id="__codelineno-21-38" name="__codelineno-21-38"></a>    <span class="k">with</span> <span class="n">trace</span><span class="p">(</span><span class="s2">&quot;qa_stream_query&quot;</span><span class="p">,</span> <span class="n">run_type</span><span class="o">=</span><span class="s2">&quot;chain&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">run_id</span><span class="o">=</span><span class="n">trace_id</span><span class="p">)</span> <span class="k">as</span> <span class="n">run_tree</span><span class="p">:</span>
+<a id="__codelineno-21-39" name="__codelineno-21-39"></a>        <span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;answer_preview&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="p">[:</span><span class="mi">800</span><span class="p">],</span> <span class="s2">&quot;hit_type&quot;</span><span class="p">:</span> <span class="n">hit_type</span><span class="p">,</span> <span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="n">sources</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">error</span><span class="p">}</span>
+<a id="__codelineno-21-40" name="__codelineno-21-40"></a>        <span class="n">run_tree</span><span class="o">.</span><span class="n">end</span><span class="p">(</span><span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">)</span> <span class="k">if</span> <span class="n">error</span> <span class="k">else</span> <span class="n">run_tree</span><span class="o">.</span><span class="n">end</span><span class="p">(</span><span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Trace 失败不能影响用户请求。真实代码会捕获异常并记录 warning，保证 LangSmith 网络波动不会把问答链路拖挂。</p>
+<p>阶段耗时要在 Pipeline 内部记录。只有总耗时没有意义，因为你不知道慢在 Milvus、Reranker、LLM 还是 MySQL 历史。</p>
+<p>来源：真实代码调用点，见 <code>qa_core/pipeline/context.py::RAGQueryContext.run_stage()</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="k">with</span> <span class="n">context</span><span class="o">.</span><span class="n">run_stage</span><span class="p">(</span><span class="s2">&quot;doc_retrieval&quot;</span><span class="p">):</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>    <span class="n">doc_hits</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">search_many</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="k">with</span> <span class="n">context</span><span class="o">.</span><span class="n">run_stage</span><span class="p">(</span><span class="s2">&quot;llm_generation&quot;</span><span class="p">):</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a>    <span class="k">yield from</span> <span class="n">llm</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>生产部署和压测验收要关注并发连接数、首 token P95、完整回答 P95、错误率和各阶段耗时，而不是只报一个模糊 QPS。</p>
+<p>来源：命令行验收，对应 <code>docker-compose.yml</code>、<code>.env.compose</code> 和生产部署章节命令。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="n">docker</span> <span class="n">compose</span> <span class="p">-</span><span class="n">-env</span><span class="o">-file</span> <span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">compose</span> <span class="n">up</span> <span class="n">-d</span> <span class="p">-</span><span class="n">-build</span> <span class="n">api</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">88</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8001</span><span class="p">/</span><span class="n">health</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="n">python</span> <span class="n">scripts</span><span class="p">/</span><span class="n">acceptance_smoke</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-base-url</span> <span class="n">http</span><span class="p">://</span><span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">88</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8001</span>
+</code></pre></div></td></tr></table></div>
+<p>闭环验证重点：</p>
+<table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>验证方式</th>
+<th>期望结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trace 开关</td>
+<td>配置 LangSmith 环境变量</td>
+<td>问答后能看到 trace</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>查看 trace 详情</td>
+<td>有场景、版本、意图、命中路径</td>
+</tr>
+<tr>
+<td>阶段耗时</td>
+<td>查看诊断字段</td>
+<td>能定位慢阶段</td>
+</tr>
+<tr>
+<td>Trace 关闭</td>
+<td><code>LANGSMITH_TRACING=false</code> 或无 API Key</td>
+<td>不发送 trace，问答正常</td>
+</tr>
+<tr>
+<td>Trace 失败</td>
+<td>LangSmith 网络异常</td>
+<td>只记录 warning，不影响用户答案</td>
+</tr>
+<tr>
+<td>生产健康检查</td>
+<td>请求 <code>/health</code></td>
+<td>服务可用</td>
+</tr>
+<tr>
+<td>部署冒烟</td>
+<td>跑 acceptance smoke</td>
+<td>核心接口可访问</td>
+</tr>
+<tr>
+<td>事故排查</td>
+<td>模拟版本/依赖问题</td>
+<td>能按 trace、日志、preflight 定位</td>
+</tr>
+</tbody>
+</table>
+<p>验收重点：线上问题能从 trace、日志、健康检查、active 版本和质量报告中定位，而不是靠猜。</p>
+<h2 id="_7">重点掌握<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>内容</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★★★ 必会</td>
+<td><code>record_query_trace()</code> 的 18 个业务 metadata 字段</td>
+<td>说明 trace 中记录了哪些可排查信息</td>
+</tr>
+<tr>
+<td>★★★ 必会</td>
+<td>线上 Trace 发现问题并交接到第 17 讲质量闭环</td>
+<td>避免只看最终答案，能把问题归类为质量、性能、部署或依赖问题</td>
+</tr>
+<tr>
+<td>★★★ 必会</td>
+<td>生产部署、容量评估、压测和监控指标</td>
+<td>说明系统上线后如何估算并发、验证容量和规划扩容</td>
+</tr>
+<tr>
+<td>★★★ 必会</td>
+<td>生产事故排查顺序：服务健康 → preflight → active 版本 → trace → 依赖 → 数据</td>
+<td>能把线上问题从现象排到证据</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td><code>configure_langsmith_environment()</code> 的环境变量注入机制</td>
+<td>理解 LangChain 集成如何感知 LangSmith</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td><code>RAGQueryContext.run_stage()</code> 的阶段计时方式</td>
+<td>能解释"怎么知道哪个阶段最慢"</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td>二期边界：受控 Agentic RAG 为主，GraphRAG/OCR 作为可插拔增强</td>
+<td>防止项目规划过重或失控</td>
+</tr>
+<tr>
+<td>★ 了解</td>
+<td>自建追踪存储方案的设计思路</td>
+<td>作为系统设计题的备选方案</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">本讲小结<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>项目不复刻 LLMOps 平台</strong>：trace 存储、过滤、可视化、标注和评估全部委托给 LangSmith</li>
+<li><strong>147 行 adapter</strong> 是项目中与 LangSmith 交互的唯一代码</li>
+<li><strong>18 个 metadata 字段</strong> 覆盖了场景、数据隔离、检索策略、耗时和错误信息</li>
+<li><strong>章节分工</strong>：第 19 讲负责 Trace 发现、定位和交接；第 17 讲负责 Annotation、Dataset、Evaluation 和 Gate</li>
+<li><strong>生产化表达</strong>：用并发连接数、首 token P95、阶段耗时、Milvus/Reranker/LLM 瓶颈、压测结果和监控告警来回答容量问题，而不是拍脑袋报 QPS</li>
+<li><strong>事故排查</strong>：先看服务健康和 preflight，再看 active 版本、trace 阶段耗时、依赖状态和入库数据</li>
+<li><strong>二期规划</strong>：主线建议是受控 Agentic RAG，GraphRAG 和 OCR/VLM 作为可插拔增强，不把自由多智能体作为生产主方案</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tracking", "navigation.expand", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="assets/vendor/mermaid.min.js"></script>
+      
+        <script src="assets/javascripts/mermaid-init.js"></script>
+      
+        <script src="assets/javascripts/mathjax-config.js"></script>
+      
+        <script src="assets/vendor/mathjax/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

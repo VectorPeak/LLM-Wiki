@@ -1,0 +1,2375 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>6.2 State 与 Prompts - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#62-state-prompts" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6.2 State 与 Prompts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          6.2 State 与 Prompts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="06-02-State%E4%B8%8EPrompts.html" class="md-nav__link md-nav__link--active">
+        6.2 State 与 Prompts
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#621-pydantic" class="md-nav__link">
+    6.2.1 五个 Pydantic 子模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#622-examstate" class="md-nav__link">
+    6.2.2 ExamState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#623-prompt" class="md-nav__link">
+    6.2.3 四个 Prompt 模板
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2.3 四个 Prompt 模板">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt" class="md-nav__link">
+    简答题批改 Prompt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#think-tool-prompt" class="md-nav__link">
+    Think Tool Prompt（批改前推理）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt_1" class="md-nav__link">
+    代码质量评估 Prompt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt_2" class="md-nav__link">
+    知识薄弱点分析 Prompt
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    ✅ 验证（import 检查）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#621-pydantic" class="md-nav__link">
+    6.2.1 五个 Pydantic 子模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#622-examstate" class="md-nav__link">
+    6.2.2 ExamState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#623-prompt" class="md-nav__link">
+    6.2.3 四个 Prompt 模板
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2.3 四个 Prompt 模板">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt" class="md-nav__link">
+    简答题批改 Prompt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#think-tool-prompt" class="md-nav__link">
+    Think Tool Prompt（批改前推理）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt_1" class="md-nav__link">
+    代码质量评估 Prompt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt_2" class="md-nav__link">
+    知识薄弱点分析 Prompt
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    ✅ 验证（import 检查）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="62-state-prompts">6.2 State 与 Prompts<a class="headerlink" href="#62-state-prompts" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>掌握 <code>ExamState</code> 的字段设计，理解三轨结果字段和 HitL 字段的作用</li>
+<li>理解5个 Pydantic 子模型在结构化输出中的用途</li>
+<li>掌握4个 Prompt 模板的设计要点，理解 Think Tool Prompt 的作用</li>
+</ul>
+<blockquote>
+<p>💡 <strong>本节新建两个文件</strong>：<code>state.py</code> 和 <code>prompts.py</code>。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📁 本节要创建的文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/agents/exam/state.py</code></td>
+<td>🆕 新建</td>
+<td>ExamState + 5 个 Pydantic 子模型</td>
+</tr>
+<tr>
+<td><code>backend/agents/exam/prompts.py</code></td>
+<td>🆕 新建</td>
+<td>4 个 Prompt 模板</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="621-pydantic">6.2.1 五个 Pydantic 子模型<a class="headerlink" href="#621-pydantic" title="Permanent link">&para;</a></h2>
+<p>在讲 State 之前，先看它依赖的子模型——这些模型直接用于 LLM 结构化输出（<code>with_structured_output</code>）。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/agents/exam/state.py</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="kn">from</span> <span class="nn">langgraph.graph.message</span> <span class="kn">import</span> <span class="n">add_messages</span>
+<span class="kn">from</span> <span class="nn">langchain_core.messages</span> <span class="kn">import</span> <span class="n">BaseMessage</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+
+<span class="k">class</span> <span class="nc">ScoringPointResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;单个得分点的评分结果&quot;&quot;&quot;</span>
+    <span class="n">point_id</span><span class="p">:</span>    <span class="nb">str</span>
+    <span class="n">point_desc</span><span class="p">:</span>  <span class="nb">str</span>
+    <span class="n">point_score</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">earned</span><span class="p">:</span>      <span class="nb">bool</span>
+    <span class="n">evidence</span><span class="p">:</span>    <span class="nb">str</span>   <span class="c1"># earned=True 时填学员答案中对应原文</span>
+    <span class="n">missing</span><span class="p">:</span>     <span class="nb">str</span>   <span class="c1"># earned=False 时填未得分原因</span>
+
+
+<span class="k">class</span> <span class="nc">SubjectiveReviewResult</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;简答题批改结果（LLM 结构化输出）&quot;&quot;&quot;</span>
+    <span class="n">question_id</span><span class="p">:</span>     <span class="nb">str</span>
+    <span class="n">student_answer</span><span class="p">:</span>  <span class="nb">str</span>
+    <span class="n">total_score</span><span class="p">:</span>     <span class="nb">int</span>
+    <span class="n">full_score</span><span class="p">:</span>      <span class="nb">int</span>
+    <span class="n">confidence</span><span class="p">:</span>      <span class="nb">float</span>       <span class="c1"># [0, 1]，低于 0.7 时标记需复核</span>
+    <span class="n">point_results</span><span class="p">:</span>   <span class="nb">list</span><span class="p">[</span><span class="n">ScoringPointResult</span><span class="p">]</span>
+    <span class="n">overall_comment</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="k">class</span> <span class="nc">WeakPoint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;单个知识薄弱点&quot;&quot;&quot;</span>
+    <span class="n">tag</span><span class="p">:</span>          <span class="nb">str</span>            <span class="c1"># 知识点标签，如 &quot;Spring IOC&quot;、&quot;Redis缓存穿透&quot;</span>
+    <span class="n">wrong_count</span><span class="p">:</span>  <span class="nb">int</span>
+    <span class="n">total_count</span><span class="p">:</span>  <span class="nb">int</span>
+    <span class="n">question_nos</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>      <span class="c1"># 涉及的题目序号列表</span>
+    <span class="n">suggestion</span><span class="p">:</span>   <span class="nb">str</span>            <span class="c1"># 针对该知识点的复习建议</span>
+
+
+<span class="k">class</span> <span class="nc">WeakPointsReport</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;知识薄弱点分析报告（LLM 结构化输出）&quot;&quot;&quot;</span>
+    <span class="n">weak_points</span><span class="p">:</span>     <span class="nb">list</span><span class="p">[</span><span class="n">WeakPoint</span><span class="p">]</span>
+    <span class="n">overall_summary</span><span class="p">:</span> <span class="nb">str</span>         <span class="c1"># 整体评价，不超过50字</span>
+
+
+<span class="k">class</span> <span class="nc">TeacherDecision</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;教师确认决策（interrupt 恢复时传入）&quot;&quot;&quot;</span>
+    <span class="n">action</span><span class="p">:</span>        <span class="nb">str</span>           <span class="c1"># &quot;approve&quot; / &quot;modify&quot;</span>
+    <span class="n">modifications</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>    <span class="c1"># [{question_id, new_score, comment}, ...]</span>
+    <span class="n">teacher_id</span><span class="p">:</span>    <span class="nb">str</span>
+</code></pre></div>
+<p><strong>设计要点：</strong></p>
+<p><code>SubjectiveReviewResult</code> 有一个 <code>confidence</code> 字段，LLM 对自己的评分把握度打分（0到1）。当 <code>confidence &lt; 0.7</code> 时，该题自动标记 <code>needs_review=True</code>，进入教师必须人工确认的列表。</p>
+<p><code>WeakPoint.question_nos</code> 记录该知识点下的出错题号，教师看报告时可以直接跳到对应题目核查。</p>
+<hr />
+<h2 id="622-examstate">6.2.2 ExamState<a class="headerlink" href="#622-examstate" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ExamState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;试卷批改 Agent 完整 State&quot;&quot;&quot;</span>
+
+    <span class="c1"># ── 请求上下文 ──────────────────────────────────────────────</span>
+    <span class="n">messages</span><span class="p">:</span>        <span class="n">Annotated</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">BaseMessage</span><span class="p">],</span> <span class="n">add_messages</span><span class="p">]</span>
+    <span class="n">student_id</span><span class="p">:</span>      <span class="nb">str</span>
+    <span class="n">tenant_id</span><span class="p">:</span>       <span class="nb">str</span>
+    <span class="n">session_id</span><span class="p">:</span>      <span class="nb">str</span>
+    <span class="n">exam_id</span><span class="p">:</span>         <span class="nb">str</span>         <span class="c1"># 试卷 ID（exams 表）</span>
+    <span class="n">submission_id</span><span class="p">:</span>   <span class="nb">str</span>         <span class="c1"># 提交记录 ID（exam_submissions 表）</span>
+    <span class="n">word_file_path</span><span class="p">:</span>  <span class="nb">str</span>         <span class="c1"># 学员作答 Word 文件本地临时路径</span>
+
+    <span class="c1"># ── 解析结果 ───────────────────────────────────────────────</span>
+    <span class="n">parsed_questions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="c1"># 解析+DB合并后的完整题目列表</span>
+
+    <span class="c1"># ── 三轨批改结果 ────────────────────────────────────────────</span>
+    <span class="n">objective_results</span><span class="p">:</span>  <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">subjective_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">code_results</span><span class="p">:</span>       <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+
+    <span class="c1"># ── 汇总预批改结果 ─────────────────────────────────────────</span>
+    <span class="n">pre_review_summary</span><span class="p">:</span> <span class="nb">dict</span>
+
+    <span class="c1"># ── 知识薄弱点分析 ─────────────────────────────────────────</span>
+    <span class="n">weak_points</span><span class="p">:</span>         <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">weak_points_summary</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="c1"># ── Human-in-the-Loop ──────────────────────────────────────</span>
+    <span class="n">teacher_notified</span><span class="p">:</span>  <span class="nb">bool</span>
+    <span class="n">teacher_decision</span><span class="p">:</span>  <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+
+    <span class="c1"># ── 最终结果 ───────────────────────────────────────────────</span>
+    <span class="n">final_results</span><span class="p">:</span>     <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+    <span class="n">published</span><span class="p">:</span>         <span class="nb">bool</span>
+
+    <span class="c1"># ── 降级标记 ───────────────────────────────────────────────</span>
+    <span class="n">fallback_used</span><span class="p">:</span>     <span class="nb">bool</span>
+    <span class="n">structured_output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
+</code></pre></div>
+<p><strong>字段分组说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th>分组</th>
+<th>字段</th>
+<th>写入节点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求上下文</td>
+<td><code>exam_id</code> <code>submission_id</code> <code>word_file_path</code></td>
+<td>API 层初始化</td>
+</tr>
+<tr>
+<td>解析结果</td>
+<td><code>parsed_questions</code></td>
+<td><code>parse_word_node</code> → <code>load_questions_meta_node</code> 覆盖</td>
+</tr>
+<tr>
+<td>三轨结果</td>
+<td><code>objective_results</code> <code>subjective_results</code> <code>code_results</code></td>
+<td><code>run_three_tracks_node</code></td>
+</tr>
+<tr>
+<td>汇总</td>
+<td><code>pre_review_summary</code></td>
+<td><code>aggregate_results_node</code></td>
+</tr>
+<tr>
+<td>薄弱点</td>
+<td><code>weak_points</code> <code>weak_points_summary</code></td>
+<td><code>analyze_weak_points_node</code></td>
+</tr>
+<tr>
+<td>HitL</td>
+<td><code>teacher_notified</code> <code>teacher_decision</code></td>
+<td><code>notify_teacher_node</code> / <code>teacher_review_node</code></td>
+</tr>
+<tr>
+<td>发布</td>
+<td><code>final_results</code> <code>published</code> <code>structured_output</code></td>
+<td><code>apply_teacher_decision_node</code> / <code>publish_results_node</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>parsed_questions</code> 被两个节点使用：<code>parse_word_node</code> 写入初步解析结果（只有学员答案），<code>load_questions_meta_node</code> 用 DB 数据覆盖它（补充题型/得分点/正确答案），图里 <code>parse_word</code> → <code>load_questions_meta</code> 是固定顺序边，不会并发冲突。</p>
+<hr />
+<h2 id="623-prompt">6.2.3 四个 Prompt 模板<a class="headerlink" href="#623-prompt" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/agents/exam/prompts.py</span>
+
+<span class="n">SYSTEM_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;你是一位严谨、公正的 IT 课程助教，负责协助教师批改学员试卷。</span>
+
+<span class="s2">【批改原则】</span>
+<span class="s2">- 严格按照得分点评分，不随意加减分</span>
+<span class="s2">- 给出明确的得分依据，指出学员答案中的具体内容</span>
+<span class="s2">- 评语简洁专业，指出核心问题，避免空泛表扬或批评</span>
+<span class="s2">- 对有争议的内容保持保守评分，宁可偏低并标记复核，不随意给高分&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>System Prompt 作为所有 LLM 调用的人设前缀，注入到每个批改请求的 <code>SystemMessage</code> 中。</p>
+<hr />
+<h3 id="prompt">简答题批改 Prompt<a class="headerlink" href="#prompt" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">SUBJECTIVE_REVIEW_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;请按照以下得分点批改学员的简答题作答。</span>
+
+<span class="s2">【题目】</span>
+<span class="si">{question_content}</span><span class="s2"></span>
+
+<span class="s2">【得分点（共</span><span class="si">{full_score}</span><span class="s2">分）】</span>
+<span class="si">{scoring_points}</span><span class="s2"></span>
+
+<span class="s2">【学员答案】</span>
+<span class="si">{student_answer}</span><span class="s2"></span>
+
+<span class="s2">请严格按照得分点逐条评分，输出以下 JSON 结构（直接输出，不要加 Markdown 代码块）：</span>
+<span class="s2">{{</span>
+<span class="s2">  &quot;question_id&quot;: &quot;&quot;,</span>
+<span class="s2">  &quot;student_answer&quot;: &quot;</span><span class="si">{student_answer}</span><span class="s2">&quot;,</span>
+<span class="s2">  &quot;total_score&quot;: &lt;整数，各得分点累加&gt;,</span>
+<span class="s2">  &quot;full_score&quot;: </span><span class="si">{full_score}</span><span class="s2">,</span>
+<span class="s2">  &quot;confidence&quot;: &lt;0.0-1.0，评分把握度，不确定时给低分并降低 confidence&gt;,</span>
+<span class="s2">  &quot;point_results&quot;: [</span>
+<span class="s2">    {{</span>
+<span class="s2">      &quot;point_id&quot;: &quot;&lt;得分点ID，若无则填空字符串&gt;&quot;,</span>
+<span class="s2">      &quot;point_desc&quot;: &quot;&lt;得分点描述&gt;&quot;,</span>
+<span class="s2">      &quot;point_score&quot;: &lt;该得分点满分&gt;,</span>
+<span class="s2">      &quot;earned&quot;: &lt;true/false&gt;,</span>
+<span class="s2">      &quot;evidence&quot;: &quot;&lt;学员答案中对应的原文，earned=true 时必填&gt;&quot;,</span>
+<span class="s2">      &quot;missing&quot;: &quot;&lt;未得分的原因，earned=false 时必填&gt;&quot;</span>
+<span class="s2">    }}</span>
+<span class="s2">  ],</span>
+<span class="s2">  &quot;overall_comment&quot;: &quot;&lt;1-2句整体评语，指出最核心的问题或亮点&gt;&quot;</span>
+<span class="s2">}}&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>这个 Prompt 用于 <code>with_structured_output(SubjectiveReviewResult)</code>——虽然 Prompt 里写的是"输出 JSON 结构"，实际上结构化输出走的是 function calling，LLM 会把结果填入 <code>SubjectiveReviewResult</code> 的字段而不是生成 JSON 文本。Prompt 里的 JSON 示例是给 LLM 的语义引导，帮助它理解每个字段的含义。</p>
+<hr />
+<h3 id="think-tool-prompt">Think Tool Prompt（批改前推理）<a class="headerlink" href="#think-tool-prompt" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">SUBJECTIVE_THINK_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;在批改这道简答题之前，请先进行深入分析。</span>
+
+<span class="s2">【题目】</span>
+<span class="si">{question_content}</span><span class="s2"></span>
+
+<span class="s2">【标准得分点】</span>
+<span class="si">{scoring_points}</span><span class="s2"></span>
+
+<span class="s2">【学员作答】</span>
+<span class="si">{student_answer}</span><span class="s2"></span>
+
+<span class="s2">请分析以下几点（中文，5-8句话）：</span>
+<span class="s2">1. 学员是否理解了题目的核心概念？</span>
+<span class="s2">2. 逐一检查每个得分点：学员的回答是否覆盖了该要点？是否用不同表述但实质正确？</span>
+<span class="s2">3. 有没有表述模糊但实质正确、不应扣分的内容？</span>
+<span class="s2">4. 有没有明显的概念错误或理解偏差？</span>
+
+<span class="s2">直接输出分析内容，不加任何前缀标签。&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>Think Tool 是两步批改流程的第一步：先让 LLM <strong>自由推理</strong>（不约束输出格式），把分析结论写进 <code>reasoning_trace</code>；再把这段推理追加到主批改 Prompt 末尾，让结构化评分参考这段分析。</p>
+<p>效果：普通 Prompt 直接批改时，LLM 对"学员用了不同表述回答正确内容"的情况容易误判扣分。加入推理步骤后，LLM 先分析"是否实质正确"，再做评分，准确率更高。</p>
+<hr />
+<h3 id="prompt_1">代码质量评估 Prompt<a class="headerlink" href="#prompt_1" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="n">CODE_QUALITY_REVIEW_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;请对以下代码题的学员提交代码进行质量评估。</span>
+
+<span class="s2">【题目要求】</span>
+<span class="si">{question}</span><span class="s2"></span>
+
+<span class="s2">【学员代码】</span>
+</code></pre></div>
+{code}
+<div class="highlight"><pre><span></span><code>请从以下5个维度评估代码质量，总分 {full_score} 分，输出 JSON（直接输出，不要加代码块标记）：
+{{
+  &quot;score&quot;: &lt;整数，0到{full_score}&gt;,
+  &quot;feedback&quot;: [
+    &quot;&lt;维度1评价：代码规范性（缩进/括号/分号等）&gt;&quot;,
+    &quot;&lt;维度2评价：命名可读性（变量/方法/类名）&gt;&quot;,
+    &quot;&lt;维度3评价：算法效率（时间/空间复杂度）&gt;&quot;,
+    &quot;&lt;维度4评价：异常处理（边界条件/错误处理）&gt;&quot;,
+    &quot;&lt;维度5评价：注释质量（关键逻辑是否有注释）&gt;&quot;
+  ]
+}}
+
+评分参考：
+- 代码基本正确且规范：{full_score} × 0.9
+- 功能正确但不够规范：{full_score} × 0.7
+- 部分正确：{full_score} × 0.4
+- 未提交或完全错误：0&quot;&quot;&quot;
+</code></pre></div></p>
+<p>LLM 从5个维度对代码质量打分，<code>{full_score}</code> 传入的是该题满分，输出 <code>score</code> 为最终得分。</p>
+<hr />
+<h3 id="prompt_2">知识薄弱点分析 Prompt<a class="headerlink" href="#prompt_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">WEAK_POINTS_ANALYSIS_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;你是一位经验丰富的 IT 课程教师，请根据学员本次试卷的答题情况，分析其知识薄弱点并给出复习建议。</span>
+
+<span class="s2">【错题/扣分题清单】</span>
+<span class="si">{wrong_questions}</span><span class="s2"></span>
+
+<span class="s2">【说明】</span>
+<span class="s2">- 上方列出了本次试卷中学员答错或扣分的题目，包含题目内容和错误原因</span>
+<span class="s2">- 请将这些题目归纳到对应的知识点，分析薄弱原因，并给出具体的复习建议</span>
+
+<span class="s2">请输出以下 JSON 结构（直接输出，不要加 Markdown 代码块）：</span>
+<span class="s2">{{</span>
+<span class="s2">  &quot;weak_points&quot;: [</span>
+<span class="s2">    {{</span>
+<span class="s2">      &quot;tag&quot;: &quot;&lt;知识点名称，例如：Spring IOC、Redis缓存穿透、JVM垃圾回收&gt;&quot;,</span>
+<span class="s2">      &quot;wrong_count&quot;: &lt;该知识点下的错题数&gt;,</span>
+<span class="s2">      &quot;total_count&quot;: &lt;该知识点下的总题数，若不确定填与wrong_count相同&gt;,</span>
+<span class="s2">      &quot;question_nos&quot;: [&lt;题目序号列表&gt;],</span>
+<span class="s2">      &quot;suggestion&quot;: &quot;&lt;针对该知识点的具体复习建议，1-2句&gt;&quot;</span>
+<span class="s2">    }}</span>
+<span class="s2">  ],</span>
+<span class="s2">  &quot;overall_summary&quot;: &quot;&lt;对学员本次考试整体表现的简短评价，指出最核心的1-2个薄弱方向，不超过50字&gt;&quot;</span>
+<span class="s2">}}&quot;&quot;&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="import">✅ 验证（import 检查）<a class="headerlink" href="#import" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>conda activate edu_agent
+python -c <span class="s2">&quot;</span>
+<span class="s2">import sys</span>
+<span class="s2">sys.path.insert(0, &#39;.&#39;)</span>
+<span class="s2">from dotenv import load_dotenv</span>
+<span class="s2">load_dotenv(&#39;.env.local&#39;)</span>
+
+<span class="s2">from backend.agents.exam.state import (</span>
+<span class="s2">    ExamState, ScoringPointResult, SubjectiveReviewResult,</span>
+<span class="s2">    WeakPoint, WeakPointsReport, TeacherDecision</span>
+<span class="s2">)</span>
+<span class="s2">from backend.agents.exam.prompts import (</span>
+<span class="s2">    SYSTEM_PROMPT, SUBJECTIVE_REVIEW_PROMPT, SUBJECTIVE_THINK_PROMPT,</span>
+<span class="s2">    CODE_QUALITY_REVIEW_PROMPT, WEAK_POINTS_ANALYSIS_PROMPT,</span>
+<span class="s2">)</span>
+<span class="s2">print(&#39;state.py import 成功，字段数：&#39;, len(ExamState.__annotations__))</span>
+<span class="s2">print(&#39;prompts.py import 成功，SYSTEM_PROMPT 长度：&#39;, len(SYSTEM_PROMPT))</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<p>预期输出：</p>
+<div class="highlight"><pre><span></span><code>state.py import 成功，字段数：17
+prompts.py import 成功，SYSTEM_PROMPT 长度：157
+</code></pre></div>
+<hr />
+<h2 id="_3">章节总结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>5 个子模型</strong>：<code>ScoringPointResult</code>（得分点）→ <code>SubjectiveReviewResult</code>（简答批改）→ <code>WeakPoint</code>（薄弱点）→ <code>WeakPointsReport</code>（薄弱点报告）→ <code>TeacherDecision</code>（教师决策）</li>
+<li><strong>ExamState 分7组</strong>：请求上下文 / 解析结果 / 三轨结果 / 汇总 / 薄弱点 / HitL / 发布</li>
+<li><strong>4 个 Prompt</strong>：SYSTEM（人设）/ SUBJECTIVE_REVIEW（简答评分）/ SUBJECTIVE_THINK（批改前推理）/ CODE_QUALITY（代码质量）/ WEAK_POINTS（薄弱点分析）</li>
+<li><strong>Think Tool 的价值</strong>：先自由推理再结构化评分，减少对"表述不同但实质正确"的误判</li>
+</ul>
+<p><strong>下一节 <code>6.3 Word 文件解析（parse_word_node）</code></strong> 实现 <code>parse_word_node</code>，解析学员提交的 <code>.docx</code> 文件，提取各题作答内容。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 6.1 试卷批改 Agent 全景" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              6.1 试卷批改 Agent 全景
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 6.3 Word 文件解析（parse_word_node）" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              6.3 Word 文件解析（parse_word_node）
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

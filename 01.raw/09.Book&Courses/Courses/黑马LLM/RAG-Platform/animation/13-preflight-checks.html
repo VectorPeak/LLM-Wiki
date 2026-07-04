@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- chapter-animation-template: unified-v2 -->
+<title>第 13 章 - 应用入口与环境前置校验业务与代码执行动画</title>
+<script src="../assets/vendor/mermaid.min.js"></script>
+<style>
+:root{color-scheme:dark;--bg:#090f1d;--panel:#101827;--panel-2:#131d30;--line:#26364f;--text:#eef5ff;--muted:#a6b4c8;--cyan:#38bdf8;--emerald:#34d399;--amber:#fbbf24;--violet:#a78bfa}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei","Segoe UI",system-ui,sans-serif;font-size:16px;overflow:hidden;letter-spacing:0}button{font:inherit}
+.topbar{min-height:86px;display:grid;grid-template-columns:minmax(300px,1fr) auto;gap:16px;align-items:center;padding:12px 22px;background:#0c1424;border-bottom:1px solid var(--line)}.brand h1{margin:0;font-size:23px;line-height:1.25;color:#e8f8ff}.brand p{margin:5px 0 0;color:var(--muted);font-size:14px;line-height:1.45}.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:8px}.tab-btn,.tool-btn{min-height:38px;border:1px solid var(--line);border-radius:8px;background:#101b2d;color:#dbeafe;cursor:pointer;padding:0 13px;transition:background .18s ease,border-color .18s ease,color .18s ease}.tab-btn:hover,.tool-btn:hover{background:#162641;border-color:#46658f}.tab-btn.active{background:var(--cyan);border-color:var(--cyan);color:#05111f;font-weight:800}.tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.tool-btn.primary{background:#164e63;border-color:#22d3ee;color:#ecfeff;font-weight:800}.tool-btn.icon{width:40px;padding:0;display:inline-grid;place-items:center;font-weight:800}.zoom-label{min-width:54px;text-align:center;color:#b8c7dc;font-size:14px}
+.workspace{height:calc(100vh - 86px);display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;padding:16px}.stage{min-width:0;border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden;display:flex;flex-direction:column}.stage-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line);background:#0f1829}.stage-title{font-size:18px;font-weight:800;color:#f3f8ff;display:flex;align-items:center;gap:10px}.badge{display:inline-flex;align-items:center;min-height:23px;padding:0 8px;border:1px solid #36506f;border-radius:999px;background:#142238;color:#b8d7ff;font-size:12px;font-weight:800}.stage-desc{font-size:14px;color:var(--muted);line-height:1.5;margin-top:4px}.progress-wrap{width:250px;display:grid;gap:7px}.progress-meta{display:flex;justify-content:space-between;color:#b6c5d8;font-size:14px}.progress{height:8px;border-radius:999px;background:#17243a;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--emerald));transition:width .25s ease}
+.viewport{position:relative;flex:1;overflow:hidden;cursor:grab;background:linear-gradient(#162136 1px,transparent 1px),linear-gradient(90deg,#162136 1px,transparent 1px);background-size:32px 32px}.viewport.dragging{cursor:grabbing}.canvas{position:absolute;left:0;top:0;transform-origin:0 0;transition:transform .22s ease}.canvas.no-animate{transition:none}.canvas svg{max-width:none!important;overflow:visible;font-size:15px!important}.canvas svg .nodeLabel,.canvas svg .edgeLabel,.canvas svg foreignObject{font-size:15px!important;line-height:1.42!important}.loading,.empty-state{position:absolute;inset:0;display:grid;place-items:center;color:#c8d8eb;font-size:18px;background:rgba(9,15,29,.78)}.loading[hidden],.empty-state[hidden]{display:none}
+.side{min-width:0;display:flex;flex-direction:column;gap:16px}.panel{border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden}.panel h2{margin:0;padding:14px 16px;border-bottom:1px solid var(--line);font-size:17px}.detail{padding:16px;background:#101a2c}.step-no{color:var(--cyan);font-size:14px;font-weight:800}.detail-title{margin-top:8px;font-size:20px;line-height:1.35;font-weight:800}.detail-body{margin-top:10px;color:#c1cede;line-height:1.65;font-size:15px}.meta{display:grid;gap:8px;padding:14px 16px}.meta-row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:8px;align-items:start;font-size:14px}.meta-row span:first-child{color:#91a6c2}.meta-row code{color:#dbeafe;background:#17243a;border:1px solid #263954;border-radius:6px;padding:2px 6px;white-space:normal;word-break:break-word}.timeline{display:grid;gap:8px;padding:12px;max-height:290px;overflow:auto}.timeline-row{display:grid;grid-template-columns:34px 1fr;gap:8px;padding:8px;border-radius:8px;color:#aebed5;background:#0c1626;border:1px solid transparent;font-size:13px;line-height:1.45;cursor:pointer}.timeline-row.current{color:#e0f2fe;border-color:var(--cyan);background:#0d2539;box-shadow:0 0 16px rgba(56,189,248,.18)}.timeline-row.done{color:#dcfce7;border-color:#0f766e;background:#0b2b27}.hint{padding:12px 16px;border-top:1px solid var(--line);color:#9fb0c7;font-size:14px;line-height:1.6}
+@media (max-width:1220px){body{overflow:auto}.topbar{height:auto;grid-template-columns:1fr;padding:14px 16px}.tabs,.tools{justify-content:flex-start}.workspace{height:auto;grid-template-columns:1fr}.viewport{height:680px;flex:auto}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>第 13 章：应用入口与环境前置校验业务与代码执行动画</h1>
+    <p>启动前检查必需配置和运行依赖，避免服务打开后问答链路才失败。</p>
+  </div>
+  <div>
+    <nav class="tabs" aria-label="章节流程视角">
+      <button class="tab-btn active" data-view="business">业务执行流程图</button>
+      <button class="tab-btn" data-view="code">代码执行流程图</button>
+    </nav>
+    <div class="tools">
+      <a class="tool-btn" href="../13-app-entry-preflight.html">返回本章讲义</a>
+      <a class="tool-btn" href="business-flow.html">业务总图</a>
+      <button class="tool-btn primary" id="playBtn">▶ 播放</button>
+      <button class="tool-btn icon" id="prevBtn" title="上一步">‹</button>
+      <button class="tool-btn icon" id="nextBtn" title="下一步">›</button>
+      <button class="tool-btn icon" id="zoomOutBtn" title="缩小">−</button>
+      <span class="zoom-label" id="zoomLabel">100%</span>
+      <button class="tool-btn icon" id="zoomInBtn" title="放大">＋</button>
+      <button class="tool-btn" id="fitBtn">适配</button>
+    </div>
+  </div>
+</header>
+<main class="workspace">
+  <section class="stage">
+    <div class="stage-head">
+      <div><div class="stage-title" id="stageTitle">第 13 章业务执行流程图 <span class="badge">业务闭环</span></div><div class="stage-desc" id="stageDesc">第 13 章功能闭环</div></div>
+      <div class="progress-wrap"><div class="progress-meta"><span id="progressName">节点 1</span><span id="progressCount">1/6</span></div><div class="progress"><span id="progressBar"></span></div></div>
+    </div>
+    <div class="viewport" id="viewport"><div class="canvas" id="canvas"></div><div class="loading" id="loading">正在绘制流程图...</div><div class="empty-state" id="emptyState" hidden>Mermaid 加载失败，请刷新页面。</div></div>
+  </section>
+  <aside class="side">
+    <section class="panel"><h2>当前节点</h2><div class="detail"><div class="step-no" id="stepNo">NODE 1</div><div class="detail-title" id="stepTitle">-</div><div class="detail-body" id="stepBody">-</div></div><div class="meta"><div class="meta-row"><span>章节</span><code id="nodeChapter">第 13 章</code></div><div class="meta-row"><span>文件</span><code id="nodeFile">-</code></div><div class="meta-row"><span>函数</span><code id="nodeSymbol">-</code></div></div></section>
+    <section class="panel"><h2>节点列表</h2><div class="timeline" id="timeline"></div><div class="hint">滚轮缩放，按住图表拖拽。点击节点列表可跳到对应代码节点。</div></section>
+  </aside>
+</main>
+<script type="text/plain" id="diagram-business">
+flowchart LR
+    B_START["服务准备启动<br/><span>业务执行流程</span><br/><em>启动入口</em>"]
+    B_SETTINGS["读取集中配置<br/><span>业务执行流程</span><br/><em>配置闭环</em>"]
+    B_CHECK["逐项前置校验<br/><span>业务执行流程</span><br/><em>环境检查</em>"]
+    B_FAIL["失败即阻止启动<br/><span>业务执行流程</span><br/><em>防故障外溢</em>"]
+    B_HEALTH["健康检查可见<br/><span>业务执行流程</span><br/><em>运维入口</em>"]
+    B_OUT["交付启动守卫<br/><span>业务执行流程</span><br/><em>本章交付</em>"]
+    B_START --> B_SETTINGS
+    B_SETTINGS --> B_CHECK
+    B_CHECK --> B_FAIL
+    B_FAIL --> B_HEALTH
+    B_HEALTH --> B_OUT
+    style B_START fill:#1e3a5f,stroke:#60a5fa,stroke-width:2px
+    style B_SETTINGS fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style B_CHECK fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style B_FAIL fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style B_HEALTH fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style B_OUT fill:#064e3b,stroke:#34d399,stroke-width:2px
+</script>
+<script type="text/plain" id="diagram-code">
+flowchart TD
+    SETTINGS["配置对象<br/><span>qa_core/config/settings.py</span><br/><em>Settings / get_settings()</em>"]
+    CHECK_VALUE["值校验<br/><span>qa_core/config/preflight.py</span><br/><em>_is_placeholder()</em>"]
+    CHECK_PATH["路径校验<br/><span>qa_core/config/preflight.py</span><br/><em>_require_path()</em>"]
+    CHECK_SCENARIO["场景校验<br/><span>qa_core/scenarios/registry.py</span><br/><em>resolve_scenario()</em>"]
+    PREFLIGHT["前置校验<br/><span>qa_core/config/preflight.py</span><br/><em>validate_runtime_environment()</em>"]
+    VALIDATE["启动守卫<br/><span>qa_core/config/preflight.py</span><br/><em>validate_runtime_environment()</em>"]
+    APP["应用接入<br/><span>app.py</span><br/><em>create_app()</em>"]
+    LOG["日志<br/><span>qa_core/config/logging_config.py</span><br/><em>get_logger()</em>"]
+    SETTINGS --> CHECK_VALUE
+    CHECK_VALUE --> CHECK_PATH
+    CHECK_PATH --> CHECK_SCENARIO
+    CHECK_SCENARIO --> PREFLIGHT
+    PREFLIGHT --> VALIDATE
+    VALIDATE --> APP
+    APP --> LOG
+    style SETTINGS fill:#1e3a5f,stroke:#60a5fa,stroke-width:2px
+    style CHECK_VALUE fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style CHECK_PATH fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style CHECK_SCENARIO fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style PREFLIGHT fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style VALIDATE fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style APP fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style LOG fill:#064e3b,stroke:#34d399,stroke-width:2px
+</script>
+<script>
+const views = {"business": {"title": "第 13 章业务执行流程图", "badge": "业务闭环", "desc": "从业务视角说明第 13 章解决什么问题、如何形成可运行闭环。", "nodes": [{"id": "B_START", "title": "服务准备启动", "file": "业务执行流程", "symbol": "启动入口", "body": "应用启动前先确认运行环境是否满足要求。", "chapter": "第 13 章"}, {"id": "B_SETTINGS", "title": "读取集中配置", "file": "业务执行流程", "symbol": "配置闭环", "body": "统一读取应用名、模型、路径、场景和观测配置。", "chapter": "第 13 章"}, {"id": "B_CHECK", "title": "逐项前置校验", "file": "业务执行流程", "symbol": "环境检查", "body": "检查占位值、必需路径和 active scenario。", "chapter": "第 13 章"}, {"id": "B_FAIL", "title": "失败即阻止启动", "file": "业务执行流程", "symbol": "防故障外溢", "body": "依赖不完整时在启动阶段失败，而不是等用户提问才失败。", "chapter": "第 13 章"}, {"id": "B_HEALTH", "title": "健康检查可见", "file": "业务执行流程", "symbol": "运维入口", "body": "健康接口返回服务状态和前置校验摘要。", "chapter": "第 13 章"}, {"id": "B_OUT", "title": "交付启动守卫", "file": "业务执行流程", "symbol": "本章交付", "body": "服务具备可解释、可排查的启动前置校验闭环。", "chapter": "第 13 章"}]}, "code": {"title": "第 13 章代码执行流程图", "badge": "代码调用", "desc": "从代码视角串联第 13 章核心文件、函数和执行顺序。", "nodes": [{"id": "SETTINGS", "title": "配置对象", "file": "qa_core/config/settings.py", "symbol": "Settings / get_settings()", "body": "集中读取运行配置。", "chapter": "第 13 章"}, {"id": "CHECK_VALUE", "title": "值校验", "file": "qa_core/config/preflight.py", "symbol": "_is_placeholder()", "body": "检查 API Key、管理令牌等必需值不是占位符。", "chapter": "第 13 章"}, {"id": "CHECK_PATH", "title": "路径校验", "file": "qa_core/config/preflight.py", "symbol": "_require_path()", "body": "检查本地模型、场景目录和 FAQ 文件存在。", "chapter": "第 13 章"}, {"id": "CHECK_SCENARIO", "title": "场景校验", "file": "qa_core/scenarios/registry.py", "symbol": "resolve_scenario()", "body": "确认 active_scenario_id 可解析。", "chapter": "第 13 章"}, {"id": "PREFLIGHT", "title": "前置校验", "file": "qa_core/config/preflight.py", "symbol": "validate_runtime_environment()", "body": "按固定顺序汇总运行环境检查。", "chapter": "第 13 章"}, {"id": "VALIDATE", "title": "启动守卫", "file": "qa_core/config/preflight.py", "symbol": "validate_runtime_environment()", "body": "任一失败直接抛错，阻止启动。", "chapter": "第 13 章"}, {"id": "APP", "title": "应用接入", "file": "app.py", "symbol": "create_app()", "body": "创建应用时执行前置校验。", "chapter": "第 13 章"}, {"id": "LOG", "title": "日志", "file": "qa_core/config/logging_config.py", "symbol": "get_logger()", "body": "统一运行日志输出。", "chapter": "第 13 章"}]}};
+const state = {view:"business",step:0,scale:1,panX:0,panY:0,playing:false,timer:null,cache:{}};
+const el = {
+  canvas:document.getElementById("canvas"),viewport:document.getElementById("viewport"),loading:document.getElementById("loading"),empty:document.getElementById("emptyState"),stageTitle:document.getElementById("stageTitle"),stageDesc:document.getElementById("stageDesc"),progressName:document.getElementById("progressName"),progressCount:document.getElementById("progressCount"),progressBar:document.getElementById("progressBar"),stepNo:document.getElementById("stepNo"),stepTitle:document.getElementById("stepTitle"),stepBody:document.getElementById("stepBody"),nodeChapter:document.getElementById("nodeChapter"),nodeFile:document.getElementById("nodeFile"),nodeSymbol:document.getElementById("nodeSymbol"),timeline:document.getElementById("timeline"),zoomLabel:document.getElementById("zoomLabel"),playBtn:document.getElementById("playBtn")
+};
+function boot(){
+  if(!window.mermaid){el.loading.hidden=true;el.empty.hidden=false;return;}
+  mermaid.initialize({startOnLoad:false,securityLevel:"loose",theme:"base",flowchart:{curve:"basis",htmlLabels:true,nodeSpacing:52,rankSpacing:68,padding:18},themeVariables:{darkMode:true,background:"#101827",mainBkg:"#17243a",primaryColor:"#17243a",primaryTextColor:"#edf6ff",primaryBorderColor:"#38bdf8",lineColor:"#93c5fd",secondaryColor:"#132136",tertiaryColor:"#0f172a",fontFamily:"Microsoft YaHei, Segoe UI, sans-serif",fontSize:"15px",clusterBkg:"#0d1829",clusterBorder:"#334155",edgeLabelBackground:"#111b2e"}});
+  renderView("business");
+}
+function diagramSource(viewId){return document.getElementById(`diagram-${viewId}`).textContent.trim();}
+async function renderView(viewId){
+  stopPlayback();
+  state.view=viewId;
+  state.step=0;
+  const view=views[viewId];
+  el.stageTitle.innerHTML=`${view.title} <span class="badge">${view.badge}</span>`;
+  el.stageDesc.textContent=view.desc;
+  document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.view===viewId));
+  renderTimeline();
+  el.loading.hidden=false;
+  el.empty.hidden=true;
+  el.canvas.innerHTML="";
+  try{
+    if(!state.cache[viewId]){
+      const result = await mermaid.render(`chapter-flow-diagram-${viewId}`, diagramSource(viewId));
+      state.cache[viewId]=result.svg;
+    }
+    el.canvas.innerHTML = state.cache[viewId];
+    decorateSvg();
+    requestAnimationFrame(() => {fitToView();activateStep(0,false);el.loading.hidden=true;});
+  }catch(err){console.error(err);el.loading.hidden=true;el.empty.hidden=false;}
+}
+function decorateSvg(){
+  const svg = el.canvas.querySelector("svg"); if(!svg) return;
+  const vb = svg.viewBox && svg.viewBox.baseVal; if(vb && vb.width && vb.height){svg.setAttribute("width", String(Math.ceil(vb.width)));svg.setAttribute("height", String(Math.ceil(vb.height)));}
+  svg.style.maxWidth="none"; svg.style.overflow="visible";
+  const style = document.createElementNS("http://www.w3.org/2000/svg","style");
+  style.textContent = `g.node > rect,g.node > polygon,g.node > path,g.node > circle {filter:drop-shadow(0 6px 14px rgba(0,0,0,.28));} g.node.is-active > rect,g.node.is-active > polygon,g.node.is-active > path,g.node.is-active > circle {stroke:#fbbf24!important;stroke-width:4px!important;filter:drop-shadow(0 0 18px rgba(251,191,36,.62));} .edgePath path {stroke-width:2.1px!important;}`;
+  svg.insertBefore(style, svg.firstChild);
+}
+function renderTimeline(){
+  const flowNodes = views[state.view].nodes;
+  el.timeline.innerHTML = flowNodes.map((node,index) => `<button class="timeline-row" data-index="${index}"><span class="num">${String(index+1).padStart(2,"0")}</span><span>${node.title}<br><small>${node.symbol}</small></span></button>`).join("");
+  el.timeline.querySelectorAll(".timeline-row").forEach(row => row.addEventListener("click", () => activateStep(Number(row.dataset.index))));
+}
+function getSvgBox(){const svg=el.canvas.querySelector("svg"); if(!svg) return {width:1000,height:700,x:0,y:0}; const vb=svg.viewBox&&svg.viewBox.baseVal; if(vb&&vb.width&&vb.height) return {width:vb.width,height:vb.height,x:vb.x,y:vb.y}; const box=svg.getBBox(); return {width:box.width,height:box.height,x:box.x,y:box.y};}
+function fitToView(){const box=getSvgBox(); const vw=el.viewport.clientWidth; const vh=el.viewport.clientHeight; state.scale=Math.max(.28,Math.min(1.18,Math.min((vw-64)/box.width,(vh-64)/box.height))); state.panX=(vw-box.width*state.scale)/2-box.x*state.scale; state.panY=Math.max(28,(vh-box.height*state.scale)/2)-box.y*state.scale; applyTransform();}
+function applyTransform(animate=true){el.canvas.classList.toggle("no-animate",!animate); el.canvas.style.transform=`translate(${state.panX}px, ${state.panY}px) scale(${state.scale})`; el.zoomLabel.textContent=`${Math.round(state.scale*100)}%`;}
+function findNode(id){const svg=el.canvas.querySelector("svg"); if(!svg) return null; const escaped=id.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); const generated=new RegExp(`^flowchart-${escaped}-\\d+$`); return Array.from(svg.querySelectorAll("g.node")).find(node => node.id===id || generated.test(node.id));}
+function activateStep(index, center=true){const flowNodes=views[state.view].nodes; state.step=(index+flowNodes.length)%flowNodes.length; const node=flowNodes[state.step]; el.canvas.querySelectorAll("g.node").forEach(item=>item.classList.remove("is-active")); const svgNode=findNode(node.id); if(svgNode){svgNode.classList.add("is-active"); if(center) focusNode(svgNode);} el.stepNo.textContent=`${state.view==="business"?"BUS":"CODE"} ${state.step+1}`; el.stepTitle.textContent=node.title; el.stepBody.textContent=node.body; el.nodeChapter.textContent=node.chapter; el.nodeFile.textContent=node.file; el.nodeSymbol.textContent=node.symbol; el.progressName.textContent=`节点 ${state.step+1}`; el.progressCount.textContent=`${state.step+1}/${flowNodes.length}`; el.progressBar.style.width=`${((state.step+1)/flowNodes.length)*100}%`; el.timeline.querySelectorAll(".timeline-row").forEach((row,i)=>{row.classList.toggle("current",i===state.step); row.classList.toggle("done",i<state.step);});}
+function getNodeSvgBox(node){const raw=node.getBBox(); const matrix=node.getCTM(); if(!matrix) return raw; const points=[{x:raw.x,y:raw.y},{x:raw.x+raw.width,y:raw.y},{x:raw.x,y:raw.y+raw.height},{x:raw.x+raw.width,y:raw.y+raw.height}].map(point=>({x:matrix.a*point.x+matrix.c*point.y+matrix.e,y:matrix.b*point.x+matrix.d*point.y+matrix.f})); const xs=points.map(p=>p.x); const ys=points.map(p=>p.y); const x=Math.min(...xs); const y=Math.min(...ys); return {x,y,width:Math.max(...xs)-x,height:Math.max(...ys)-y};}
+function focusNode(node){const box=getNodeSvgBox(node); const svgBox=getSvgBox(); const vw=el.viewport.clientWidth; const vh=el.viewport.clientHeight; const padding=48; const desired=Math.min(1.05,Math.max(.34,Math.min((vw-padding*2)/Math.max(box.width,1),(vh-padding*2)/Math.max(box.height,1)))); if(box.width*state.scale>vw-padding*2||box.height*state.scale>vh-padding*2||state.scale<.42) state.scale=desired; const cx=box.x+box.width/2; const cy=box.y+box.height/2; state.panX=vw/2-(cx-svgBox.x)*state.scale; state.panY=vh/2-(cy-svgBox.y)*state.scale; applyTransform();}
+function setScale(next, anchorX=el.viewport.clientWidth/2, anchorY=el.viewport.clientHeight/2){const old=state.scale; const bounded=Math.max(.25,Math.min(2.4,next)); const worldX=(anchorX-state.panX)/old; const worldY=(anchorY-state.panY)/old; state.scale=bounded; state.panX=anchorX-worldX*bounded; state.panY=anchorY-worldY*bounded; applyTransform();}
+function startPlayback(){state.playing=true; el.playBtn.textContent="Ⅱ 暂停"; state.timer=window.setInterval(()=>activateStep(state.step+1),1350);}
+function stopPlayback(){state.playing=false; el.playBtn.textContent="▶ 播放"; if(state.timer) window.clearInterval(state.timer); state.timer=null;}
+document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>renderView(btn.dataset.view)));
+document.getElementById("playBtn").addEventListener("click",()=>state.playing?stopPlayback():startPlayback());
+document.getElementById("prevBtn").addEventListener("click",()=>activateStep(state.step-1));
+document.getElementById("nextBtn").addEventListener("click",()=>activateStep(state.step+1));
+document.getElementById("zoomInBtn").addEventListener("click",()=>setScale(state.scale*1.15));
+document.getElementById("zoomOutBtn").addEventListener("click",()=>setScale(state.scale/1.15));
+document.getElementById("fitBtn").addEventListener("click",fitToView);
+window.addEventListener("resize",fitToView);
+let dragging=false; let dragStart={x:0,y:0,panX:0,panY:0};
+el.viewport.addEventListener("pointerdown",event=>{dragging=true;dragStart={x:event.clientX,y:event.clientY,panX:state.panX,panY:state.panY};el.viewport.classList.add("dragging");el.viewport.setPointerCapture(event.pointerId);});
+el.viewport.addEventListener("pointermove",event=>{if(!dragging)return;state.panX=dragStart.panX+event.clientX-dragStart.x;state.panY=dragStart.panY+event.clientY-dragStart.y;applyTransform(false);});
+el.viewport.addEventListener("pointerup",event=>{dragging=false;el.viewport.classList.remove("dragging");el.viewport.releasePointerCapture(event.pointerId);});
+el.viewport.addEventListener("wheel",event=>{event.preventDefault();const rect=el.viewport.getBoundingClientRect();setScale(state.scale*(event.deltaY<0?1.1:.9),event.clientX-rect.left,event.clientY-rect.top);},{passive:false});
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot,{once:true}); else boot();
+</script>
+</body>
+</html>

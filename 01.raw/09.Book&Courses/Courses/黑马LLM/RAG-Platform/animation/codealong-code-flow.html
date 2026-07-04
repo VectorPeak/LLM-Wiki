@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KnowForge RAG Platform - 章节代码完整链路流程图</title>
+<script src="../assets/vendor/mermaid.min.js"></script>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#07111f;
+  --panel:#101a2b;
+  --panel-2:#142238;
+  --panel-3:#0c1626;
+  --line:#2b3d58;
+  --line-strong:#5f7eaa;
+  --text:#edf6ff;
+  --muted:#aebed2;
+  --blue:#60a5fa;
+  --cyan:#22d3ee;
+  --emerald:#34d399;
+  --amber:#fbbf24;
+  --rose:#fb7185;
+  --violet:#a78bfa;
+  --orange:#fb923c;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+  font-size:16px;
+  letter-spacing:0;
+  overflow:hidden;
+}
+button{font:inherit}
+.topbar{
+  height:88px;
+  display:grid;
+  grid-template-columns:minmax(340px,520px) minmax(0,1fr) auto;
+  align-items:center;
+  gap:18px;
+  padding:0 22px;
+  border-bottom:1px solid var(--line);
+  background:#0c1728;
+}
+.brand h1{
+  margin:0;
+  font-size:24px;
+  line-height:1.2;
+  color:#f3f8ff;
+}
+.subtitle{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.45;
+}
+.tabs{
+  display:flex;
+  gap:9px;
+  justify-content:center;
+  min-width:0;
+}
+.tabs button,.tool-btn{
+  min-height:40px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#111d31;
+  color:#dce8f8;
+  cursor:pointer;
+  padding:0 14px;
+  white-space:nowrap;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.tabs button:hover,.tool-btn:hover{border-color:var(--line-strong);background:#172640}
+.tabs button.active{
+  color:#06121f;
+  background:var(--cyan);
+  border-color:var(--cyan);
+  font-weight:800;
+}
+.tools{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tool-btn{
+  width:40px;
+  padding:0;
+  display:inline-grid;
+  place-items:center;
+  font-weight:800;
+}
+.tool-btn.wide{width:auto;padding:0 13px}
+.tool-btn.primary{
+  background:#155e75;
+  border-color:#67e8f9;
+  color:#ecfeff;
+}
+.zoom-label{
+  min-width:54px;
+  text-align:center;
+  color:#c1cee1;
+  font-size:14px;
+}
+.workspace{
+  height:calc(100vh - 88px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 392px;
+  gap:16px;
+  padding:16px;
+}
+.stage{
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.stage-header{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  gap:18px;
+  padding:15px 18px;
+  border-bottom:1px solid var(--line);
+  background:#101b2d;
+}
+.stage-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:19px;
+  font-weight:800;
+  color:#f3f8ff;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:0 9px;
+  border-radius:999px;
+  border:1px solid #36506f;
+  background:#142238;
+  color:#b8d7ff;
+  font-size:12px;
+  font-weight:700;
+}
+.stage-desc{
+  font-size:14px;
+  color:var(--muted);
+  margin-top:5px;
+  line-height:1.5;
+}
+.progress-wrap{width:270px;display:grid;gap:7px}
+.progress-meta{
+  display:flex;
+  justify-content:space-between;
+  color:#b8c7dc;
+  font-size:14px;
+}
+.progress{
+  height:8px;
+  border-radius:999px;
+  background:#18253b;
+  overflow:hidden;
+}
+.progress > span{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--cyan),var(--emerald),var(--amber));
+  transition:width .25s ease;
+}
+.viewport{
+  position:relative;
+  flex:1;
+  overflow:hidden;
+  cursor:grab;
+  background:
+    linear-gradient(#16243a 1px,transparent 1px),
+    linear-gradient(90deg,#16243a 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.viewport.dragging{cursor:grabbing}
+.canvas{
+  position:absolute;
+  left:0;
+  top:0;
+  transform-origin:0 0;
+  transition:transform .22s ease;
+}
+.canvas.no-animate{transition:none}
+.canvas svg{
+  max-width:none!important;
+  overflow:visible;
+  font-size:14px!important;
+}
+.canvas svg .nodeLabel,.canvas svg .edgeLabel,.canvas svg foreignObject{
+  font-size:14px!important;
+  line-height:1.42!important;
+}
+.canvas svg .cluster-label text{font-size:16px!important;font-weight:800!important}
+.loading,.empty-state{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:#cddbed;
+  font-size:18px;
+  background:rgba(8,17,31,.84);
+}
+.loading[hidden],.empty-state[hidden]{display:none}
+.side{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.panel{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel);
+  overflow:hidden;
+}
+.panel h2{
+  margin:0;
+  padding:13px 15px;
+  border-bottom:1px solid var(--line);
+  font-size:17px;
+}
+.node-card{padding:15px;background:#101b2d}
+.node-index{
+  color:var(--cyan);
+  font-size:14px;
+  font-weight:800;
+}
+.node-title{
+  margin-top:8px;
+  font-size:20px;
+  line-height:1.35;
+  font-weight:800;
+}
+.node-body{
+  margin-top:10px;
+  color:#c4d1e1;
+  line-height:1.62;
+  font-size:15px;
+}
+.meta-list{
+  display:grid;
+  gap:8px;
+  padding:14px 15px;
+}
+.meta-row{
+  display:grid;
+  grid-template-columns:74px minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+  font-size:14px;
+}
+.meta-row span:first-child{color:#91a6c2}
+.meta-row code{
+  color:#dbeafe;
+  background:#17243a;
+  border:1px solid #263954;
+  border-radius:6px;
+  padding:2px 6px;
+  white-space:normal;
+  word-break:break-word;
+}
+.legend{
+  display:grid;
+  gap:9px;
+  padding:13px 15px 15px;
+}
+.legend-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#d5e2f1;
+  font-size:14px;
+}
+.swatch{
+  width:14px;
+  height:14px;
+  border-radius:4px;
+  border:1px solid rgba(255,255,255,.32);
+}
+.coverage{
+  display:grid;
+  gap:9px;
+  padding:13px 15px 15px;
+}
+.coverage-item{
+  display:grid;
+  grid-template-columns:26px minmax(0,1fr);
+  gap:9px;
+  align-items:start;
+  color:#cddbed;
+  font-size:14px;
+  line-height:1.5;
+}
+.coverage-index{
+  display:inline-grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  border-radius:6px;
+  background:#14324a;
+  color:#7dd3fc;
+  font-weight:800;
+  font-size:12px;
+}
+.hint{
+  padding:12px 15px;
+  border-top:1px solid var(--line);
+  color:#9fb1c8;
+  font-size:14px;
+  line-height:1.58;
+}
+@media (max-width:1420px){
+  body{overflow:auto}
+  .topbar{
+    height:auto;
+    grid-template-columns:1fr;
+    align-items:start;
+    padding:16px;
+  }
+  .tabs{justify-content:flex-start;overflow:auto}
+  .tools{flex-wrap:wrap}
+}
+@media (max-width:1180px){
+  .workspace{height:auto;grid-template-columns:1fr}
+  .viewport{height:760px;flex:auto}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>章节代码完整链路流程图</h1>
+    <div class="subtitle">基于第 19 章最终快照，整理为两张大图：业务节点流程图与代码执行流程图。</div>
+  </div>
+  <nav class="tabs" aria-label="流程视角">
+    <button class="active" data-view="business">业务节点流程图</button>
+    <button data-view="code">代码执行流程图</button>
+  </nav>
+  <div class="tools" aria-label="流程图控制">
+    <button class="tool-btn primary wide" id="playBtn" title="播放或暂停">播放</button>
+    <button class="tool-btn" id="prevBtn" title="上一步">‹</button>
+    <button class="tool-btn" id="nextBtn" title="下一步">›</button>
+    <button class="tool-btn" id="zoomOutBtn" title="缩小">−</button>
+    <span class="zoom-label" id="zoomLabel">100%</span>
+    <button class="tool-btn" id="zoomInBtn" title="放大">＋</button>
+    <button class="tool-btn wide" id="fitBtn" title="适配窗口">适配</button>
+  </div>
+</header>
+
+<main class="workspace">
+  <section class="stage">
+    <div class="stage-header">
+      <div>
+        <div class="stage-title" id="stageTitle">业务节点流程图 <span class="pill">CH19</span></div>
+        <div class="stage-desc" id="stageDesc">从业务请求、在线问答、离线入库、质量治理、测试门禁到观测闭环，串成一张完整业务图。</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta"><span id="progressName">节点 1</span><span id="progressCount">1/1</span></div>
+        <div class="progress"><span id="progressBar"></span></div>
+      </div>
+    </div>
+    <div class="viewport" id="viewport">
+      <div class="canvas" id="canvas"></div>
+      <div class="loading" id="loading">正在绘制完整链路...</div>
+      <div class="empty-state" id="emptyState" hidden>Mermaid 加载失败，请刷新页面或检查静态资源。</div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <section class="panel">
+      <h2>当前节点</h2>
+      <div class="node-card">
+        <div class="node-index" id="nodeIndex">NODE 1</div>
+        <div class="node-title" id="nodeTitle">业务入口</div>
+        <div class="node-body" id="nodeBody">切换两张大图后，可以逐步查看完整链路上的每个关键节点。</div>
+      </div>
+      <div class="meta-list">
+        <div class="meta-row"><span>章节</span><code id="nodeChapter">-</code></div>
+        <div class="meta-row"><span>位置</span><code id="nodeFile">-</code></div>
+        <div class="meta-row"><span>交付</span><code id="nodeSymbol">-</code></div>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>闭环覆盖</h2>
+      <div class="coverage" id="coverageList"></div>
+    </section>
+    <section class="panel">
+      <h2>图例</h2>
+      <div class="legend">
+        <div class="legend-row"><span class="swatch" style="background:#1e3a5f"></span>用户入口 / Web API</div>
+        <div class="legend-row"><span class="swatch" style="background:#172554"></span>应用服务 / RAG Pipeline</div>
+        <div class="legend-row"><span class="swatch" style="background:#713f12"></span>路由 / 计划 / 规则配置</div>
+        <div class="legend-row"><span class="swatch" style="background:#0f766e"></span>检索 / Store / 入库</div>
+        <div class="legend-row"><span class="swatch" style="background:#4c1d95"></span>Prompt / 回答生成</div>
+        <div class="legend-row"><span class="swatch" style="background:#064e3b"></span>治理 / 测试 / 观测</div>
+        <div class="legend-row"><span class="swatch" style="background:#7f1d1d"></span>异常 / 拒绝 / 信息不足</div>
+      </div>
+      <div class="hint">本页是第 19 章最终快照的课程流程图，不是根目录完整项目的逐文件自动生成图。可滚轮缩放，按住图表拖拽。</div>
+    </section>
+  </aside>
+</main>
+
+<script type="text/plain" id="diagram-business">
+flowchart LR
+    U["用户 / 学员<br/>提出企业知识问题"]
+    P["请求参数<br/>query / source / session<br/>scenario / tenant / dataset / kb_version"]
+    UI["浏览器或 API 调用方<br/>WebSocket 流式问答<br/>HTTP 检索诊断"]
+
+    subgraph START["启动与基础配置闭环"]
+      APP["应用启动<br/>create_app()"]
+      SETTINGS["运行配置<br/>Settings / get_settings()"]
+      PREFLIGHT["前置校验<br/>validate_runtime_environment()"]
+      RULES["路由规则配置<br/>rules.toml / get_rule_config()"]
+      SCENARIO["业务场景配置<br/>ScenarioRegistry / valid_sources"]
+      APP --> SETTINGS --> PREFLIGHT
+      SETTINGS --> RULES
+      SETTINGS --> SCENARIO
+    end
+
+    subgraph ONLINE["在线问答业务闭环"]
+      API["问答入口<br/>/api/stream<br/>/api/retrieval/debug"]
+      SERVICE["QAService<br/>应用服务门面"]
+      HISTORY["会话历史<br/>recent queries / add turn"]
+      CONTEXT["单次请求上下文<br/>trace_id / session / scope / kb"]
+      ROUTE["低成本路由<br/>直答 / source 边界 / FAQ 快路径 / 检索"]
+      PREPARE["检索准备<br/>意图 / source / 改写 / 计划 / 变体 / PromptProfile"]
+      FAQ["FAQ 检索<br/>标准问答优先"]
+      DOC["文档检索<br/>Hybrid Search"]
+      ANSWER["证据组织与回答<br/>上下文筛选 / Prompt / grounded answer"]
+      STREAM["流式事件<br/>start / status / token / end / error"]
+      API --> SERVICE --> HISTORY --> CONTEXT --> ROUTE
+      ROUTE --> PREPARE --> FAQ --> DOC --> ANSWER --> STREAM
+      ROUTE -.直答或 FAQ 精确命中.-> STREAM
+    end
+
+    subgraph RETRIEVAL["检索与可见性闭环"]
+      PLAN["RetrievalPlan<br/>top_k / threshold / rerank / variants"]
+      STORE["FAQ / Doc Store<br/>MilvusHybridStore"]
+      FILTER["可见性过滤<br/>source + kb_version + DataScope"]
+      SCORE["Hybrid 打分<br/>dense + sparse + merge + rerank"]
+      SOURCES["来源载荷<br/>source_payloads()"]
+      PLAN --> STORE --> FILTER --> SCORE --> SOURCES
+    end
+
+    subgraph INGEST["离线入库业务闭环"]
+      FILES["知识资料<br/>PDF / DOCX / MD / TXT / CSV / Excel"]
+      FAQCSV["FAQ CSV<br/>标准问题 / 标准答案 / 分类"]
+      VERSION["知识库版本<br/>ensure / record / activate"]
+      SCOPE["数据域<br/>tenant / dataset / visibility / roles"]
+      LOAD["文档加载<br/>load_file()"]
+      NORMALIZE["标准化元数据<br/>fingerprint / source / kb / scope"]
+      CHUNK["切分<br/>stable chunk id"]
+      FAQDOC["FAQ 标准化<br/>normalize_faq_source()"]
+      MANIFEST["MySQL IndexManifest<br/>fingerprint + chunk_ids"]
+      REUSE["跨版本复用<br/>copy_documents_to_version()<br/>复用旧 chunk + dense"]
+      WRITE["写入 Store<br/>变化文件 delete_ids() / add_documents()"]
+      FILES --> LOAD --> NORMALIZE --> MANIFEST
+      MANIFEST -->|"未变化"| REUSE
+      MANIFEST -->|"变化"| CHUNK --> WRITE
+      REUSE --> WRITE
+      FAQCSV --> FAQDOC --> WRITE
+      VERSION --> NORMALIZE
+      SCOPE --> NORMALIZE
+      VERSION --> FAQDOC
+      SCOPE --> FAQDOC
+    end
+
+    subgraph QUALITY["质量、测试与观测闭环"]
+      Q1["入库质量检查<br/>文件 / FAQ / 冲突 / chunk"]
+      TEST["自动化测试<br/>unittest / guardrails / smoke"]
+      TRACE["Trace 观测<br/>stage timings / first token / sources"]
+      DEBUG["检索诊断<br/>intent / plan / variants / sources / timings"]
+      Q1 --> TEST --> TRACE
+      DEBUG --> TRACE
+    end
+
+    U --> P --> UI --> API
+    START --> API
+    SCENARIO --> CONTEXT
+    RULES --> ROUTE
+    PREPARE --> PLAN
+    FAQ --> STORE
+    DOC --> STORE
+    SOURCES --> ANSWER
+    WRITE --> STORE
+    Q1 -.质量门禁.-> WRITE
+    STREAM --> TRACE
+    API --> DEBUG
+    TEST -.验证.-> ONLINE
+    TEST -.验证.-> INGEST
+    TRACE -.运维复盘.-> RULES
+
+    style U fill:#1e3a5f,stroke:#60a5fa,stroke-width:2px
+    style P fill:#1e3a5f,stroke:#60a5fa
+    style UI fill:#1e3a5f,stroke:#60a5fa
+    style START fill:#312e81,stroke:#a78bfa
+    style ONLINE fill:#172554,stroke:#818cf8
+    style RETRIEVAL fill:#0f766e,stroke:#22d3ee
+    style INGEST fill:#0f766e,stroke:#22d3ee
+    style QUALITY fill:#064e3b,stroke:#34d399
+    style ROUTE fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style PREPARE fill:#713f12,stroke:#fbbf24
+    style ANSWER fill:#4c1d95,stroke:#a78bfa,stroke-width:2px
+    style STREAM fill:#064e3b,stroke:#34d399,stroke-width:2px
+    style FILTER fill:#064e3b,stroke:#34d399
+    style SCORE fill:#0f766e,stroke:#22d3ee
+    style WRITE fill:#0f766e,stroke:#22d3ee,stroke-width:2px
+    style TEST fill:#064e3b,stroke:#34d399
+    style TRACE fill:#064e3b,stroke:#34d399,stroke-width:2px
+</script>
+
+<script type="text/plain" id="diagram-code">
+flowchart TD
+    subgraph BOOT["启动与路由注册"]
+      APPPY["app.py<br/>create_app(run_preflight=True)"]
+      FASTAPI["FastAPI(title=settings.app_name)"]
+      ERR["register_api_exception_handlers(app)"]
+      PREF["validate_runtime_environment(settings)"]
+      ROUTERS["include_router(chat_router)<br/>include_router(kb_versions_router)"]
+      HEALTH["GET /health"]
+      APPPY --> FASTAPI --> ERR --> PREF --> ROUTERS --> HEALTH
+    end
+
+    subgraph API["Web/API 入口"]
+      WS["chat.py<br/>websocket_endpoint()"]
+      POSTDBG["chat.py<br/>POST /api/retrieval/debug<br/>debug_retrieval()"]
+      COLLECT["_send_stream_events(context)"]
+      DBG_PAYLOAD["QAService.debug_retrieval(...)"]
+      SCTX["QueryServiceContext.from_ws_payload()<br/>from_debug_request()"]
+      FACTORY["application/factory.py<br/>get_qa_service()"]
+      WS --> SCTX --> COLLECT --> FACTORY
+      POSTDBG --> SCTX --> DBG_PAYLOAD --> FACTORY
+    end
+
+    subgraph SERVICE["应用服务层"]
+      QAS["QAService.stream_query()"]
+      QADBG["QAService.debug_retrieval()"]
+      VALIDATE["QAService.validate_source()<br/>retrieval.filters.validate_source_filter()"]
+      HISTORY["ChatHistoryStore<br/>MySQL get_context_messages() / add_turn()"]
+      FACTORY --> QAS
+      FACTORY --> QADBG
+      QAS --> VALIDATE
+      QAS --> HISTORY
+    end
+
+    subgraph RAG_MAIN["RAG 在线主流程"]
+      RAG["pipeline/rag.py<br/>stream_query()"]
+      RCTX["create_query_context()<br/>scenario + DataScope + kb + trace"]
+      START_EVENT["start_event(context)"]
+      STATUS_ROUTE["status_event('正在进行查询路由')"]
+      DECIDE["decide_route(query, scenario, source_filter)"]
+      ROUTE_BRANCH{"route.answer ?"}
+      PREP_STATUS["status_event('正在识别问题意图')"]
+      PREPARE["prepare_retrieval(context)"]
+      INTENT_DIRECT{"prepared.intent.direct_answer ?"}
+      FAQ_STATUS["status_event('正在检索 FAQ')"]
+      SEARCH_FAQ["search_faq(context, prepared)"]
+      FAQ_DIRECT["get_faq_direct_answer(context, prepared, faq_result)"]
+      FAQ_BRANCH{"FAQ 可直出 ?"}
+      DOC_STATUS["status_event('正在检索文档')"]
+      SEARCH_DOC["search_doc(context, prepared)"]
+      SELECT["prepare_answer(context, prepared, faq_result, doc_result)"]
+      PROMPT["build_context(context_docs)<br/>prompt_profile.user_template.format(...)"]
+      ANSWER_STATUS["status_event('正在生成回答')"]
+      COMPOSE["stream_llm_answer(system_prompt, user_prompt)"]
+      FINISH_SINGLE["_finish_with_single_answer(context, query, answer)"]
+      TOKEN["token_event(answer)"]
+      SAVE["history.add_turn(session_id, query, answer)"]
+      SUCCESS["finish_success(context, answer)<br/>end_event + record_query_trace"]
+      ERROR["finish_error(context, exc)<br/>error_event + record_query_trace"]
+
+      RAG --> RCTX --> START_EVENT --> STATUS_ROUTE --> DECIDE --> ROUTE_BRANCH
+      ROUTE_BRANCH -- 是 --> FINISH_SINGLE
+      ROUTE_BRANCH -- 否 --> PREP_STATUS --> PREPARE --> INTENT_DIRECT
+      INTENT_DIRECT -- 是 --> FINISH_SINGLE
+      INTENT_DIRECT -- 否 --> FAQ_STATUS --> SEARCH_FAQ --> FAQ_DIRECT --> FAQ_BRANCH
+      FAQ_BRANCH -- 是 --> FINISH_SINGLE
+      FAQ_BRANCH -- 否 --> DOC_STATUS --> SEARCH_DOC --> SELECT --> PROMPT --> ANSWER_STATUS --> COMPOSE --> TOKEN
+      FINISH_SINGLE --> TOKEN --> SAVE --> SUCCESS
+      RAG -.异常.-> ERROR
+    end
+
+    QAS --> RAG
+    VALIDATE -.注入.-> RCTX
+    HISTORY -.注入.-> RCTX
+
+    subgraph ROUTE_PREP["路由与检索准备内部展开"]
+      SRC_VALID["validate_source_filter()"]
+      DIRECT["classify_direct_intent()"]
+      BOUNDARY["detect_boundary_answer()<br/>infer_source()"]
+      FAST_SHOULD["should_try_faq_fast_path()<br/>rules.faq_fast_path"]
+      FAST_ANSWER["try_fast_faq_direct_answer(context)<br/>Milvus FAQ collection"]
+      LOAD_HISTORY["history.get_context_messages()"]
+      CLASSIFY["classify_intent(query, history, scenario)"]
+      SOURCE["effective_source_filter()"]
+      REWRITE["rewrite_query_if_needed()"]
+      PLAN["build_retrieval_plan()"]
+      VARIANTS["generate_query_variants()"]
+      PROFILE["build_answer_prompt_profile()"]
+      PREP_OBJ["RetrievalPreparation"]
+      SRC_VALID --> DIRECT --> BOUNDARY --> FAST_SHOULD --> FAST_ANSWER
+      LOAD_HISTORY --> CLASSIFY --> SOURCE --> REWRITE --> PLAN --> VARIANTS --> PROFILE --> PREP_OBJ
+    end
+
+    DECIDE -.内部.-> SRC_VALID
+    PREPARE -.内部.-> LOAD_HISTORY
+
+    subgraph STORE_FLOW["Hybrid Store 检索内部展开"]
+      FAQ_STORE["get_faq_store(scenario.faq_collection)"]
+      DOC_STORE["get_doc_store(scenario.doc_collection)"]
+      SEARCH_MANY["MilvusHybridStore.search_many(query_variants)"]
+      NORM_Q["normalize_queries()"]
+      SEARCH_ONE["MilvusHybridStore.search(query)"]
+      EXPR["build_source_expr()"]
+      VISIBLE["build_source_expr()<br/>source + kb_version + DataScope"]
+      DENSE["embedding_model.embed_query()<br/>dense vector"]
+      SPARSE["Milvus BM25 function<br/>sparse vector"]
+      MERGE["merge_hits_by_document()"]
+      SORT["sort_hits_by_score()"]
+      RERANK["rerank_hits()"]
+      RESULT["RetrievalResult<br/>hits / top_score / source_payloads()"]
+      FAQ_STORE --> SEARCH_MANY
+      DOC_STORE --> SEARCH_MANY
+      SEARCH_MANY --> NORM_Q --> SEARCH_ONE --> EXPR --> VISIBLE --> DENSE --> SPARSE --> MERGE --> SORT --> RERANK --> RESULT
+    end
+
+    SEARCH_FAQ --> FAQ_STORE
+    SEARCH_DOC --> DOC_STORE
+    RESULT --> FAQ_DIRECT
+    RESULT --> SELECT
+
+    subgraph DEBUG_FLOW["检索诊断半链路"]
+      RAG_DBG["pipeline/rag.py<br/>debug_retrieval()"]
+      DBG_CTX["create_query_context()"]
+      DBG_PREP["prepare_retrieval()"]
+      DBG_FAQ["search_faq()"]
+      DBG_DOC["search_doc()"]
+      DBG_TIMING["context.finalize_timings()"]
+      DBG_RET["返回 query / rewritten_query<br/>intent / retrieval_plan / sources / timings"]
+      RAG_DBG --> DBG_CTX --> DBG_PREP --> DBG_FAQ --> DBG_DOC --> DBG_TIMING --> DBG_RET
+    end
+
+    QADBG --> RAG_DBG
+
+    subgraph INGEST_CODE["离线入库代码执行链路"]
+      INGEST_DIR["indexing/service.py<br/>ingest_directory()"]
+      ING_SCENE["resolve_scenario(scenario_id)"]
+      ING_SCOPE["resolve_data_scope()"]
+      ING_VERSION["get_kb_version_store()<br/>ensure_version()"]
+      ITER["service.py<br/>_iter_supported_files()"]
+      LOAD_FILE["document_loaders.py<br/>load_file(path)"]
+      NORMALIZE_DOC["document_normalizer.py<br/>normalize_documents()"]
+      SPLIT["chunking.py<br/>split_documents()"]
+      GET_DOC["get_doc_store(scenario.doc_collection)"]
+      DEL_DOC["store.delete_ids(ids)"]
+      ADD_DOC["store.add_documents(chunks, ids)"]
+      RECORD_DOC["version_store.record_ingest_result()"]
+      ACTIVATE_DOC["version_store.activate_version()"]
+      SUMMARY["IngestionSummary.as_dict()"]
+
+      FAQ_ING["faq_ingestion.py<br/>ingest_faq_csv()"]
+      FAQ_D["faq_documents_from_csv()"]
+      FAQ_SOURCE["normalize_faq_source()"]
+      FAQ_STORE2["get_faq_store(scenario.faq_collection)"]
+      FAQ_WRITE["delete_ids(ids) + add_documents(docs, ids)"]
+      FAQ_RECORD["record_ingest_result(content_type='faq')"]
+
+      INGEST_DIR --> ING_SCENE --> ING_SCOPE --> ING_VERSION --> ITER --> LOAD_FILE --> NORMALIZE_DOC --> SPLIT --> GET_DOC --> DEL_DOC --> ADD_DOC --> RECORD_DOC --> ACTIVATE_DOC --> SUMMARY
+      FAQ_ING --> ING_SCENE
+      FAQ_ING --> ING_SCOPE
+      FAQ_ING --> ING_VERSION
+      FAQ_ING --> FAQ_D --> FAQ_SOURCE --> FAQ_STORE2 --> FAQ_WRITE --> FAQ_RECORD --> ACTIVATE_DOC
+    end
+
+    ADD_DOC -.写入后可检索.-> DOC_STORE
+    FAQ_WRITE -.写入后可检索.-> FAQ_STORE
+
+    subgraph GOVERN["治理、测试、观测支撑"]
+      RULECFG["config/rules.py<br/>RuleConfig / faq_fast_path / query_variants"]
+      SCENEREG["scenarios/registry.py<br/>ScenarioDefinition / valid_sources"]
+      SCOPE_OBJ["governance/data_scope.py<br/>DataScope.milvus_expr()"]
+      KB_STORE["governance/kb_versions.py<br/>KnowledgeBaseVersionStore"]
+      QUALITY["quality/*.py<br/>FAQ / chunk / conflict / ingestion reports"]
+      TESTS["tests/*.py + scripts/*.py<br/>unittest / guardrails / smoke"]
+      TRACE["observability/langsmith_adapter.py<br/>record_query_trace() / langsmith_status()"]
+      TIMINGS["RAGQueryContext.run_stage()<br/>stage_timings_ms / first_token_ms / slowest_stage"]
+      RULECFG --> DECIDE
+      SCENEREG --> RCTX
+      SCOPE_OBJ --> RCTX
+      KB_STORE --> RCTX
+      QUALITY -.入库前后检查.-> INGEST_CODE
+      TESTS -.验证.-> RAG_MAIN
+      TESTS -.验证.-> INGEST_CODE
+      TIMINGS --> SUCCESS --> TRACE
+      ERROR --> TRACE
+    end
+
+    style APPPY fill:#1e3a5f,stroke:#60a5fa,stroke-width:2px
+    style API fill:#1e3a5f,stroke:#60a5fa
+    style SERVICE fill:#172554,stroke:#818cf8
+    style RAG_MAIN fill:#172554,stroke:#818cf8
+    style ROUTE_PREP fill:#713f12,stroke:#fbbf24
+    style STORE_FLOW fill:#0f766e,stroke:#22d3ee
+    style DEBUG_FLOW fill:#312e81,stroke:#a78bfa
+    style INGEST_CODE fill:#0f766e,stroke:#22d3ee
+    style GOVERN fill:#064e3b,stroke:#34d399
+    style DECIDE fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style PREPARE fill:#713f12,stroke:#fbbf24
+    style COMPOSE fill:#4c1d95,stroke:#a78bfa,stroke-width:2px
+    style SUCCESS fill:#064e3b,stroke:#34d399,stroke-width:2px
+    style ERROR fill:#7f1d1d,stroke:#fb7185,stroke-width:2px
+    style ADD_DOC fill:#0f766e,stroke:#22d3ee,stroke-width:2px
+    style FAQ_WRITE fill:#0f766e,stroke:#22d3ee,stroke-width:2px
+</script>
+
+<script>
+const coverage = {
+  business: [
+    "在线问答闭环：从用户问题进入 API，到路由、检索、回答、流式事件和 Trace。",
+    "离线入库闭环：从知识资料或 FAQ CSV 到版本、数据域、标准化、切分和写入 Store。",
+    "治理闭环：场景 source 白名单、DataScope、KB 版本、规则配置共同约束检索边界。",
+    "质量与验证闭环：质量报告、单元测试、门禁脚本和冒烟脚本验证交付结果。",
+    "观测闭环：每次请求记录 trace_id、阶段耗时、首 token、来源和错误信息。"
+  ],
+  code: [
+    "WebSocket 主链路：websocket_endpoint() 到 QAService.stream_query() 再到 pipeline.rag.stream_query()。",
+    "路由准备链路：decide_route() 与 prepare_retrieval() 展开所有规则、改写、计划和 Prompt 节点。",
+    "检索生成链路：search_faq()、search_doc()、Hybrid Store、context docs、Prompt 和 grounded answer。",
+    "诊断半链路：debug_retrieval() 返回 intent、plan、variants、sources、timings，不生成回答。",
+    "入库代码链路：ingest_directory() 与 ingest_faq_csv() 写入同一套 FAQ / Doc Store，供在线检索使用。"
+  ]
+};
+
+const views = {
+  business: {
+    title: "业务节点流程图",
+    badge: "业务闭环",
+    desc: "从业务请求、在线问答、离线入库、质量治理、测试门禁到观测闭环，串成一张完整业务图。",
+    source: document.getElementById("diagram-business").textContent.trim(),
+    nodes: [
+      ["U","业务入口","用户 / 学员","业务问题","提出企业知识问题，系统需要给出可追溯答案。"],
+      ["P","请求输入","query/source/session/scenario/tenant/dataset/kb_version","统一请求参数","把问题、分类、会话、场景、租户、数据集和知识库版本一起带入链路。"],
+      ["START","CH13","app.py + qa_core/config/*.py","启动与基础配置闭环","应用启动时加载 Settings、前置校验、规则配置和场景定义。"],
+      ["API","CH12","qa_core/api/chat.py","问答入口","提供 WebSocket 流式问答和 HTTP 检索诊断入口。"],
+      ["SERVICE","CH09","qa_core/application/service.py","应用服务门面","API 不直接碰 Pipeline，统一通过 QAService 编排。"],
+      ["CONTEXT","CH10/14/15/19","qa_core/pipeline/runtime.py","单次请求上下文","保存 scenario、DataScope、KB 版本、session_id、trace_id 和阶段耗时。"],
+      ["ROUTE","CH05","qa_core/pipeline/steps.py","低成本路由","先处理直答、source 边界和 FAQ 快路径，减少不必要检索。"],
+      ["PREPARE","CH06/07/11/15","qa_core/pipeline/steps.py","检索准备","生成意图、source、改写问题、检索计划、查询变体和 PromptProfile。"],
+      ["FAQ","CH08/10","qa_core/pipeline/retrieval_steps.py","FAQ 优先","标准问答命中时可以直接返回。"],
+      ["DOC","CH08/10","qa_core/pipeline/retrieval_steps.py","文档检索","FAQ 不足时进入文档 Hybrid Search。"],
+      ["ANSWER","CH10/11","qa_core/pipeline/context.py","证据回答","筛选上下文、构造 Prompt，生成带依据的回答或信息不足。"],
+      ["STREAM","CH10/19","qa_core/pipeline/events.py","流式事件","对外输出 start、status、token、end、error 事件。"],
+      ["RETRIEVAL","CH08/15","qa_core/retrieval/*.py","检索与可见性闭环","Store 内部完成 source、kb_version、DataScope 过滤和 hybrid 打分。"],
+      ["INGEST","CH16","qa_core/indexing/*.py + qa_core/retrieval/store.py","离线入库业务闭环","文档与 FAQ CSV 进入真实 Milvus Store；日常更新通过 copy_documents_to_version() 复用未变化 chunk/dense。"],
+      ["QUALITY","CH17/18/19","qa_core/quality + tests + observability","质量测试观测闭环","质量报告、测试门禁和 Trace 共同保护交付结果。"]
+    ]
+  },
+  code: {
+    title: "代码执行流程图",
+    badge: "函数调用",
+    desc: "按真实调用顺序展开 Web/API、QAService、RAG Pipeline、Hybrid Store、诊断接口和离线入库代码。",
+    source: document.getElementById("diagram-code").textContent.trim(),
+    nodes: [
+      ["APPPY","CH12/13","ch19_observability_tracing/app.py","create_app()","创建 FastAPI 应用，注册异常处理、前置校验、问答路由和 KB 版本路由。"],
+      ["WS","CH12","qa_core/api/chat.py","websocket_endpoint()","WebSocket 接收 JSON 请求，逐个发送 stream event。"],
+      ["POSTDBG","CH12/18","qa_core/api/chat.py","POST /api/retrieval/debug","诊断入口，只返回检索准备与召回信息。"],
+      ["SCTX","CH12","qa_core/api/service_context.py","QueryServiceContext.from_ws_payload() / from_debug_request()","把 WebSocket payload 或 debug request 解析成 QAService 所需参数。"],
+      ["QAS","CH09","qa_core/application/service.py","QAService.stream_query()","在线问答服务门面，委托 rag_stream_query()。"],
+      ["QADBG","CH09/10","qa_core/application/service.py","QAService.debug_retrieval()","检索诊断服务门面，委托 rag_debug_retrieval()。"],
+      ["RAG","CH10","qa_core/pipeline/rag.py","stream_query()","主流程总调度：route、prepare、FAQ、doc、answer、finish。"],
+      ["RCTX","CH10/14/15/19","qa_core/pipeline/runtime.py","create_query_context()","创建 RAGQueryContext，确定 scenario、DataScope、KB 版本和 trace。"],
+      ["DECIDE","CH05","qa_core/pipeline/steps.py","decide_route()","执行 source 校验、直答、边界检测、FAQ 快路径和 retrieval 分支判断。"],
+      ["PREPARE","CH06/07/11/15","qa_core/pipeline/steps.py","prepare_retrieval()","加载历史、分类意图、解析 source、改写、生成计划和变体、选择 PromptProfile。"],
+      ["SEARCH_FAQ","CH08/10","qa_core/pipeline/retrieval_steps.py","search_faq()","使用 FAQ store 执行多变体检索。"],
+      ["FAQ_DIRECT","CH10","qa_core/pipeline/retrieval_steps.py","get_faq_direct_answer()","按精确问题或阈值判断 FAQ 是否直接返回。"],
+      ["SEARCH_DOC","CH08/10","qa_core/pipeline/retrieval_steps.py","search_doc()","使用 doc store 执行文档检索。"],
+      ["STORE_FLOW","CH08/15","qa_core/retrieval/store.py","search_many() / search()","展开查询归一化、过滤、dense/sparse、合并、排序和精排。"],
+      ["PROMPT","CH10/11","qa_core/pipeline/steps.py","prepare_answer()","筛选上下文、构造 PromptProfile 用户输入，并生成 AnswerPreparation。"],
+      ["COMPOSE","CH11","qa_core/pipeline/steps.py","stream_llm_answer()","用真实 LLM 客户端流式生成回答；信息不足分支走确定性收口。"],
+      ["SUCCESS","CH19","qa_core/pipeline/runtime.py","finish_success()","生成 end_event，并调用 record_query_trace()。"],
+      ["ERROR","CH19","qa_core/pipeline/runtime.py","finish_error()","异常时生成 error_event，并记录错误 Trace。"],
+      ["DEBUG_FLOW","CH10/18","qa_core/pipeline/rag.py","debug_retrieval()","诊断半链路返回 rewritten_query、intent、plan、sources 和 timings。"],
+      ["INGEST_CODE","CH16","qa_core/indexing/service.py + faq_ingestion.py + retrieval/store.py","ingest_directory() / ingest_faq_csv() / copy_documents_to_version()","离线文档和 FAQ 入库；跨版本增量在构建阶段复用未变化 chunk 和 dense 向量，线上仍只查新的 active 完整版本。"],
+      ["GOVERN","CH13/14/15/17/18/19","config + governance + quality + tests + observability","支撑模块","规则、场景、数据域、版本、质量、测试和观测共同支撑主链路。"]
+    ]
+  }
+};
+
+const state = {view:"business",node:0,scale:1,panX:0,panY:0,playing:false,timer:null,cache:{}};
+const el = {
+  canvas:document.getElementById("canvas"),
+  viewport:document.getElementById("viewport"),
+  loading:document.getElementById("loading"),
+  empty:document.getElementById("emptyState"),
+  stageTitle:document.getElementById("stageTitle"),
+  stageDesc:document.getElementById("stageDesc"),
+  progressName:document.getElementById("progressName"),
+  progressCount:document.getElementById("progressCount"),
+  progressBar:document.getElementById("progressBar"),
+  nodeIndex:document.getElementById("nodeIndex"),
+  nodeTitle:document.getElementById("nodeTitle"),
+  nodeBody:document.getElementById("nodeBody"),
+  nodeChapter:document.getElementById("nodeChapter"),
+  nodeFile:document.getElementById("nodeFile"),
+  nodeSymbol:document.getElementById("nodeSymbol"),
+  zoomLabel:document.getElementById("zoomLabel"),
+  playBtn:document.getElementById("playBtn"),
+  coverageList:document.getElementById("coverageList")
+};
+
+function bootMermaid(){
+  if(!window.mermaid){
+    el.loading.hidden = true;
+    el.empty.hidden = false;
+    return;
+  }
+  mermaid.initialize({
+    startOnLoad:false,
+    securityLevel:"loose",
+    theme:"base",
+    flowchart:{
+      curve:"basis",
+      htmlLabels:true,
+      nodeSpacing:64,
+      rankSpacing:84,
+      padding:22
+    },
+    themeVariables:{
+      darkMode:true,
+      background:"#101827",
+      mainBkg:"#17243a",
+      primaryColor:"#17243a",
+      primaryTextColor:"#edf6ff",
+      primaryBorderColor:"#38bdf8",
+      lineColor:"#93c5fd",
+      secondaryColor:"#132136",
+      tertiaryColor:"#0f172a",
+      fontFamily:"Microsoft YaHei, Segoe UI, sans-serif",
+      fontSize:"14px",
+      clusterBkg:"#0d1829",
+      clusterBorder:"#334155",
+      edgeLabelBackground:"#111b2e"
+    }
+  });
+  renderView("business");
+}
+
+async function renderView(viewId){
+  stopPlayback();
+  state.view = viewId;
+  state.node = 0;
+  const view = views[viewId];
+  el.stageTitle.innerHTML = `${view.title} <span class="pill">${view.badge}</span>`;
+  el.stageDesc.textContent = view.desc;
+  renderCoverage(viewId);
+  document.querySelectorAll(".tabs button").forEach(btn => btn.classList.toggle("active", btn.dataset.view === viewId));
+  el.loading.hidden = false;
+  el.empty.hidden = true;
+  el.canvas.innerHTML = "";
+  try{
+    if(!state.cache[viewId]){
+      const result = await mermaid.render(`chapter-full-flow-${viewId}`, view.source);
+      state.cache[viewId] = result.svg;
+    }
+    el.canvas.innerHTML = state.cache[viewId];
+    decorateSvg();
+    requestAnimationFrame(() => {
+      focusInitialNode();
+      activateNode(0, true);
+      el.loading.hidden = true;
+    });
+  }catch(err){
+    console.error(err);
+    el.loading.hidden = true;
+    el.empty.hidden = false;
+  }
+}
+
+function renderCoverage(viewId){
+  el.coverageList.innerHTML = "";
+  coverage[viewId].forEach((item, index) => {
+    const row = document.createElement("div");
+    row.className = "coverage-item";
+    row.innerHTML = `<span class="coverage-index">${index + 1}</span><span>${item}</span>`;
+    el.coverageList.appendChild(row);
+  });
+}
+
+function decorateSvg(){
+  const svg = el.canvas.querySelector("svg");
+  if(!svg) return;
+  const vb = svg.viewBox && svg.viewBox.baseVal;
+  if(vb && vb.width && vb.height){
+    svg.setAttribute("width", String(Math.ceil(vb.width)));
+    svg.setAttribute("height", String(Math.ceil(vb.height)));
+  }
+  svg.style.maxWidth = "none";
+  svg.style.overflow = "visible";
+  const style = document.createElementNS("http://www.w3.org/2000/svg","style");
+  style.textContent = `
+    g.node > rect,g.node > polygon,g.node > path,g.node > circle { filter: drop-shadow(0 6px 14px rgba(0,0,0,.28)); }
+    g.node.is-active > rect,g.node.is-active > polygon,g.node.is-active > path,g.node.is-active > circle {
+      stroke:#fbbf24!important;
+      stroke-width:4px!important;
+      filter: drop-shadow(0 0 18px rgba(251,191,36,.62));
+    }
+    g.cluster.is-active > rect {
+      stroke:#fbbf24!important;
+      stroke-width:4px!important;
+      filter: drop-shadow(0 0 18px rgba(251,191,36,.62));
+    }
+    g.cluster.is-active .cluster-label text,
+    g.cluster.is-active .cluster-label span {
+      fill:#fde68a!important;
+      color:#fde68a!important;
+      font-weight:800!important;
+    }
+    .edgePath path { stroke-width:2.15px!important; }
+    .edgeLabel { color:#eaf5ff!important; }
+  `;
+  svg.insertBefore(style, svg.firstChild);
+}
+
+function getSvgBox(){
+  const svg = el.canvas.querySelector("svg");
+  if(!svg) return {width:1000,height:700,x:0,y:0};
+  const vb = svg.viewBox && svg.viewBox.baseVal;
+  if(vb && vb.width && vb.height) return {width:vb.width,height:vb.height,x:vb.x,y:vb.y};
+  const box = svg.getBBox();
+  return {width:box.width,height:box.height,x:box.x,y:box.y};
+}
+
+function fitToView(){
+  const box = getSvgBox();
+  const vw = el.viewport.clientWidth;
+  const vh = el.viewport.clientHeight;
+  state.scale = Math.max(.18, Math.min(1.05, Math.min((vw - 80) / box.width, (vh - 80) / box.height)));
+  state.panX = (vw - box.width * state.scale) / 2 - box.x * state.scale;
+  state.panY = Math.max(30, (vh - box.height * state.scale) / 2) - box.y * state.scale;
+  applyTransform();
+}
+
+function focusInitialNode(){
+  fitToView();
+  const readableScale = state.view === "code" ? .42 : .5;
+  if(state.scale < readableScale){
+    state.scale = readableScale;
+    applyTransform(false);
+  }
+}
+
+function applyTransform(animate=true){
+  el.canvas.classList.toggle("no-animate", !animate);
+  el.canvas.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.scale})`;
+  el.zoomLabel.textContent = `${Math.round(state.scale * 100)}%`;
+  requestAnimationFrame(() => el.canvas.classList.remove("no-animate"));
+}
+
+function findGraphElement(nodeId){
+  const svg = el.canvas.querySelector("svg");
+  if(!svg) return null;
+  const candidates = [...svg.querySelectorAll("g.node,g.cluster")];
+  return candidates.find(item => {
+    const id = item.getAttribute("id") || "";
+    return id.includes(`-${nodeId}-`) || id.endsWith(`-${nodeId}`) || id.includes(nodeId);
+  }) || null;
+}
+
+function activateNode(index, center=true){
+  const view = views[state.view];
+  const nodes = view.nodes;
+  state.node = Math.max(0, Math.min(index, nodes.length - 1));
+  const [id, chapter, file, symbol, body] = nodes[state.node];
+  el.nodeIndex.textContent = `${id} · ${state.node + 1}/${nodes.length}`;
+  el.nodeTitle.textContent = symbol;
+  el.nodeBody.textContent = body;
+  el.nodeChapter.textContent = chapter;
+  el.nodeFile.textContent = file;
+  el.nodeSymbol.textContent = symbol;
+  el.progressName.textContent = id;
+  el.progressCount.textContent = `${state.node + 1}/${nodes.length}`;
+  el.progressBar.style.width = `${((state.node + 1) / nodes.length) * 100}%`;
+
+  const svg = el.canvas.querySelector("svg");
+  if(svg){
+    svg.querySelectorAll("g.node.is-active,g.cluster.is-active").forEach(item => item.classList.remove("is-active"));
+    const active = findGraphElement(id);
+    if(active){
+      active.classList.add("is-active");
+      if(center) centerElement(active);
+    }
+  }
+}
+
+function centerElement(graphElement){
+  const svgBox = getSvgBox();
+  const bbox = graphElement.getBBox();
+  const vw = el.viewport.clientWidth;
+  const vh = el.viewport.clientHeight;
+  state.panX = vw / 2 - (bbox.x + bbox.width / 2 - svgBox.x) * state.scale;
+  state.panY = vh / 2 - (bbox.y + bbox.height / 2 - svgBox.y) * state.scale;
+  applyTransform();
+}
+
+function step(delta){
+  const total = views[state.view].nodes.length;
+  activateNode((state.node + delta + total) % total);
+}
+
+function stopPlayback(){
+  state.playing = false;
+  clearInterval(state.timer);
+  state.timer = null;
+  el.playBtn.textContent = "播放";
+}
+
+function togglePlayback(){
+  if(state.playing){
+    stopPlayback();
+    return;
+  }
+  state.playing = true;
+  el.playBtn.textContent = "暂停";
+  state.timer = setInterval(() => step(1), 1900);
+}
+
+document.querySelectorAll(".tabs button").forEach(btn => {
+  btn.addEventListener("click", () => renderView(btn.dataset.view));
+});
+document.getElementById("prevBtn").addEventListener("click", () => step(-1));
+document.getElementById("nextBtn").addEventListener("click", () => step(1));
+document.getElementById("fitBtn").addEventListener("click", fitToView);
+document.getElementById("playBtn").addEventListener("click", togglePlayback);
+document.getElementById("zoomInBtn").addEventListener("click", () => {
+  state.scale = Math.min(2.4, state.scale * 1.15);
+  applyTransform();
+});
+document.getElementById("zoomOutBtn").addEventListener("click", () => {
+  state.scale = Math.max(.16, state.scale / 1.15);
+  applyTransform();
+});
+
+el.viewport.addEventListener("wheel", event => {
+  event.preventDefault();
+  const oldScale = state.scale;
+  const factor = event.deltaY < 0 ? 1.08 : .92;
+  const nextScale = Math.max(.16, Math.min(2.4, oldScale * factor));
+  const rect = el.viewport.getBoundingClientRect();
+  const mx = event.clientX - rect.left;
+  const my = event.clientY - rect.top;
+  state.panX = mx - (mx - state.panX) * (nextScale / oldScale);
+  state.panY = my - (my - state.panY) * (nextScale / oldScale);
+  state.scale = nextScale;
+  applyTransform(false);
+},{passive:false});
+
+let dragging = false;
+let lastX = 0;
+let lastY = 0;
+el.viewport.addEventListener("pointerdown", event => {
+  dragging = true;
+  lastX = event.clientX;
+  lastY = event.clientY;
+  el.viewport.classList.add("dragging");
+  el.viewport.setPointerCapture(event.pointerId);
+});
+el.viewport.addEventListener("pointermove", event => {
+  if(!dragging) return;
+  state.panX += event.clientX - lastX;
+  state.panY += event.clientY - lastY;
+  lastX = event.clientX;
+  lastY = event.clientY;
+  applyTransform(false);
+});
+el.viewport.addEventListener("pointerup", event => {
+  dragging = false;
+  el.viewport.classList.remove("dragging");
+  el.viewport.releasePointerCapture(event.pointerId);
+});
+el.viewport.addEventListener("pointercancel", () => {
+  dragging = false;
+  el.viewport.classList.remove("dragging");
+});
+window.addEventListener("resize", () => fitToView());
+
+bootMermaid();
+</script>
+</body>
+</html>

@@ -1,0 +1,2275 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>2.4 LangGraph 速成 - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#24-langgraph" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2.4 LangGraph 速成
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          2.4 LangGraph 速成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link md-nav__link--active">
+        2.4 LangGraph 速成
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    2.4.1 回顾心智模型，以及本节要造什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#242-state" class="md-nav__link">
+    2.4.2 第一步：定义 State
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#243" class="md-nav__link">
+    2.4.3 第二步：写节点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#244" class="md-nav__link">
+    2.4.4 第三步：搭图、编译、运行
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#245" class="md-nav__link">
+    2.4.5 加分支：条件边
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#246-memorysaver-thread_id" class="md-nav__link">
+    2.4.6 加记忆：MemorySaver 与 thread_id
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#247-interrupt-command" class="md-nav__link">
+    2.4.7 了解：interrupt 与 Command（人在环中）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#248-langgraph" class="md-nav__link">
+    2.4.8 LangGraph 规范小结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    2.4.1 回顾心智模型，以及本节要造什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#242-state" class="md-nav__link">
+    2.4.2 第一步：定义 State
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#243" class="md-nav__link">
+    2.4.3 第二步：写节点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#244" class="md-nav__link">
+    2.4.4 第三步：搭图、编译、运行
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#245" class="md-nav__link">
+    2.4.5 加分支：条件边
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#246-memorysaver-thread_id" class="md-nav__link">
+    2.4.6 加记忆：MemorySaver 与 thread_id
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#247-interrupt-command" class="md-nav__link">
+    2.4.7 了解：interrupt 与 Command（人在环中）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#248-langgraph" class="md-nav__link">
+    2.4.8 LangGraph 规范小结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="24-langgraph">2.4 LangGraph 速成<a class="headerlink" href="#24-langgraph" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>回顾并落地「Agent = 图」的心智模型：State、Node、Edge、Checkpointer</li>
+<li>掌握用 <code>StateGraph</code> 定义图、<code>add_node</code> 加节点、<code>add_edge</code> + <code>START</code> / <code>END</code> 连边、<code>compile</code> 编译</li>
+<li>掌握节点的写法：读 State → 返回「要更新的字段」</li>
+<li>掌握用 <code>add_conditional_edges</code> 实现条件分支（路由）</li>
+<li>掌握用 <code>MemorySaver</code> + <code>thread_id</code> 实现多轮记忆，理解 <code>add_messages</code></li>
+<li>了解 <code>interrupt</code> / <code>Command</code>（人在环中，第六章详解）</li>
+<li>知道本项目的 LangGraph 规范与禁用写法</li>
+</ul>
+<blockquote>
+<p>✅ <strong>好消息</strong>：本节所有 demo <strong>不需要大模型、不需要 API Key</strong>——我们把节点写成简单的 Python 逻辑，就能完整跑通一个 Agent 的骨架。这能让你专注于「图怎么搭、怎么跑」这件事本身。等你把骨架理解透了，第四章往节点里填大模型调用就水到渠成。</p>
+<p>LangGraph 是本项目的**绝对核心**，这一节请务必动手把每个例子敲一遍、跑一遍。</p>
+</blockquote>
+<hr />
+<h2 id="241">2.4.1 回顾心智模型，以及本节要造什么<a class="headerlink" href="#241" title="Permanent link">&para;</a></h2>
+<p>回顾 1.2.4 讲过的心智模型：<strong>一个 Agent 就是一张图</strong>，由四要素构成——</p>
+<ul>
+<li><strong>State（状态）</strong>：所有节点共享的一份数据；</li>
+<li><strong>Node（节点）</strong>：一个函数，读 State、做事、返回要更新的内容；</li>
+<li><strong>Edge（边）</strong>：决定一个节点之后去哪（固定边 / 条件边）；</li>
+<li><strong>Checkpointer（检查点）</strong>：把 State 存下来，实现记忆与恢复。</li>
+</ul>
+<p>本节我们就用这四要素，<strong>从零搭一个「学习助手」Agent</strong>：它接收一个问题，先判断问题类型（概念题 / 代码题 / 闲聊），再根据类型走不同分支给出回应，最后还能记住多轮对话。我们会一步步把它搭起来，每一步都能运行。</p>
+<hr />
+<h2 id="242-state">2.4.2 第一步：定义 State<a class="headerlink" href="#242-state" title="Permanent link">&para;</a></h2>
+<p>State 用一个 <code>TypedDict</code> 来定义——它就是规定「这张图里流动的数据有哪些字段」。我们的学习助手需要三个字段：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+
+<span class="k">class</span> <span class="nc">HelperState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="n">question</span><span class="p">:</span> <span class="nb">str</span>      <span class="c1"># 用户的问题（输入）</span>
+    <span class="n">category</span><span class="p">:</span> <span class="nb">str</span>      <span class="c1"># 分类结果：concept / code / chat（中间结果）</span>
+    <span class="n">answer</span><span class="p">:</span>   <span class="nb">str</span>      <span class="c1"># 最终回应（输出）</span>
+</code></pre></div>
+<p>你可以把 State 理解成一张**贯穿全程的「工单」**：问题进来时填上 <code>question</code>，经过分类节点填上 <code>category</code>，经过回应节点填上 <code>answer</code>。每个节点都在这张工单上读取已有信息、补充新信息。</p>
+<hr />
+<h2 id="243">2.4.3 第二步：写节点<a class="headerlink" href="#243" title="Permanent link">&para;</a></h2>
+<p>节点就是普通的 Python 函数，遵循一个**固定约定**：</p>
+<blockquote>
+<p><strong>接收当前 State 作为参数，返回一个字典，字典里只包含「这个节点要更新的字段」。</strong></p>
+</blockquote>
+<p>注意这个关键点：<strong>节点不直接修改传进来的 State，而是返回一个「增量更新」</strong>。LangGraph 会自动把你返回的字典合并进 State。没返回的字段保持原样。</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">classify_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">HelperState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;分类节点：根据关键词判断问题类型&quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">&quot;代码&quot;</span> <span class="ow">in</span> <span class="n">q</span> <span class="ow">or</span> <span class="s2">&quot;报错&quot;</span> <span class="ow">in</span> <span class="n">q</span> <span class="ow">or</span> <span class="s2">&quot;bug&quot;</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;code&quot;</span>
+    <span class="k">elif</span> <span class="s2">&quot;什么是&quot;</span> <span class="ow">in</span> <span class="n">q</span> <span class="ow">or</span> <span class="s2">&quot;概念&quot;</span> <span class="ow">in</span> <span class="n">q</span> <span class="ow">or</span> <span class="s2">&quot;原理&quot;</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;concept&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;chat&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="n">category</span><span class="p">}</span>          <span class="c1"># 只返回要更新的字段</span>
+
+<span class="k">def</span> <span class="nf">answer_concept_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">HelperState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;【概念解答】关于「</span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">」，它的核心思想是……&quot;</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">answer_code_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">HelperState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;【代码助手】针对「</span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">」，我们一步步排查……&quot;</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">answer_chat_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">HelperState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="s2">&quot;【闲聊】哈哈，没问题，我们继续聊～&quot;</span><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>这就是为什么 2.2 学的 Pydantic、2.3 学的大模型调用能无缝融入：在真实项目里，节点函数内部会去调用大模型（<code>await llm.ainvoke(...)</code>）、查知识库，然后把结果 <code>return {"字段": 结果}</code>。本节为了聚焦图结构，节点里只写了简单的 Python 判断。</p>
+</blockquote>
+<hr />
+<h2 id="244">2.4.4 第三步：搭图、编译、运行<a class="headerlink" href="#244" title="Permanent link">&para;</a></h2>
+<p>现在把节点连成一张图。先搭一个最简单的**直线图**（分类 → 概念解答 → 结束），把机制跑通：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">HelperState</span><span class="p">)</span>          <span class="c1"># ① 用 State 类型创建图构建器</span>
+
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;classify&quot;</span><span class="p">,</span> <span class="n">classify_node</span><span class="p">)</span>         <span class="c1"># ② 注册节点（名字, 函数）</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span>   <span class="n">answer_concept_node</span><span class="p">)</span>
+
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">START</span><span class="p">,</span> <span class="s2">&quot;classify&quot;</span><span class="p">)</span>        <span class="c1"># ③ 连边：START 是入口</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;classify&quot;</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">)</span>     <span class="c1">#    分类后去回应</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>            <span class="c1">#    回应后结束（END 是出口）</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>                  <span class="c1"># ④ 编译成可执行的图</span>
+
+<span class="c1"># ⑤ 运行：传入初始 State，拿回最终 State</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;什么是装饰器&quot;</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code>{&#39;question&#39;: &#39;什么是装饰器&#39;, &#39;category&#39;: &#39;concept&#39;, &#39;answer&#39;: &#39;【概念解答】关于「什么是装饰器」，它的核心思想是……&#39;}
+</code></pre></div>
+<p>图的执行流向可以画成：</p>
+<div class="highlight"><pre><span></span><code>START ──► classify ──► answer ──► END
+</code></pre></div>
+<p>逐步理解这五步：</p>
+<ol>
+<li><strong><code>StateGraph(HelperState)</code></strong>：创建一个「图构建器」，并告诉它图里流动的数据结构是 <code>HelperState</code>。</li>
+<li><strong><code>add_node("名字", 函数)</code></strong>：把一个函数注册成图上的节点，并给它起个名字（后面连边时用这个名字引用）。</li>
+<li><strong><code>add_edge(起点, 终点)</code></strong>：连一条固定的边。<code>START</code> 和 <code>END</code> 是 LangGraph 内置的特殊起点和终点——<strong>入口必须从 <code>START</code> 连出，出口必须连到 <code>END</code></strong>。</li>
+<li><strong><code>compile()</code></strong>：把搭好的图编译成一个真正能执行的对象。</li>
+<li><strong><code>invoke(初始State)</code></strong>：从 <code>START</code> 开始执行，依次跑过各节点，每个节点的返回值被合并进 State，最后返回完整的最终 State。</li>
+</ol>
+<blockquote>
+<p><strong>规范提醒</strong>：设置入口和出口，<strong>统一用 <code>START</code> / <code>END</code> 连边</strong>。旧教程里的 <code>builder.set_entry_point(...)</code> / <code>builder.set_finish_point(...)</code> 在本项目里**禁止使用**。</p>
+<p>（<code>invoke</code> 是同步版，方便我们在小脚本里直接跑。项目里在 FastAPI 异步环境中用的是异步版 <code>await graph.ainvoke(...)</code>，用法一致。）</p>
+</blockquote>
+<hr />
+<h2 id="245">2.4.5 加分支：条件边<a class="headerlink" href="#245" title="Permanent link">&para;</a></h2>
+<p>上面的图永远走「概念解答」，没用上分类结果。真实 Agent 需要**根据 State 的值动态选择走哪条路**，这就是**条件边**。</p>
+<p>条件边需要两样东西：一个**路由函数**（读 State，返回一个字符串「路标」），和一张**路标 → 目标节点**的映射表。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span>
+
+<span class="k">def</span> <span class="nf">route_by_category</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">HelperState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;路由函数：返回一个字符串路标，决定下一步去哪个节点&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span>      <span class="c1"># 返回 &quot;concept&quot; / &quot;code&quot; / &quot;chat&quot;</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">HelperState</span><span class="p">)</span>
+
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;classify&quot;</span><span class="p">,</span> <span class="n">classify_node</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">,</span>  <span class="n">answer_concept_node</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span>     <span class="n">answer_code_node</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">,</span>     <span class="n">answer_chat_node</span><span class="p">)</span>
+
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">START</span><span class="p">,</span> <span class="s2">&quot;classify&quot;</span><span class="p">)</span>
+
+<span class="c1"># 条件边：分类后，根据 route_by_category 的返回值选择目标节点</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+    <span class="s2">&quot;classify&quot;</span><span class="p">,</span>                  <span class="c1"># 从哪个节点出发</span>
+    <span class="n">route_by_category</span><span class="p">,</span>           <span class="c1"># 路由函数</span>
+    <span class="p">{</span>                            <span class="c1"># 路标 → 目标节点 的映射</span>
+        <span class="s2">&quot;concept&quot;</span><span class="p">:</span> <span class="s2">&quot;concept&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;code&quot;</span><span class="p">:</span>    <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chat&quot;</span><span class="p">:</span>    <span class="s2">&quot;chat&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;concept&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span>    <span class="n">END</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">,</span>    <span class="n">END</span><span class="p">)</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+
+<span class="c1"># 试三种不同的问题，观察走了不同分支</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;什么是装饰器&quot;</span><span class="p">,</span> <span class="s2">&quot;这段代码报错怎么办&quot;</span><span class="p">,</span> <span class="s2">&quot;今天天气不错&quot;</span><span class="p">]:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;问题：</span><span class="si">{</span><span class="n">q</span><span class="si">}</span><span class="se">\n</span><span class="s2">  → 分类：</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">　回应：</span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;answer&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code>问题：什么是装饰器
+  → 分类：concept　回应：【概念解答】关于「什么是装饰器」，它的核心思想是……
+
+问题：这段代码报错怎么办
+  → 分类：code　回应：【代码助手】针对「这段代码报错怎么办」，我们一步步排查……
+
+问题：今天天气不错
+  → 分类：chat　回应：【闲聊】哈哈，没问题，我们继续聊～
+</code></pre></div>
+<p>现在的图长这样：</p>
+<div class="highlight"><pre><span></span><code>                    ┌──► concept ──┐
+START ──► classify ─┼──► code ─────┼──► END
+                    └──► chat ─────┘
+              （由 route_by_category 决定走哪条）
+</code></pre></div>
+<p><strong>这正是 EduAgent 智能问答 Agent 的核心结构</strong>：先用一个分类节点判断问题类型，再用条件边把不同类型的问题分流到不同的处理路径。你现在已经掌握了它的骨架。</p>
+<hr />
+<h2 id="246-memorysaver-thread_id">2.4.6 加记忆：MemorySaver 与 thread_id<a class="headerlink" href="#246-memorysaver-thread_id" title="Permanent link">&para;</a></h2>
+<p>到目前为止，每次 <code>invoke</code> 都是独立的，图记不住上一次聊了什么。要实现**多轮记忆**，需要两步：</p>
+<ol>
+<li>编译时绑定一个 <strong>Checkpointer</strong>（本地用 <code>MemorySaver</code>），它负责在每次执行后把 State 存下来；</li>
+<li>调用时传入一个 <strong><code>thread_id</code></strong>，作为「这是哪一段对话」的标识。相同 <code>thread_id</code> 的多次调用，会接续同一份记忆。</li>
+</ol>
+<p>为了演示「累积记忆」，我们让消息字段使用一个特殊机制 <strong><code>add_messages</code></strong>——它能让每次新消息**追加**到历史里，而不是覆盖：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">TypedDict</span>
+<span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">START</span><span class="p">,</span> <span class="n">END</span>
+<span class="kn">from</span> <span class="nn">langgraph.graph.message</span> <span class="kn">import</span> <span class="n">add_messages</span>
+<span class="kn">from</span> <span class="nn">langgraph.checkpoint.memory</span> <span class="kn">import</span> <span class="n">MemorySaver</span>
+<span class="kn">from</span> <span class="nn">langchain_core.messages</span> <span class="kn">import</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">AIMessage</span>
+
+<span class="k">class</span> <span class="nc">ChatState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="c1"># Annotated[..., add_messages]：告诉 LangGraph 这个列表字段「追加」而非「覆盖」</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">add_messages</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">reply_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ChatState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">last_user_msg</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">content</span>        <span class="c1"># 取最后一条用户消息</span>
+    <span class="n">history_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">])</span>               <span class="c1"># 看看记住了几条</span>
+    <span class="n">reply</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;我收到了「</span><span class="si">{</span><span class="n">last_user_msg</span><span class="si">}</span><span class="s2">」（当前历史共 </span><span class="si">{</span><span class="n">history_count</span><span class="si">}</span><span class="s2"> 条消息）&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">AIMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">reply</span><span class="p">)]}</span>      <span class="c1"># 返回的新消息会被「追加」</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">ChatState</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&quot;reply&quot;</span><span class="p">,</span> <span class="n">reply_node</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">START</span><span class="p">,</span> <span class="s2">&quot;reply&quot;</span><span class="p">)</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;reply&quot;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">checkpointer</span><span class="o">=</span><span class="n">MemorySaver</span><span class="p">())</span>      <span class="c1"># 绑定记忆</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;configurable&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;thread_id&quot;</span><span class="p">:</span> <span class="s2">&quot;user-1&quot;</span><span class="p">}}</span>        <span class="c1"># 同一对话的标识</span>
+
+<span class="n">graph</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;你好&quot;</span><span class="p">)]},</span> <span class="n">config</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;messages&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;还记得我刚说了啥吗&quot;</span><span class="p">)]},</span> <span class="n">config</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;messages&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code>HumanMessage: 你好
+AIMessage: 我收到了「你好」（当前历史共 1 条消息）
+HumanMessage: 还记得我刚说了啥吗
+AIMessage: 我收到了「还记得我刚说了啥吗」（当前历史共 3 条消息）
+</code></pre></div>
+<p>看第二次调用：我们只传了一条新消息，但最终的 <code>messages</code> 里**累积了全部 4 条**（前两条来自第一轮）。这证明图确实**记住了上一轮对话**。关键就在两处：编译时的 <code>checkpointer=MemorySaver()</code>，和调用时相同的 <code>thread_id</code>。</p>
+<blockquote>
+<p><strong><code>add_messages</code> 在做什么？</strong> 它是一个「合并规则」：默认情况下，节点返回 <code>{"messages": [...]}</code> 会**覆盖**原列表；而加了 <code>Annotated[list, add_messages]</code> 后，新消息会**追加**到历史末尾。这背后的「合并规则（Reducer）」机制，如果你想深入理解，可以看本节配套的拓展阅读《拓展：状态合并与 Reducer》——<strong>不看不影响主线</strong>。</p>
+<p><strong>EduAgent 里的真实应用</strong>：四个 Agent 全部用 <code>add_messages</code> 管理对话消息；记忆通过 <code>MemorySaver</code> 实现，并按 Agent 类型隔离；<code>thread_id</code> 用 <code>student_{学员ID}_session_{会话ID}</code> 的格式拼成，确保每个学员的每段会话各记各的。这些我们会在后续章节实现。</p>
+</blockquote>
+<hr />
+<h2 id="247-interrupt-command">2.4.7 了解：interrupt 与 Command（人在环中）<a class="headerlink" href="#247-interrupt-command" title="Permanent link">&para;</a></h2>
+<p>LangGraph 还有一个强大能力：让图**在某个节点中途「暂停」，等外部（比如老师）做出决定后再继续**。这就是「人在环中（HitL）」，用 <code>interrupt()</code> 暂停、用 <code>Command(resume=...)</code> 恢复。</p>
+<p>EduAgent 的试卷批改 Agent 正是用它实现「AI 批改完 → 暂停 → 等老师确认/修改 → 继续发布」的流程。这是相对进阶的内容，我们放到**第六章**结合真实业务详细讲解。本节你只需要知道「LangGraph 支持中途暂停等人介入」这件事即可。</p>
+<hr />
+<h2 id="248-langgraph">2.4.8 LangGraph 规范小结<a class="headerlink" href="#248-langgraph" title="Permanent link">&para;</a></h2>
+<p>把本项目关于 LangGraph 的硬性规范汇总：</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>❌ 禁用写法</th>
+<th>✅ 必用写法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设置入口 / 出口</td>
+<td><code>set_entry_point()</code> / <code>set_finish_point()</code></td>
+<td><code>add_edge(START, ...)</code> / <code>add_edge(..., END)</code></td>
+</tr>
+<tr>
+<td>快速创建 Agent</td>
+<td><code>create_react_agent</code>（作为主要方式）</td>
+<td>自己用 <code>StateGraph</code> 搭图</td>
+</tr>
+<tr>
+<td>节点更新状态</td>
+<td>直接修改传入的 state 对象</td>
+<td>返回「要更新的字段」字典</td>
+</tr>
+<tr>
+<td>多轮记忆</td>
+<td><code>ConversationBufferMemory</code></td>
+<td><code>compile(checkpointer=...)</code> + <code>thread_id</code></td>
+</tr>
+</tbody>
+</table>
+<p>核心心法就一句：<strong>自己用 <code>StateGraph</code> 显式地把节点和边画出来，让流程清晰可控</strong>——这正是本项目选择 LangGraph 而非「一键式 Agent」的原因。</p>
+<hr />
+<h2 id="_2">章节总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>本节我们亲手搭建了第一个能跑的 Agent 骨架，把 LangGraph 的核心机制走了一遍：</p>
+<ul>
+<li><strong>四步套路</strong>：定义 State（<code>TypedDict</code>）→ 写节点（读 State、返回更新字段）→ 搭图（<code>StateGraph</code> + <code>add_node</code> + <code>add_edge</code> + <code>START</code>/<code>END</code>）→ <code>compile</code> 后 <code>invoke</code>。</li>
+<li><strong>条件边</strong>：用 <code>add_conditional_edges</code> + 路由函数实现「根据 State 动态分支」——这是问答 Agent 的核心结构。</li>
+<li><strong>记忆</strong>：<code>compile(checkpointer=MemorySaver())</code> + 相同 <code>thread_id</code> 实现多轮记忆；<code>add_messages</code> 让消息追加而非覆盖。</li>
+<li><strong>进阶预告</strong>：<code>interrupt</code> / <code>Command</code> 实现人在环中（第六章）。</li>
+<li><strong>规范</strong>：统一用 <code>START</code>/<code>END</code>，节点返回增量更新，禁用旧版记忆与入口写法。</li>
+</ul>
+<p>到这里，你已经具备了「看懂、写出一张 LangGraph 图」的能力。这是整个项目最核心的技能——后面四个 Agent，无非是把节点里的简单逻辑换成「调用大模型 + 查知识库 + 打分」的真实业务。</p>
+<p>下一节 <code>2.5 FastAPI 速成</code>，我们将学习如何把这些 Agent 通过 Web 接口暴露出去，让前端能调用它们。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="03-LangChain%E9%80%9F%E6%88%90.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2.3 LangChain 速成" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              2.3 LangChain 速成
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="05-FastAPI%E9%80%9F%E6%88%90.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 2.5 FastAPI 速成" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              2.5 FastAPI 速成
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

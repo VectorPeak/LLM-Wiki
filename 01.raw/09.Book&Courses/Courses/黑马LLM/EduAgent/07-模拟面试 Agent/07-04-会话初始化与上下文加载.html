@@ -1,0 +1,2448 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>7.4 load_context 节点 - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#74-load_context" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7.4 load_context 节点
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          7.4 load_context 节点
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link md-nav__link--active">
+        7.4 load_context 节点
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#741-vs" class="md-nav__link">
+    7.4.1 首轮 vs 非首轮
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#742-llm" class="md-nav__link">
+    7.4.2 LLM 动态出题
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#743-load_context_node" class="md-nav__link">
+    7.4.3 load_context_node 完整实现
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#744" class="md-nav__link">
+    7.4.4 并行查询的必要性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#745" class="md-nav__link">
+    7.4.5 题库合并策略
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    🧪 本节实测
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#741-vs" class="md-nav__link">
+    7.4.1 首轮 vs 非首轮
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#742-llm" class="md-nav__link">
+    7.4.2 LLM 动态出题
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#743-load_context_node" class="md-nav__link">
+    7.4.3 load_context_node 完整实现
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#744" class="md-nav__link">
+    7.4.4 并行查询的必要性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#745" class="md-nav__link">
+    7.4.5 题库合并策略
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    🧪 本节实测
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="74-load_context">7.4 load_context 节点<a class="headerlink" href="#74-load_context" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解首轮与非首轮执行路径的区别</li>
+<li>掌握 <code>asyncio.gather</code> 并行发起四路 DB 查询的写法</li>
+<li>理解 LLM 动态出题与 DB 题库的合并策略</li>
+</ul>
+<blockquote>
+<p>💡 <strong>本节新建文件</strong>：<code>backend/agents/interview/nodes.py</code>（写 <code>load_context_node</code> 和 <code>_generate_questions_by_llm</code>）</p>
+</blockquote>
+<hr />
+<h2 id="_2">📁 本节要创建的文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/agents/interview/nodes.py</code></td>
+<td>🆕 新建</td>
+<td>开始写 nodes.py，本节写前两个函数</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="741-vs">7.4.1 首轮 vs 非首轮<a class="headerlink" href="#741-vs" title="Permanent link">&para;</a></h2>
+<p><code>load_context_node</code> <strong>每轮都执行</strong>（它是图的第一个节点），但首轮和非首轮做的事不同：</p>
+<div class="highlight"><pre><span></span><code>每轮都做：
+  ─ 从 DB 加载历史对话摘要（existing_summary）
+
+仅首轮（total_turn_count == 0）额外做：
+  ─ 初始化全部 State 字段（current_stage=WARMUP, followup_count=0, ...）
+  ─ 加载简历联动数据（resume_projects, resume_skills）
+  ─ 从 interview_questions 表拉题库（按 target_position 过滤）
+  ─ 用 LLM 动态生成岗位题目（_generate_questions_by_llm）
+</code></pre></div>
+<p>判断依据是 <code>state.get("total_turn_count", 0) == 0</code>。首轮时 <code>total_turn_count</code> 还未被 <code>evaluate_answer_node</code> 更新（从 0 开始），非首轮时已经 ≥ 1。</p>
+<hr />
+<h2 id="742-llm">7.4.2 LLM 动态出题<a class="headerlink" href="#742-llm" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/agents/interview/nodes.py</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">from</span> <span class="nn">langchain_core.messages</span> <span class="kn">import</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">AIMessage</span><span class="p">,</span> <span class="n">SystemMessage</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">text</span>
+
+<span class="kn">from</span> <span class="nn">backend.agents.interview.state</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">InterviewState</span><span class="p">,</span> <span class="n">InterviewStage</span><span class="p">,</span> <span class="n">AnswerQuality</span><span class="p">,</span> <span class="n">ReportWrapper</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">backend.agents.interview.prompts</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SYSTEM_PROMPT</span><span class="p">,</span> <span class="n">WARMUP_PROMPT</span><span class="p">,</span> <span class="n">INTRO_EVAL_TECH_FIRST_PROMPT</span><span class="p">,</span>
+    <span class="n">TECH_BASE_PROMPT</span><span class="p">,</span> <span class="n">PROJECT_PROMPT</span><span class="p">,</span> <span class="n">CLOSING_PROMPT</span><span class="p">,</span>
+    <span class="n">STAGE_TRANSITION_PROMPTS</span><span class="p">,</span> <span class="n">EVALUATE_ANSWER_PROMPT</span><span class="p">,</span>
+    <span class="n">EVALUATE_THINK_PROMPT</span><span class="p">,</span> <span class="n">GENERATE_REPORT_PROMPT</span><span class="p">,</span>
+    <span class="n">TECH_BASE_GENERATE_PROMPT</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">langchain_core.messages</span> <span class="kn">import</span> <span class="n">BaseMessage</span>
+
+<span class="kn">from</span> <span class="nn">backend.core.llm_factory</span> <span class="kn">import</span> <span class="n">get_llm</span><span class="p">,</span> <span class="n">get_structured_llm</span>
+<span class="kn">from</span> <span class="nn">backend.core.memory</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">build_thread_id</span><span class="p">,</span> <span class="n">should_trigger_summary</span><span class="p">,</span>
+    <span class="n">compress_to_summary</span><span class="p">,</span> <span class="n">trim_messages_to_window</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">backend.core.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">backend.dependencies</span> <span class="kn">import</span> <span class="n">AsyncSessionLocal</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>            <span class="c1"># 本模块日志器</span>
+
+<span class="n">DEFAULT_MAX_TURNS</span> <span class="o">=</span> <span class="mi">40</span>                    <span class="c1"># 一场面试的总轮数上限（兜底防止无限进行）</span>
+<span class="n">MAX_FOLLOWUP_PER_QUESTION</span> <span class="o">=</span> <span class="mi">2</span>            <span class="c1"># 同一道题最多追问几次</span>
+
+<span class="c1"># 各阶段「最少 / 最多」轮数（check_stage 用，详见 7.5）</span>
+<span class="n">STAGE_MIN_TURNS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">WARMUP</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>    <span class="mi">1</span><span class="p">,</span>   <span class="c1"># 热身至少 1 轮（自我介绍完即可推进）</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">TECH_BASE</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>   <span class="c1"># 技术环节至少 6 轮</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">PROJECT</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>   <span class="mi">2</span><span class="p">,</span>   <span class="c1"># 项目环节至少 2 轮</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">CLOSING</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>   <span class="mi">2</span><span class="p">,</span>   <span class="c1"># 反问环节至少 2 轮</span>
+<span class="p">}</span>
+<span class="n">STAGE_MAX_TURNS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">WARMUP</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>    <span class="mi">4</span><span class="p">,</span>   <span class="c1"># 热身最多 4 轮（避免卡住）</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">TECH_BASE</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>  <span class="c1"># 技术环节最多 12 轮</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">PROJECT</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>   <span class="mi">14</span><span class="p">,</span>  <span class="c1"># 项目环节最多 14 轮</span>
+    <span class="n">InterviewStage</span><span class="o">.</span><span class="n">CLOSING</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>   <span class="mi">4</span><span class="p">,</span>   <span class="c1"># 反问环节最多 4 轮</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_msg_text</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">BaseMessage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;安全提取消息文本，兼容 str 和 list（多模态）content。&quot;&quot;&quot;</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">content</span>                 <span class="c1"># 取出消息内容（可能是 str 或 list）</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>         <span class="c1"># 多模态消息：content 是片段列表</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>                   <span class="c1"># 把各片段的文本拼起来</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># dict 取 text 字段，否则 str()</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">content</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>                   <span class="c1"># 普通字符串直接返回</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_generate_questions_by_llm</span><span class="p">(</span><span class="n">target_position</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    根据目标岗位用 LLM 动态生成技术面试题，作为 DB 题库的替代/补充。</span>
+
+<span class="sd">    参数：target_position（岗位，决定出题方向）、count（题数，默认 8）</span>
+<span class="sd">    返回：题目字典列表，每项 = {id, content, difficulty, tags, asked}；失败返回 []。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>                                            <span class="c1"># 出题失败不应让整个加载崩，包 try</span>
+        <span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="s2">&quot;interview&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span> <span class="c1"># 取模型（温度 0.3，出题略有多样性）</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">TECH_BASE_GENERATE_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>  <span class="c1"># 拼出题 Prompt</span>
+            <span class="n">position</span><span class="o">=</span><span class="n">target_position</span><span class="p">,</span>               <span class="c1"># 填岗位</span>
+            <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span>                            <span class="c1"># 填题数</span>
+        <span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">([</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">prompt</span><span class="p">)])</span>  <span class="c1"># 调大模型</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">_msg_text</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>          <span class="c1"># 安全取出回复文本</span>
+
+        <span class="c1"># 兼容 LLM 有时用 ```json ... ``` 包裹输出：把里面以 [ 开头的那段抠出来</span>
+        <span class="k">if</span> <span class="s2">&quot;```&quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;```&quot;</span><span class="p">)</span>               <span class="c1"># 按围栏切开</span>
+            <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+                <span class="n">stripped</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">stripped</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;json&quot;</span><span class="p">):</span>     <span class="c1"># 去掉可能的 &quot;json&quot; 语言标记</span>
+                    <span class="n">stripped</span> <span class="o">=</span> <span class="n">stripped</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">stripped</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">):</span>        <span class="c1"># 找到以 [ 开头的题目数组</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">stripped</span>
+                    <span class="k">break</span>
+
+        <span class="n">questions_raw</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>            <span class="c1"># 解析成 Python 列表</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>                                 <span class="c1"># 收集规整后的题目</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">questions_raw</span><span class="p">):</span>       <span class="c1"># 逐题处理</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">):</span>  <span class="c1"># 跳过格式不对/无题干的</span>
+                <span class="k">continue</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>                         <span class="c1"># 规整成统一结构</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span>         <span class="sa">f</span><span class="s2">&quot;llm_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>           <span class="c1"># LLM 题用 llm_0/llm_1... 当 id</span>
+                <span class="s2">&quot;content&quot;</span><span class="p">:</span>    <span class="n">q</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">],</span>         <span class="c1"># 题干</span>
+                <span class="s2">&quot;difficulty&quot;</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;difficulty&quot;</span><span class="p">,</span> <span class="s2">&quot;medium&quot;</span><span class="p">),</span>     <span class="c1"># 难度（缺省 medium）</span>
+                <span class="s2">&quot;tags&quot;</span><span class="p">:</span>       <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">target_position</span><span class="p">]),</span>  <span class="c1"># 标签（缺省用岗位名）</span>
+                <span class="s2">&quot;asked&quot;</span><span class="p">:</span>      <span class="kc">False</span><span class="p">,</span>                <span class="c1"># 初始都没问过</span>
+            <span class="p">})</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;generate_questions_llm.done&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="n">position</span><span class="o">=</span><span class="n">target_position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>                               <span class="c1"># 返回题库</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>                          <span class="c1"># 出题失败（LLM 报错/JSON 解析失败等）</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;generate_questions_llm.failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">[]</span>                                   <span class="c1"># 返回空，让 load_context 降级到纯 DB 题库</span>
+</code></pre></div>
+<p>注意 JSON 解析的健壮性处理：LLM 有时会用 <code>```json ... ```</code> 包裹输出，代码先尝试剥离这层包装，再 <code>json.loads</code>。解析失败返回空列表，<code>load_context_node</code> 会降级到纯 DB 题库。</p>
+<hr />
+<h2 id="743-load_context_node">7.4.3 load_context_node 完整实现<a class="headerlink" href="#743-load_context_node" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">load_context_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">InterviewState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    上下文加载节点（每轮第一个执行）。</span>
+
+<span class="sd">    读取 state：</span>
+<span class="sd">        student_id / session_id        定位会话（拼 thread_id）</span>
+<span class="sd">        total_turn_count               判断是否首轮（==0 即首轮）</span>
+<span class="sd">        resume_review_id               首轮用它读简历联动数据（可为空）</span>
+<span class="sd">        target_position                首轮用它生成/查询题库</span>
+<span class="sd">        resume_projects / resume_skills 首轮的兜底初始值</span>
+<span class="sd">    返回（合并进 state）：</span>
+<span class="sd">        首轮：current_stage / 各计数 / question_bank / resume_projects / resume_skills</span>
+<span class="sd">              / existing_summary 等一整套初始化</span>
+<span class="sd">        非首轮：只刷新 existing_summary</span>
+
+<span class="sd">    每轮都执行：加载历史摘要（from DB）。</span>
+<span class="sd">    首轮额外执行：初始化 State、加载简历联动数据、从题库拉题。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">student_id</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;student_id&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>       <span class="c1"># 取学员 ID</span>
+    <span class="n">session_id</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;session_id&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>       <span class="c1"># 取会话 ID</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">student_id</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">session_id</span><span class="p">:</span>             <span class="c1"># 缺 ID 无法定位会话 → 返回空</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;load_context.missing_ids&quot;</span><span class="p">,</span> <span class="n">state_keys</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="n">thread_id</span> <span class="o">=</span> <span class="n">build_thread_id</span><span class="p">(</span><span class="n">student_id</span><span class="p">,</span> <span class="n">session_id</span><span class="p">)</span>  <span class="c1"># 拼 thread_id（摘要表/检查点的 key）</span>
+
+    <span class="n">is_first_turn</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;total_turn_count&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>  <span class="c1"># 总轮数为 0 = 首轮</span>
+    <span class="n">updates</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>                               <span class="c1"># 收集要写回 state 的更新</span>
+
+    <span class="c1"># ── 内部查询函数（各自独立 session，可并行执行）──────────</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_resume</span><span class="p">(</span><span class="n">resume_review_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="c1"># 按 resume_review_id 去 resume_reviews 表读简历结构化数据（第4章简历Agent写的）</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>     <span class="c1"># 独立 DB 会话</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                    <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT structured_data FROM resume_reviews WHERE id = :id&quot;</span><span class="p">),</span>
+                    <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">resume_review_id</span><span class="p">},</span>
+                <span class="p">)</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">mappings</span><span class="p">()</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;structured_data&quot;</span><span class="p">]:</span>       <span class="c1"># 读到数据</span>
+                <span class="n">structured</span> <span class="o">=</span> <span class="p">(</span>                       <span class="c1"># structured_data 可能已是 dict 或 JSON 字符串</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;structured_data&quot;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;structured_data&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;structured_data&quot;</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span>                             <span class="c1"># 只取项目和技能两项</span>
+                    <span class="s2">&quot;resume_projects&quot;</span><span class="p">:</span> <span class="n">structured</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;projects&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+                    <span class="s2">&quot;resume_skills&quot;</span><span class="p">:</span>   <span class="n">structured</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;skills_list&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+                <span class="p">}</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>                       <span class="c1"># 读失败不影响面试，记日志返回空</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;load_context.resume_load_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_questions</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="c1"># 从 interview_questions 表查岗位题库（匹配该岗位或 general 通用题）</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                    <span class="n">text</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                        SELECT id, content, difficulty, tags</span>
+<span class="s2">                        FROM interview_questions</span>
+<span class="s2">                        WHERE (target_position = :target OR target_position = &#39;general&#39;)</span>
+<span class="s2">                          AND is_active = TRUE</span>
+<span class="s2">                        ORDER BY</span>
+<span class="s2">                            CASE difficulty</span>
+<span class="s2">                                WHEN &#39;medium&#39; THEN 1</span>
+<span class="s2">                                WHEN &#39;easy&#39;   THEN 2</span>
+<span class="s2">                                ELSE 3</span>
+<span class="s2">                            END,</span>
+<span class="s2">                            RANDOM()</span>
+<span class="s2">                        LIMIT 20</span>
+<span class="s2">                    &quot;&quot;&quot;</span><span class="p">),</span>
+                    <span class="p">{</span><span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">target</span><span class="p">},</span>
+                <span class="p">)</span>
+                <span class="n">rows</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">mappings</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">[</span>                                 <span class="c1"># 规整成统一题目结构</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span>         <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]),</span>
+                    <span class="s2">&quot;content&quot;</span><span class="p">:</span>    <span class="n">r</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;difficulty&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;difficulty&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;tags&quot;</span><span class="p">:</span>       <span class="n">r</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="p">[]),</span>
+                    <span class="s2">&quot;asked&quot;</span><span class="p">:</span>      <span class="kc">False</span><span class="p">,</span>             <span class="c1"># 初始都没问过</span>
+                <span class="p">}</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span>
+            <span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;load_context.question_bank_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_fetch_summary</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># 读历史对话摘要（长对话压缩后存在 interview_sessions.summary）</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">s</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                    <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT summary FROM interview_sessions WHERE thread_id = :tid&quot;</span><span class="p">),</span>
+                    <span class="p">{</span><span class="s2">&quot;tid&quot;</span><span class="p">:</span> <span class="n">thread_id</span><span class="p">},</span>
+                <span class="p">)</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">mappings</span><span class="p">()</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">row</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;load_context.summary_load_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># ── 并行执行所有查询 ─────────────────────────────────────</span>
+    <span class="k">if</span> <span class="n">is_first_turn</span><span class="p">:</span>                                <span class="c1"># 首轮：完整初始化</span>
+        <span class="n">updates</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>                             <span class="c1"># 一次性写入所有起始字段</span>
+            <span class="s2">&quot;current_stage&quot;</span><span class="p">:</span>       <span class="n">InterviewStage</span><span class="o">.</span><span class="n">WARMUP</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>   <span class="c1"># 起始阶段 = 热身</span>
+            <span class="s2">&quot;stage_turn_count&quot;</span><span class="p">:</span>    <span class="mi">0</span><span class="p">,</span>                <span class="c1"># 当前阶段轮数清零</span>
+            <span class="s2">&quot;total_turn_count&quot;</span><span class="p">:</span>    <span class="mi">0</span><span class="p">,</span>                <span class="c1"># 总轮数清零</span>
+            <span class="s2">&quot;followup_count&quot;</span><span class="p">:</span>      <span class="mi">0</span><span class="p">,</span>                <span class="c1"># 追问次数清零</span>
+            <span class="s2">&quot;projects_asked&quot;</span><span class="p">:</span>      <span class="p">[],</span>               <span class="c1"># 已深挖项目清空</span>
+            <span class="s2">&quot;last_answer_quality&quot;</span><span class="p">:</span> <span class="n">AnswerQuality</span><span class="o">.</span><span class="n">ADEQUATE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>  <span class="c1"># 上轮质量给中性初值</span>
+            <span class="s2">&quot;max_turns&quot;</span><span class="p">:</span>           <span class="n">DEFAULT_MAX_TURNS</span><span class="p">,</span><span class="c1"># 轮数上限 40</span>
+            <span class="s2">&quot;report&quot;</span><span class="p">:</span>              <span class="kc">None</span><span class="p">,</span>             <span class="c1"># 报告未生成</span>
+            <span class="s2">&quot;should_summarize&quot;</span><span class="p">:</span>    <span class="kc">False</span><span class="p">,</span>            <span class="c1"># 暂不压缩</span>
+            <span class="s2">&quot;resume_projects&quot;</span><span class="p">:</span>     <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_projects&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>  <span class="c1"># 简历项目兜底空</span>
+            <span class="s2">&quot;resume_skills&quot;</span><span class="p">:</span>       <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_skills&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>    <span class="c1"># 简历技能兜底空</span>
+        <span class="p">})</span>
+
+        <span class="n">resume_review_id</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_review_id&quot;</span><span class="p">)</span>  <span class="c1"># 简历联动 ID（可能为空）</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;target_position&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>         <span class="c1"># 目标岗位</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">_noop_resume</span><span class="p">():</span>                    <span class="c1"># 没有简历 ID 时的占位协程（返回空）</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="c1"># 四路 I/O 各起一个协程：简历 / DB题库 / LLM出题 / 历史摘要</span>
+        <span class="n">resume_coro</span>    <span class="o">=</span> <span class="n">_fetch_resume</span><span class="p">(</span><span class="n">resume_review_id</span><span class="p">)</span> <span class="k">if</span> <span class="n">resume_review_id</span> <span class="k">else</span> <span class="n">_noop_resume</span><span class="p">()</span>
+        <span class="n">questions_coro</span> <span class="o">=</span> <span class="n">_fetch_questions</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">llm_q_coro</span>     <span class="o">=</span> <span class="n">_generate_questions_by_llm</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">summary_coro</span>   <span class="o">=</span> <span class="n">_fetch_summary</span><span class="p">()</span>
+
+        <span class="kn">import</span> <span class="nn">asyncio</span>
+        <span class="c1"># gather 同时发起四路、等全部完成（总耗时≈最慢的 LLM 出题，详见 7.4.4）</span>
+        <span class="n">resume_data</span><span class="p">,</span> <span class="n">db_questions</span><span class="p">,</span> <span class="n">llm_questions</span><span class="p">,</span> <span class="n">existing_summary</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+            <span class="n">resume_coro</span><span class="p">,</span> <span class="n">questions_coro</span><span class="p">,</span> <span class="n">llm_q_coro</span><span class="p">,</span> <span class="n">summary_coro</span>
+        <span class="p">)</span>
+
+        <span class="c1"># LLM 生成题优先（岗位精准），DB 题兜底/补充</span>
+        <span class="k">if</span> <span class="n">llm_questions</span><span class="p">:</span>
+            <span class="n">question_bank</span> <span class="o">=</span> <span class="n">llm_questions</span> <span class="o">+</span> <span class="p">(</span><span class="n">db_questions</span> <span class="k">if</span> <span class="n">db_questions</span> <span class="k">else</span> <span class="p">[])</span>  <span class="c1"># LLM 题在前，DB 题补后</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">question_bank</span> <span class="o">=</span> <span class="n">db_questions</span>             <span class="c1"># LLM 出题失败 → 纯用 DB 题</span>
+
+        <span class="k">if</span> <span class="n">resume_data</span><span class="p">:</span>                              <span class="c1"># 读到了简历联动数据</span>
+            <span class="n">updates</span><span class="p">[</span><span class="s2">&quot;resume_projects&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resume_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_projects&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">updates</span><span class="p">[</span><span class="s2">&quot;resume_skills&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">resume_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_skills&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;load_context.resume_loaded&quot;</span><span class="p">,</span> <span class="n">projects</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">updates</span><span class="p">[</span><span class="s2">&quot;resume_projects&quot;</span><span class="p">]))</span>
+
+        <span class="n">updates</span><span class="p">[</span><span class="s2">&quot;question_bank&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">question_bank</span>  <span class="c1"># 写入题库</span>
+        <span class="n">updates</span><span class="p">[</span><span class="s2">&quot;existing_summary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">existing_summary</span>  <span class="c1"># 写入历史摘要</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;load_context.question_bank_loaded&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">question_bank</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>                                            <span class="c1"># 非首轮：只刷新摘要</span>
+        <span class="n">updates</span><span class="p">[</span><span class="s2">&quot;existing_summary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_fetch_summary</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">updates</span>                                   <span class="c1"># 返回更新，写回 state</span>
+</code></pre></div>
+<hr />
+<h2 id="744">7.4.4 并行查询的必要性<a class="headerlink" href="#744" title="Permanent link">&para;</a></h2>
+<p>首轮同时发起四路 I/O：</p>
+<table>
+<thead>
+<tr>
+<th>查询</th>
+<th>耗时</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_fetch_resume</code></td>
+<td>~10ms（DB）</td>
+<td>从 <code>resume_reviews</code> 表读取简历结构化数据</td>
+</tr>
+<tr>
+<td><code>_fetch_questions</code></td>
+<td>~10ms（DB）</td>
+<td>从 <code>interview_questions</code> 表拉取题库</td>
+</tr>
+<tr>
+<td><code>_generate_questions_by_llm</code></td>
+<td>~2-3s（LLM 调用）</td>
+<td>动态出题，是四路中最慢的</td>
+</tr>
+<tr>
+<td><code>_fetch_summary</code></td>
+<td>~10ms（DB）</td>
+<td>读取历史摘要</td>
+</tr>
+</tbody>
+</table>
+<p>如果串行执行，总耗时约为四路之和（~3s）。<code>asyncio.gather</code> 并行执行，总耗时约等于最慢的那一路（LLM 出题的 2-3s），节省了约 30ms 的 DB 查询等待。</p>
+<hr />
+<h2 id="745">7.4.5 题库合并策略<a class="headerlink" href="#745" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>LLM 生成题（8道，岗位精准）
+    │
+    ├─ 成功 → 放在题库前面（优先使用）
+    │          └─ DB 题（最多20道，通用题）附加在后面补充
+    │
+    └─ 失败 → 纯用 DB 题兜底
+</code></pre></div>
+<p>LLM 题放前面的原因：LLM 根据具体 <code>target_position</code>（如"AI大模型开发工程师"）生成的题，比 DB 里按 <code>target_position = 'general'</code> 查出的通用题更贴合岗位。面试前几轮用 LLM 精准题，后续如果问完了再用 DB 通用题补充。</p>
+<hr />
+<h2 id="_3">🧪 本节实测<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><code>load_context_node</code> 首轮要并行读三处 DB（简历 / 题库 / 摘要）+ LLM 动态出题，所以测试**需要数据库**。fixture 的 <code>setup_db_fixture()</code> 会先把李明的简历写进 <code>resume_reviews</code>、建好面试会话，再调用节点，让你看到简历联动数据和题库被真实加载出来。</p>
+<p><strong>前置条件</strong>：① PostgreSQL 已启动（<code>docker-compose up -d postgres</code>）② 已 <code>python scripts/seed_data.py</code>（存在 student01）③ <code>.env.local</code> 配好 <code>DEEPSEEK_API_KEY</code>。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="c1"># scripts/manual_tests/itv_07_04_load_context.py</span>
+<span class="c1"># 运行：python scripts/manual_tests/itv_07_04_load_context.py</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">langchain_core.messages</span> <span class="kn">import</span> <span class="n">HumanMessage</span>
+
+<span class="kn">from</span> <span class="nn">itv_fixtures</span> <span class="kn">import</span> <span class="n">load_env</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">base_state</span><span class="p">,</span> <span class="n">setup_db_fixture</span>
+
+<span class="n">load_env</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">backend.agents.interview.nodes</span> <span class="kn">import</span> <span class="n">load_context_node</span><span class="p">,</span> <span class="n">_generate_questions_by_llm</span>
+<span class="kn">from</span> <span class="nn">backend.agents.interview.state</span> <span class="kn">import</span> <span class="n">InterviewStage</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;① 准备 DB fixture：写入李明简历 + 新建面试会话&quot;</span><span class="p">)</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="k">await</span> <span class="n">setup_db_fixture</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;resume_review_id:&quot;</span><span class="p">,</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;resume_review_id&quot;</span><span class="p">])</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;② 首轮 load_context_node（total_turn_count=0 → 走初始化路径）&quot;</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">base_state</span><span class="p">(</span>
+        <span class="n">student_id</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;student_id&quot;</span><span class="p">],</span>
+        <span class="n">session_id</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;session_id&quot;</span><span class="p">],</span>
+        <span class="n">resume_review_id</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;resume_review_id&quot;</span><span class="p">],</span>
+        <span class="n">total_turn_count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s2">&quot;[开始面试]&quot;</span><span class="p">)],</span>
+    <span class="p">)</span>
+    <span class="n">updates</span> <span class="o">=</span> <span class="k">await</span> <span class="n">load_context_node</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;初始化阶段:&quot;</span><span class="p">,</span> <span class="n">updates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;current_stage&quot;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;简历项目:&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">updates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_projects&quot;</span><span class="p">,</span> <span class="p">[])])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;简历技能:&quot;</span><span class="p">,</span> <span class="n">updates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resume_skills&quot;</span><span class="p">,</span> <span class="p">[])[:</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+    <span class="n">bank</span> <span class="o">=</span> <span class="n">updates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;question_bank&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">题库共 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bank</span><span class="p">)</span><span class="si">}</span><span class="s2"> 题，前 5 题：&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">bank</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&gt;6</span><span class="si">}</span><span class="s2">] (</span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">&#39;difficulty&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][:</span><span class="mi">34</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;历史摘要:&quot;</span><span class="p">,</span> <span class="n">updates</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;existing_summary&quot;</span><span class="p">))</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;③ 单独验证 LLM 动态出题（不依赖 DB）&quot;</span><span class="p">)</span>
+    <span class="n">qs</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_generate_questions_by_llm</span><span class="p">(</span><span class="s2">&quot;AI大模型开发工程师&quot;</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">qs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - (</span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">&#39;difficulty&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">][:</span><span class="mi">38</span><span class="p">]</span><span class="si">}</span><span class="s2">  tags=</span><span class="si">{</span><span class="n">q</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;✅ 07-04 load_context 首轮初始化验证完成&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</code></pre></div>
+<p>运行：</p>
+<div class="highlight"><pre><span></span><code>conda activate edu_agent
+python scripts/manual_tests/itv_07_04_load_context.py
+</code></pre></div>
+<p><strong>③ LLM 动态出题（实际运行输出）：</strong></p>
+<div class="highlight"><pre><span></span><code>==================================================================
+  ③ 单独验证 LLM 动态出题（不依赖 DB）
+==================================================================
+  - (medium) 请解释Transformer中自注意力机制的计算过程，包括Q、K、V的生成和注意  tags=[&#39;Transformer&#39;, &#39;注意力机制&#39;]
+  - (easy)   什么是过拟合和欠拟合？列举至少三种解决过拟合的常用方法。  tags=[&#39;深度学习&#39;, &#39;模型泛化&#39;]
+  - (medium) 请描述自回归语言模型（如GPT）的生成原理，包括如何逐步生成下一个token。  tags=[&#39;自回归模型&#39;, &#39;语言模型&#39;]
+  - (hard)   请解释LoRA微调的核心思想，它如何在不改变原模型参数的情况下实现高效微调？  tags=[&#39;大模型微调&#39;, &#39;LoRA&#39;]
+</code></pre></div>
+<p><strong>①② 首轮加载（需 DB，示例输出）：</strong></p>
+<div class="highlight"><pre><span></span><code>==================================================================
+  ② 首轮 load_context_node（total_turn_count=0 → 走初始化路径）
+==================================================================
+初始化阶段: warmup
+简历项目: [&#39;企业知识库 RAG 问答系统&#39;, &#39;客服领域大模型 LoRA 微调&#39;]
+简历技能: [&#39;Python&#39;, &#39;PyTorch&#39;, &#39;LangChain&#39;, &#39;Transformer&#39;, &#39;RAG&#39;] ...
+
+题库共 8 题，前 5 题：
+  [ llm_0] (medium) 请解释Transformer中自注意力机制的计算过程...
+  [ llm_1] (easy)   什么是过拟合和欠拟合？列举至少三种解决...
+  [ llm_2] (medium) 请描述自回归语言模型的生成原理...
+  [ llm_3] (hard)   请解释LoRA微调的核心思想...
+  [ llm_4] (medium) 向量相似度检索中余弦相似度的原理...
+历史摘要: None
+</code></pre></div>
+<blockquote>
+<p>💡 <strong>读懂这个测试</strong>：
+- ③ 是**实际运行输出**——LLM 按"AI大模型开发工程师"岗位生成的题完全契合方向（Transformer / 过拟合 / 自回归 / LoRA），印证 7.4.5"LLM 精准题优先"。
+- ②的 <code>resume_projects</code> 正是 <code>setup_db_fixture</code> 写进 DB 的李明两个项目被读了回来——这就是 7.4 的简历联动，也是 7.8 节项目深挖能问出"5 万 chunk"的数据来源。
+- 题库 8 题 <code>id</code> 全是 <code>llm_*</code>，说明 <code>seed_data.py</code> 默认没有灌 <code>interview_questions</code> 表（DB 题为空），完全由 LLM 出题兜底——对照 7.4.5 的"LLM 失败才用 DB"反过来也成立："DB 为空就纯用 LLM"。</p>
+</blockquote>
+<hr />
+<h2 id="_4">章节总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>首轮/非首轮分支</strong>：<code>total_turn_count == 0</code> 判断；首轮做完整初始化，非首轮只刷新 <code>existing_summary</code></li>
+<li><strong>四路并行查询</strong>：<code>asyncio.gather</code> 让四路 I/O 同时发起，总耗时由最慢的 LLM 出题决定（~2-3s）</li>
+<li><strong>题库合并</strong>：LLM 精准题优先，DB 通用题补充；LLM 失败时纯 DB 兜底</li>
+<li><strong>嵌套 async 函数</strong>：四个子查询定义为 <code>load_context_node</code> 内部的 <code>async def</code>，拿到上层变量（<code>thread_id</code> 等）而不需要额外传参</li>
+</ul>
+<p><strong>下一节 <code>7.5 check_stage 节点</code></strong> 实现阶段推进逻辑：阶段轮次判断、强制终止条件、辅助函数。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 7.3 Prompts 全解析" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              7.3 Prompts 全解析
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 7.5 check_stage 节点" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              7.5 check_stage 节点
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

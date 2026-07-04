@@ -1,0 +1,3350 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="基于 LangChain + Milvus Hybrid Search 的 KnowForge RAG Platform — 19 讲系统课程">
+      
+      
+      
+      
+        <link rel="prev" href="13-app-entry-preflight.html">
+      
+      
+        <link rel="next" href="15-data-isolation.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>14 知识库多版本管理 - KnowForge RAG Platform — 系统讲义</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/site-overrides.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#14" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="index.html" title="KnowForge RAG Platform — 系统讲义" class="md-header__button md-logo" aria-label="KnowForge RAG Platform — 系统讲义" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KnowForge RAG Platform — 系统讲义
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              14 知识库多版本管理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="KnowForge RAG Platform — 系统讲义" class="md-nav__button md-logo" aria-label="KnowForge RAG Platform — 系统讲义" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    KnowForge RAG Platform — 系统讲义
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="course-outline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程大纲
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="animation/business-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 业务流程图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一阶段：基础概念
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第一阶段：基础概念
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-project-overview.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 项目概述与环境搭建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02-rag-fundamentals.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 RAG 核心概念深入
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二阶段：核心 RAG 链路
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第二阶段：核心 RAG 链路
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03-langchain-ecosystem.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 LangChain 生态系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="04-milvus-index-and-operations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 Milvus 索引机制与基本操作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-intent-classification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 意图分类
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="06-retrieval-strategy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 检索策略与动态计划
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-query-rewrite-variants.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 查询改写与变体生成
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="08-milvus-hybrid-search.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 Milvus 混合检索
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="09-qaservice-orchestration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 QAService 核心编排
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="10-rag-pipeline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 RAG Pipeline 主流程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="11-prompt-engineering.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 Prompt 工程与 Profile 系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三阶段：Web 服务基础设施
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第三阶段：Web 服务基础设施
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="12-fastapi-async.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 FastAPI 与异步 Web 框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="13-app-entry-preflight.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13 应用入口与环境前置校验
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四阶段：治理与运维
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    第四阶段：治理与运维
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 知识库多版本管理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="14-kb-versioning.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14 知识库多版本管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲地图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲地图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图 1：第 14 讲功能闭环地图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        节点与代码对齐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：前置知识 — 为什么 RAG 需要版本管理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第一部分：前置知识 — 为什么 RAG 需要版本管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 不加版本管理的风险
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 版本管理的典型需求
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：版本状态机
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二部分：版本状态机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 三种状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安全入库与激活流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 质量门禁与状态转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 激活操作的轻量性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-staged-active" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 为什么采用 STAGED 候选版本 + active 指针切换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三部分：版本号设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第三部分：版本号设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 版本号生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 为什么版本号包含配置哈希
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第四部分：MySQL 版本控制面
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第四部分：MySQL 版本控制面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 表结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-knowledgebaseversionstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 KnowledgeBaseVersionStore 类
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#milvus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第五部分：与 Milvus 检索的集成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第五部分：与 Milvus 检索的集成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 写入时携带版本信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 检索时过滤版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 评测用历史版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第六部分：全量重建的安全流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲实践闭环
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲实践闭环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲从 0 到 1 实现闭环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重点掌握
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="15-data-isolation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15 数据隔离与多租户
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="16-ingestion-pipeline.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 文档入库与索引链路
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="17-quality-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 RAG 回归验收与入库质量
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="18-testing-system.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18 测试与接口验收
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="19-observability-tracing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19 LangSmith 观测、Trace 与生产化部署
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术附录
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术附录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-a-pydantic.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A Pydantic 数据校验与 Settings 管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-b-sha256-fingerprint.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    B SHA256 文件指纹
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-c-hnsw-index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C HNSW 索引参数调优
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-d-crossencoder-reranker.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    D CrossEncoder Reranker 原理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-e-recursive-splitter.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    E RecursiveCharacterTextSplitter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-f-embedding-models.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F Embedding 模型选型
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-g-chunking-strategy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    G 文档切分策略 Parent-Child Chunking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="appendix/appendix-h-tool-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    H 项目工具类开发详解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲地图
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲地图">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图 1：第 14 讲功能闭环地图
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        节点与代码对齐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一部分：前置知识 — 为什么 RAG 需要版本管理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第一部分：前置知识 — 为什么 RAG 需要版本管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 不加版本管理的风险
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 版本管理的典型需求
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二部分：版本状态机
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二部分：版本状态机">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 三种状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安全入库与激活流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 质量门禁与状态转换
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 激活操作的轻量性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-staged-active" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 为什么采用 STAGED 候选版本 + active 指针切换
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三部分：版本号设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第三部分：版本号设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 版本号生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 为什么版本号包含配置哈希
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第四部分：MySQL 版本控制面
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第四部分：MySQL 版本控制面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 表结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-knowledgebaseversionstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 KnowledgeBaseVersionStore 类
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#milvus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第五部分：与 Milvus 检索的集成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第五部分：与 Milvus 检索的集成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 写入时携带版本信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 检索时过滤版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 评测用历史版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第六部分：全量重建的安全流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲实践闭环
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="本讲实践闭环">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲从 0 到 1 实现闭环
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重点掌握
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本讲小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="14">第14讲：知识库多版本管理<a class="headerlink" href="#14" title="Permanent link">&para;</a></h1>
+<p><strong>上一讲</strong>：<a href="13-app-entry-preflight.html">应用入口与环境前置校验</a>
+<strong>下一讲</strong>：<a href="15-data-isolation.html">数据隔离与多租户设计</a></p>
+<h2 id="_1">本讲目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解为什么 RAG 系统需要知识库版本管理</li>
+<li>掌握版本状态机的设计（STAGED → ACTIVE → ARCHIVED）</li>
+<li>理解版本切换的实现（O(1) 操作，不批量更新 Milvus）</li>
+<li>理解版本号生成的设计（时间戳 + 配置哈希）</li>
+<li>理解入库质量报告/质量门禁为什么是版本激活前置条件</li>
+</ul>
+<!-- chapter-map:start -->
+<h2 id="_2">本讲地图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>本图对应本讲功能闭环，展示从输入到本讲交付物的主干路径。节点与主项目代码文件和函数保持一致，后续章节消费的能力只作为交付边界出现。</p>
+<h3 id="1-14">图 1：第 14 讲功能闭环地图<a class="headerlink" href="#1-14" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    C14_GEN["版本号&lt;br/&gt;generate_kb_version()"]
+    C14_COMMON["公共时间工具&lt;br/&gt;utc_now() / utc_file_stamp()"]
+    C14_MODEL["版本对象&lt;br/&gt;KnowledgeBaseVersion"]
+    C14_MYSQL["MySQL 存储基类&lt;br/&gt;_MySqlStore"]
+    C14_STORE["版本仓库&lt;br/&gt;KnowledgeBaseVersionStore"]
+    C14_ENSURE["确保版本&lt;br/&gt;ensure_version()"]
+    C14_RESULT["入库记录&lt;br/&gt;record_ingest_result()"]
+    C14_ACTIVE["激活归档&lt;br/&gt;activate_version() / archive_version()"]
+    C14_API["版本 API&lt;br/&gt;list/activate/archive payload"]
+    C14_QUERY{{"在线接入&lt;br/&gt;active_kb_version"}}
+    C14_COMMON --&gt; C14_GEN
+    C14_GEN --&gt; C14_MODEL
+    C14_MYSQL --&gt; C14_STORE
+    C14_MODEL --&gt; C14_STORE
+    C14_STORE --&gt; C14_ENSURE
+    C14_ENSURE --&gt; C14_RESULT
+    C14_RESULT --&gt; C14_ACTIVE
+    C14_ACTIVE --&gt; C14_QUERY
+    C14_STORE --&gt; C14_API
+    C14_API --&gt; C14_ACTIVE
+    style C14_GEN fill:#F8FAFC,stroke:#64748B,stroke-width:2px
+    style C14_COMMON fill:#DBEAFE,stroke:#2563EB,stroke-width:2px
+    style C14_MODEL fill:#F5F3FF,stroke:#7C3AED,stroke-width:2px
+    style C14_MYSQL fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style C14_STORE fill:#DBEAFE,stroke:#2563EB,stroke-width:2px
+    style C14_ENSURE fill:#F5F3FF,stroke:#7C3AED,stroke-width:2px
+    style C14_RESULT fill:#FEF3C7,stroke:#D97706,stroke-width:2px
+    style C14_ACTIVE fill:#DBEAFE,stroke:#2563EB,stroke-width:2px
+    style C14_API fill:#F5F3FF,stroke:#7C3AED,stroke-width:2px
+    style C14_QUERY fill:#DCFCE7,stroke:#16A34A,stroke-width:2px</code></pre>
+<h3 id="_3">节点与代码对齐<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>对齐文件</th>
+<th>函数/对象</th>
+<th>本章职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>版本号</td>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td><code>generate_kb_version()</code></td>
+<td>生成带场景和时间信息的知识库版本号。</td>
+</tr>
+<tr>
+<td>公共时间工具</td>
+<td><code>qa_core/common.py</code></td>
+<td><code>utc_now() / utc_file_stamp()</code></td>
+<td>统一版本时间和文件时间戳格式。</td>
+</tr>
+<tr>
+<td>版本对象</td>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td><code>KnowledgeBaseVersion</code></td>
+<td>保存版本状态、描述、时间和入库统计。</td>
+</tr>
+<tr>
+<td>MySQL 存储基类</td>
+<td><code>qa_core/memory/base.py</code></td>
+<td><code>_MySqlStore</code></td>
+<td>提供 SQLAlchemy 引擎和安全表名校验。</td>
+</tr>
+<tr>
+<td>MySQL Schema 初始化</td>
+<td><code>qa_core/storage/mysql_schema.py</code></td>
+<td><code>create_kb_version_tables()</code></td>
+<td>集中维护版本表和 active 指针表的 DDL。</td>
+</tr>
+<tr>
+<td>版本仓库</td>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td><code>KnowledgeBaseVersionStore</code></td>
+<td>读取和写入 MySQL 版本表与 active 指针。</td>
+</tr>
+<tr>
+<td>确保版本</td>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td><code>ensure_version()</code></td>
+<td>入库时创建或复用 STAGED 版本。</td>
+</tr>
+<tr>
+<td>入库记录</td>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td><code>record_ingest_result()</code></td>
+<td>记录 doc/faq 数量和 source。</td>
+</tr>
+<tr>
+<td>激活归档</td>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td><code>activate_version() / archive_version()</code></td>
+<td>控制当前在线检索可见版本。</td>
+</tr>
+<tr>
+<td>版本 API</td>
+<td><code>qa_core/api/kb_versions.py</code></td>
+<td><code>list/activate/archive payload</code></td>
+<td>提供轻量版本管理接口。</td>
+</tr>
+<tr>
+<td>在线接入</td>
+<td><code>qa_core/pipeline/runtime.py</code></td>
+<td><code>active_kb_version</code></td>
+<td>查询时把版本写入 RAGQueryContext。</td>
+</tr>
+</tbody>
+</table>
+<!-- chapter-map:end -->
+
+<hr />
+<h2 id="rag">第一部分：前置知识 — 为什么 RAG 需要版本管理<a class="headerlink" href="#rag" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 不加版本管理的风险<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<p>假设你用一个脚本把 500 个业务文档写入 Milvus。运行完毕后：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>场景 A：一切正常，问答效果好
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>场景 B：你发现新的 Embedding 模型（bge-m3-v2）效果更好，想切换
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>  → 重新入库，覆盖了旧的向量数据
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>  → 新模型效果反而更差（新的切分策略导致 chunk 太碎）
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>  → 无法回滚，因为旧数据已经被覆盖了
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>场景 C：你修改了文档切分参数（chunk_size 从 500 改为 300）
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>  → 想对比新旧切分方案的效果
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>  → 没有版本机制，你只能删除旧数据重建，对比无从谈起
+</code></pre></div></td></tr></table></div>
+<p><strong>版本管理的核心价值</strong>：让知识库的更新成为<strong>可逆操作</strong>。</p>
+<p>版本管理还承担一个发布边界：新版本写入 Milvus 只是进入 <code>STAGED</code>，不等于可以上线。上线前必须有质量依据，当前项目通过入库质量报告和质量门禁决定是否允许激活。</p>
+<h3 id="12">1.2 版本管理的典型需求<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>需求</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安全入库</td>
+<td>新版本先写入，不影响线上正在使用的版本</td>
+</tr>
+<tr>
+<td>灰度验证</td>
+<td>新版本入库后先评测，确定没问题再切换</td>
+</tr>
+<tr>
+<td>快速回滚</td>
+<td>新版本效果不好，一键切回旧版本</td>
+</tr>
+<tr>
+<td>对比评测</td>
+<td>同一个问题可以分别在新旧版本上验证召回效果</td>
+</tr>
+<tr>
+<td>长期保留</td>
+<td>历史版本不删除，作为 A/B 测试和故障分析的依据</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_4">第二部分：版本状态机<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 三种状态<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; STAGED : 入库完成
+
+    STAGED --&gt; ACTIVE : 激活版本&lt;br/&gt;仅更新 MySQL active 指针
+    STAGED --&gt; ARCHIVED : 直接归档&lt;br/&gt;从未激活的版本
+
+    ACTIVE --&gt; STAGED : 回滚/新版本激活&lt;br/&gt;旧 ACTIVE 转为 STAGED
+    ACTIVE --&gt; ARCHIVED : 长期不用后归档
+
+    ARCHIVED --&gt; [*] : Milvus 数据保留&lt;br/&gt;可手动清理
+
+    note right of ACTIVE
+        在线检索表达式：
+        kb_version == "active_version"
+        同一场景只有一个 ACTIVE
+    end note
+
+    note right of STAGED
+        已写入 Milvus
+        评测验证中
+        用户检索不可见
+    end note</code></pre>
+<h3 id="_5">安全入库与激活流程<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    Start(["执行 rebuild_kb_version.py"]) --&gt; Create["1️⃣ 创建 STAGED 版本&lt;br/&gt;版本号含时间戳+配置哈希"]
+
+    Create --&gt; Ingest["2️⃣ 入库存入 STAGED&lt;br/&gt;FAQ 入库 + 文档入库&lt;br/&gt;写入 kb_version=新版本号"]
+
+    Ingest --&gt; Report["3️⃣ 生成入库质量报告&lt;br/&gt;解析失败/低质量chunk/&lt;br/&gt;FAQ空值/冲突检测"]
+
+    Report --&gt; Gate{"4️⃣ 入库质量门禁"}
+
+    Gate --&gt;|"✅ 通过"| Activate["5️⃣ 激活版本&lt;br/&gt;更新 MySQL active 指针&lt;br/&gt;旧 ACTIVE 降为 STAGED&lt;br/&gt;Milvus 数据不更新"]
+
+    Gate --&gt;|"❌ 不通过"| Abort["❌ 终止激活&lt;br/&gt;STAGED 版本保留&lt;br/&gt;线上仍用旧 ACTIVE&lt;br/&gt;用户无感知"]
+
+    Activate --&gt; Online["✅ 新版本上线&lt;br/&gt;下一次检索自动使用&lt;br/&gt;expr: kb_version==新版本号"]
+
+    style Create fill:#EFF6FF,stroke:#2563EB,stroke-width:2px
+    style Gate fill:#FFFBEB,stroke:#D97706,stroke-width:2px
+    style Activate fill:#ECFDF5,stroke:#059669,stroke-width:2px
+    style Abort fill:#FEF2F2,stroke:#DC2626,stroke-width:2px
+    style Online fill:#ECFDF5,stroke:#059669,stroke-width:3px</code></pre>
+<ul>
+<li><strong>STAGED</strong>：版本已写入 Milvus，但线上检索不使用。通常用于新入库的版本，等待评测验证。</li>
+<li><strong>ACTIVE</strong>：当前在线检索使用的版本。同一场景只有一个 ACTIVE 版本。</li>
+<li><strong>ARCHIVED</strong>：不再使用的历史版本。数据和 Milvus chunk 都保留，但不参与在线检索。</li>
+</ul>
+<h3 id="22">2.2 质量门禁与状态转换<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>第 14 章需要讲清一个边界：<code>activate_version()</code> 本身只负责切换 MySQL active 指针；它不判断资料质量。资料质量由 <code>scripts/rebuild_kb_version.py --quality-gate --activate</code> 串起来：先生成入库质量报告，再执行门禁，门禁通过才调用 <code>activate_version()</code>。</p>
+<p>质量报告在本章只作为“是否允许激活”的前置条件出现，不展开检测算法。具体检查项，例如解析失败、低质量 chunk、FAQ 空值、重复问题和 FAQ/文档冲突，放在第 17 讲系统展开。</p>
+<p>下面的代码展示的是步骤 5（激活）和归档操作。步骤 1（创建版本）见 <code>ensure_version()</code>，步骤 2（入库写入）见第 16 讲，步骤 3-4（质量报告和门控）见第 17 讲。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># qa_core/governance/kb_versions.py</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">activate_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kb_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KnowledgeBaseVersion</span><span class="p">:</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;把指定版本切为当前在线检索版本。</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="sd">    激活只更新 MySQL 控制面中的 active 指针，不更新 Milvus 数据。</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># → 流程图节点 5️⃣：激活版本</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kb_version</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    <span class="k">if</span> <span class="n">record</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;知识库版本不存在：</span><span class="si">{</span><span class="n">kb_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>    <span class="n">previous</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_pointer</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="n">now</span> <span class="o">=</span> <span class="n">utc_now</span><span class="p">()</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="c1"># 同一场景原 ACTIVE 统一转为 STAGED，保留回滚能力。</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;UPDATE kb_versions SET status=&#39;STAGED&#39; WHERE scenario_id=:scenario_id AND status=&#39;ACTIVE&#39;&quot;</span><span class="p">),</span> <span class="o">...</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>        <span class="n">record</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;ACTIVE&quot;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>        <span class="n">record</span><span class="o">.</span><span class="n">activated_at</span> <span class="o">=</span> <span class="n">now</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_upsert_version_with_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_active_pointer_with_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">kb_version</span><span class="p">,</span> <span class="n">previous</span><span class="p">)</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kb_version</span><span class="p">)</span> <span class="ow">or</span> <span class="n">record</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">archive_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kb_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KnowledgeBaseVersion</span><span class="p">:</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;归档一个非 active 版本。</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="sd">    归档不会删除 Milvus 数据，只是状态标记。</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># → 流程图未展示的附加操作：归档</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_version_candidate</span><span class="p">()</span> <span class="o">==</span> <span class="n">kb_version</span><span class="p">:</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;不能归档当前 active 知识库版本&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>    <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kb_version</span><span class="p">)</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>    <span class="n">record</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;ARCHIVED&quot;</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>    <span class="n">record</span><span class="o">.</span><span class="n">archived_at</span> <span class="o">=</span> <span class="n">utc_now</span><span class="p">()</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_upsert_version</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>    <span class="k">return</span> <span class="n">record</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="23">2.3 激活操作的轻量性<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p><strong>关键设计</strong>：激活版本只更新 MySQL 中的一行 active 指针，不碰 Milvus。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>激活前的在线检索：
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>  Milvus expr 包含 kb_version == &quot;v1&quot;
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>激活后的在线检索：
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>  Milvus expr 包含 kb_version == &quot;v2&quot;
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>  v1 的 chunk 数据仍在 Milvus 中，只是不再被查到
+</code></pre></div></td></tr></table></div>
+<p>如果激活需要修改所有 chunk 的 metadata，一个 10 万条 chunk 的知识库需要很长时间。通过把版本切换放在检索表达式中，版本切换变成了 O(1) 操作。</p>
+<h3 id="24-staged-active">2.4 为什么采用 STAGED 候选版本 + active 指针切换<a class="headerlink" href="#24-staged-active" title="Permanent link">&para;</a></h3>
+<p>多版本入库不要理解成“把资料重新写一遍”，而要理解成一次<strong>知识库发布流程</strong>。新资料可能出现解析失败、切分异常、FAQ 口径冲突、source 配错、召回退化等问题。如果直接覆盖线上向量数据，一旦新版本质量有问题，用户会立刻受到影响，而且很难快速回滚。</p>
+<p>本项目采用的是控制面和数据面分离：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>保存内容</th>
+<th>主要职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Milvus 数据面</td>
+<td>所有版本的 FAQ 向量和文档 chunk 向量</td>
+<td>保存可检索数据，不负责判断哪个版本上线</td>
+</tr>
+<tr>
+<td>MySQL 控制面</td>
+<td><code>kb_versions</code>、<code>kb_active_versions</code></td>
+<td>保存版本状态、active 指针和 previous 指针</td>
+</tr>
+<tr>
+<td>在线检索表达式</td>
+<td><code>kb_version == active_version</code></td>
+<td>让查询只命中当前 active 版本</td>
+</tr>
+</tbody>
+</table>
+<p>所以完整业务逻辑是：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>入库 = 生成一个候选版本
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>质量报告 = 描述候选版本有哪些风险
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>质量门禁 = 判断候选版本能不能上线
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>激活 = 切换 active 指针
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>回滚 = 把 active 指针切回旧版本
+</code></pre></div></td></tr></table></div>
+<p>注意两个边界：</p>
+<ol>
+<li><strong>写入 Milvus 不等于上线</strong>：STAGED 版本已经在 Milvus 中存在，但线上检索不会命中它，因为线上检索只查 active <code>kb_version</code>。</li>
+<li><strong>质量报告不等于质量门禁</strong>：质量报告负责记录事实，例如失败文件、重复 FAQ、低质量 chunk；质量门禁负责根据阈值决定是否阻断激活。</li>
+</ol>
+<p>这种设计的好处是：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>直接覆盖式入库</th>
+<th>多版本发布式入库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新资料有问题</td>
+<td>线上立即受影响</td>
+<td>STAGED 阶段被拦截</td>
+</tr>
+<tr>
+<td>需要回滚</td>
+<td>很难恢复旧向量</td>
+<td>切回 previous active 指针</td>
+</tr>
+<tr>
+<td>发布速度</td>
+<td>可能要修改大量向量数据</td>
+<td>只更新 MySQL active 指针</td>
+</tr>
+<tr>
+<td>排查问题</td>
+<td>不知道哪次入库引入问题</td>
+<td>每个版本有独立版本号、报告和统计</td>
+</tr>
+<tr>
+<td>多场景管理</td>
+<td>容易互相影响</td>
+<td>每个场景独立 active 指针</td>
+</tr>
+</tbody>
+</table>
+<p>企业项目中也经常做跨版本增量构建。当前项目采用的是物理复制式增量：未变化文件不重新 embedding，但会把旧 chunk 和 dense 向量复制到新版本，这样新版本仍然是一个完整快照，线上查询只需要过滤 <code>kb_version == active_version</code>。</p>
+<p>大规模企业知识库还可以升级为引用式增量：未变化 chunk 不复制，而是用 <code>valid_from_seq / valid_to_seq</code> 描述 chunk 在哪些版本中有效。两种方案的取舍如下：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>查询方式</th>
+<th>优点</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理复制式增量</td>
+<td><code>kb_version == active_version</code></td>
+<td>查询简单、版本完整、适合中小规模</td>
+<td>未变化 chunk 会重复占用空间</td>
+</tr>
+<tr>
+<td>引用式增量</td>
+<td><code>valid_from_seq &lt;= active_seq</code> 且未失效</td>
+<td>节省空间、适合百万级 chunk</td>
+<td>检索表达式、回滚、质量报告和 GC 都更复杂</td>
+</tr>
+</tbody>
+</table>
+<p>本课程主项目选择物理复制式增量，是为了先把“候选版本入库 → 质量门禁 → active 指针切换 → 回滚”的主线讲清楚。引用式增量作为企业规模化优化方向，在第 16 讲入库章节补充理解。</p>
+<hr />
+<h2 id="_6">第三部分：版本号设计<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 版本号生成<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span>
+<span class="normal"><a href="#__codelineno-4-21">21</a></span>
+<span class="normal"><a href="#__codelineno-4-22">22</a></span>
+<span class="normal"><a href="#__codelineno-4-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_kb_version</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;kb&quot;</span><span class="p">,</span> <span class="n">scenario_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;生成一个适合人读和机器过滤的知识库版本号。</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="sd">    包含：</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="sd">    - 时间戳：便于肉眼判断版本先后</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="sd">    - 配置短 hash：把 embedding、reranker、chunk_schema、collection</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="sd">      等关键配置纳入标识</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="n">scenario</span> <span class="o">=</span> <span class="n">_resolve_version_scenario</span><span class="p">(</span><span class="n">scenario_id</span><span class="p">)</span>  <span class="c1"># 私有 helper，避免 settings -&gt; scenarios -&gt; kb_versions 循环导入</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>    <span class="n">stamp</span> <span class="o">=</span> <span class="n">utc_file_stamp</span><span class="p">()</span>  <span class="c1"># 如 20260506_103000（年月日_时分秒）</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>    <span class="n">config_hash</span> <span class="o">=</span> <span class="n">stable_hash</span><span class="p">(</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a>        <span class="n">scenario</span><span class="o">.</span><span class="n">scenario_id</span><span class="p">,</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a>        <span class="n">settings</span><span class="o">.</span><span class="n">embedding_model_version</span><span class="p">,</span>    <span class="c1"># 如 &quot;bge-m3-local-v1&quot;</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>        <span class="n">settings</span><span class="o">.</span><span class="n">reranker_model_version</span><span class="p">,</span>     <span class="c1"># 如 &quot;bge-reranker-v1&quot;</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a>        <span class="n">settings</span><span class="o">.</span><span class="n">chunk_schema_version</span><span class="p">,</span>       <span class="c1"># 如 &quot;parent_child_v1&quot;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a>        <span class="n">scenario</span><span class="o">.</span><span class="n">doc_collection</span><span class="p">,</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a>        <span class="n">scenario</span><span class="o">.</span><span class="n">faq_collection</span><span class="p">,</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a>    <span class="p">)[:</span><span class="mi">8</span><span class="p">]</span>  <span class="c1"># 只取前 8 位</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">scenario</span><span class="o">.</span><span class="n">scenario_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">stamp</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">config_hash</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23"></a>    <span class="c1"># 例：kb_enterprise_knowledge_20260506_103000_9f2a1b3c</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="32">3.2 为什么版本号包含配置哈希<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>设计意图：从版本号可以直接判断两个版本是否使用同一套配置。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>kb_enterprise_knowledge_20260506_103000_9f2a1b3c
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>kb_enterprise_knowledge_20260507_150000_7d3e8f1a
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>                           不同日期 ↑         不同 hash ↑
+</code></pre></div></td></tr></table></div>
+<p>如果两个版本的 hash 相同但日期不同，说明是同一套配置下的数据更新（新增/修改了文档）。
+如果 hash 不同，说明 Embedding 模型、Reranker 模型或 Chunk 方案有变化，需要重点关注召回质量的对比。</p>
+<hr />
+<h2 id="mysql">第四部分：MySQL 版本控制面<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 表结构<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>当前项目把知识库版本控制面保存到 MySQL，而不是本地 JSON 文件。核心是两张表：</p>
+<table>
+<thead>
+<tr>
+<th>表</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kb_versions</code></td>
+<td>保存每个版本的状态、模型配置快照、collection、入库统计</td>
+</tr>
+<tr>
+<td><code>kb_active_versions</code></td>
+<td>保存每个场景当前 active 版本和 previous 版本</td>
+</tr>
+</tbody>
+</table>
+<p><code>kb_versions</code> 的关键字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scenario_id</code></td>
+<td>业务场景</td>
+</tr>
+<tr>
+<td><code>kb_version</code></td>
+<td>知识库版本号</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>STAGED</code> / <code>ACTIVE</code> / <code>ARCHIVED</code></td>
+</tr>
+<tr>
+<td><code>doc_collection</code> / <code>faq_collection</code></td>
+<td>对应 Milvus collection</td>
+</tr>
+<tr>
+<td><code>embedding_model_version</code> / <code>reranker_model_version</code> / <code>chunk_schema_version</code></td>
+<td>入库配置快照</td>
+</tr>
+<tr>
+<td><code>sources_json</code> / <code>stats_json</code></td>
+<td>已入库 source 和统计信息</td>
+</tr>
+</tbody>
+</table>
+<p><code>kb_active_versions</code> 的关键字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scenario_id</code></td>
+<td>业务场景</td>
+</tr>
+<tr>
+<td><code>active_kb_version</code></td>
+<td>在线检索默认使用的版本</td>
+</tr>
+<tr>
+<td><code>previous_kb_version</code></td>
+<td>上一个 active 版本，用于快速回滚</td>
+</tr>
+</tbody>
+</table>
+<p>表结构创建逻辑集中在 <code>qa_core/storage/mysql_schema.py</code>：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># qa_core/storage/mysql_schema.py</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_kb_version_tables</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">version_table</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">active_table</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;创建知识库版本表和 active 指针表。&quot;&quot;&quot;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="n">_execute_ddl</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">ddl_versions</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>    <span class="n">_execute_ddl</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">ddl_active</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p><code>KnowledgeBaseVersionStore.ensure_tables()</code> 只调用 schema 初始化函数，再做版本状态校准。这样表结构初始化和版本状态机读写分开：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qa_core/storage/mysql_schema.py</code></td>
+<td>维护 MySQL 控制面表结构和幂等 schema 补齐逻辑</td>
+</tr>
+<tr>
+<td><code>qa_core/governance/kb_versions.py</code></td>
+<td>负责版本状态机、active 指针、激活、归档和回滚</td>
+</tr>
+<tr>
+<td><code>scripts/rebuild_kb_version.py</code></td>
+<td>负责编排入库、质量门禁，通过后才激活版本</td>
+</tr>
+</tbody>
+</table>
+<p>当前项目暂不引入 Alembic。课程一期先讲清控制面/数据面分离和 active 指针切换；生产环境如果需要严格版本化 DDL，可以把 <code>mysql_schema.py</code> 中的表结构迁移成 Alembic revisions。</p>
+<h3 id="42-knowledgebaseversionstore">4.2 KnowledgeBaseVersionStore 类<a class="headerlink" href="#42-knowledgebaseversionstore" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span>
+<span class="normal"><a href="#__codelineno-7-21">21</a></span>
+<span class="normal"><a href="#__codelineno-7-22">22</a></span>
+<span class="normal"><a href="#__codelineno-7-23">23</a></span>
+<span class="normal"><a href="#__codelineno-7-24">24</a></span>
+<span class="normal"><a href="#__codelineno-7-25">25</a></span>
+<span class="normal"><a href="#__codelineno-7-26">26</a></span>
+<span class="normal"><a href="#__codelineno-7-27">27</a></span>
+<span class="normal"><a href="#__codelineno-7-28">28</a></span>
+<span class="normal"><a href="#__codelineno-7-29">29</a></span>
+<span class="normal"><a href="#__codelineno-7-30">30</a></span>
+<span class="normal"><a href="#__codelineno-7-31">31</a></span>
+<span class="normal"><a href="#__codelineno-7-32">32</a></span>
+<span class="normal"><a href="#__codelineno-7-33">33</a></span>
+<span class="normal"><a href="#__codelineno-7-34">34</a></span>
+<span class="normal"><a href="#__codelineno-7-35">35</a></span>
+<span class="normal"><a href="#__codelineno-7-36">36</a></span>
+<span class="normal"><a href="#__codelineno-7-37">37</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">KnowledgeBaseVersionStore</span><span class="p">(</span><span class="n">_MySqlStore</span><span class="p">):</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;知识库版本状态机的 MySQL 存储实现。</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="sd">    每个场景在 kb_versions 中有多条版本记录，在 kb_active_versions</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="sd">    中有一条 active 指针记录。这样多场景可以独立激活、回滚和对比。</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scenario_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span> <span class="o">=</span> <span class="n">_resolve_version_scenario</span><span class="p">(</span><span class="n">scenario_id</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_active_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">requested</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;解析一次检索应该使用的知识库版本。</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="sd">        优先级：</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="sd">        1. 请求显式传入的 kb_version（用于评测/灰度）</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="sd">        2. 环境变量 ACTIVE_KB_VERSION</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="sd">        3. MySQL active 指针表中的 active_kb_version</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="sd">        当前在线检索必须带版本过滤。没有 active 版本直接报错。</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a>        <span class="k">if</span> <span class="n">requested</span><span class="p">:</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">requested</span><span class="p">):</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;请求的知识库版本不存在：</span><span class="si">{</span><span class="n">requested</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a>            <span class="k">return</span> <span class="n">requested</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a>        <span class="n">active</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_version_candidate</span><span class="p">()</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">active</span><span class="p">:</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a>                <span class="sa">f</span><span class="s2">&quot;场景 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">scenario_id</span><span class="si">}</span><span class="s2"> 没有 active 知识库版本&quot;</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a>            <span class="p">)</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">active</span><span class="p">):</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a>                <span class="sa">f</span><span class="s2">&quot;active 知识库版本不存在于版本表：</span><span class="si">{</span><span class="n">active</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a>            <span class="p">)</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a>        <span class="k">return</span> <span class="n">active</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="milvus">第五部分：与 Milvus 检索的集成<a class="headerlink" href="#milvus" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 写入时携带版本信息<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># qa_core/governance/kb_versions.py</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">version_metadata</span><span class="p">(</span><span class="n">kb_version</span><span class="p">,</span> <span class="n">scenario_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;构建写入每个 FAQ/chunk metadata 的版本字段。&quot;&quot;&quot;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>    <span class="n">settings</span> <span class="o">=</span> <span class="n">get_settings</span><span class="p">()</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>    <span class="n">scenario</span> <span class="o">=</span> <span class="n">_resolve_version_scenario</span><span class="p">(</span><span class="n">scenario_id</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>    <span class="k">return</span> <span class="p">{</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>        <span class="s2">&quot;scenario_id&quot;</span><span class="p">:</span> <span class="n">scenario</span><span class="o">.</span><span class="n">scenario_id</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>        <span class="s2">&quot;kb_version&quot;</span><span class="p">:</span> <span class="n">kb_version</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a>        <span class="s2">&quot;embedding_model_version&quot;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">embedding_model_version</span><span class="p">,</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>        <span class="s2">&quot;reranker_model_version&quot;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">reranker_model_version</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a>        <span class="s2">&quot;chunk_schema_version&quot;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">chunk_schema_version</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a>    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>每条 FAQ 和 chunk 入库时，这些字段都会被写入 metadata：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">chunk</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">page_content</span><span class="o">=</span><span class="s2">&quot;入职流程包括以下步骤...&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;hr&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>        <span class="s2">&quot;chunk_id&quot;</span><span class="p">:</span> <span class="s2">&quot;abc123&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>        <span class="s2">&quot;kb_version&quot;</span><span class="p">:</span> <span class="s2">&quot;kb_enterprise_knowledge_20260507_150000_7d3e8f1a&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>        <span class="s2">&quot;embedding_model_version&quot;</span><span class="p">:</span> <span class="s2">&quot;bge-m3-local-v1&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>        <span class="o">...</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="p">}</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="52">5.2 检索时过滤版本<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span>
+<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># 在线检索</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="n">active_version</span> <span class="o">=</span> <span class="n">resolve_active_kb_version</span><span class="p">(</span><span class="n">requested</span><span class="p">,</span> <span class="n">scenario</span><span class="o">.</span><span class="n">scenario_id</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="c1"># active_version = &quot;kb_enterprise_knowledge_20260507_150000_7d3e8f1a&quot;</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="c1"># 拼入 Milvus 表达式</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="n">expr</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;kb_version == &quot;</span><span class="si">{</span><span class="n">active_version</span><span class="si">}</span><span class="s1">&quot; and source == &quot;hr&quot; and ...&#39;</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="c1"># 只检索 active 版本的 chunk</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="n">results</span> <span class="o">=</span> <span class="n">milvus_store</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="n">expr</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="53">5.3 评测用历史版本<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># 评测脚本可以显式指定历史版本</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="n">service</span><span class="o">.</span><span class="n">debug_retrieval</span><span class="p">(</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>    <span class="n">query</span><span class="o">=</span><span class="s2">&quot;入职流程有哪些步骤&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>    <span class="n">kb_version</span><span class="o">=</span><span class="s2">&quot;kb_enterprise_knowledge_20260506_103000_9f2a1b3c&quot;</span><span class="p">,</span>  <span class="c1"># 旧版本</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>    <span class="o">...</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="p">)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="c1"># 对比两个版本对同一批问题的召回效果</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">eval_set</span><span class="p">:</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>    <span class="n">old_result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">debug_retrieval</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">question</span><span class="p">,</span> <span class="n">kb_version</span><span class="o">=</span><span class="n">old_version</span><span class="p">)</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>    <span class="n">new_result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">debug_retrieval</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">question</span><span class="p">,</span> <span class="n">kb_version</span><span class="o">=</span><span class="n">new_version</span><span class="p">)</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a>    <span class="n">compare</span><span class="p">(</span><span class="n">old_result</span><span class="p">,</span> <span class="n">new_result</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<hr />
+<h2 id="_7">第六部分：全量重建的安全流程<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>这一部分是第 14 章需要和第 16、17 章衔接的地方：第 16 章负责把资料写入新版本，第 17 章负责解释质量报告如何检查；第 14 章负责解释为什么质量报告不通过时不能激活版本。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="n">python</span> <span class="n">scripts</span><span class="p">/</span><span class="n">rebuild_kb_version</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-scenario</span> <span class="n">enterprise_knowledge</span> <span class="p">-</span><span class="n">-new-version</span> <span class="p">-</span><span class="n">-force</span> <span class="p">-</span><span class="n">-quality-gate</span> <span class="p">-</span><span class="n">-activate</span>
+</code></pre></div></td></tr></table></div>
+<p>执行顺序：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>1. 创建 STAGED 版本（version = &quot;kb_...20260507_150000_xxxx&quot;）
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>2. FAQ 入库（写入 STAGED 版本的 kb_version）
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>3. 文档入库（写入 STAGED 版本的 kb_version）
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>4. 生成入库质量报告
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>5. 执行入库质量门禁
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a>   ├─ 通过 → 调用 activate_version()，将 STAGED 切换为 ACTIVE
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a>   └─ 不通过 → 终止流程，STAGED 版本仍保留（不激活）
+</code></pre></div></td></tr></table></div>
+<p>对应真实代码在 <code>scripts/rebuild_kb_version.py</code>：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span>
+<span class="normal"><a href="#__codelineno-14-7">7</a></span>
+<span class="normal"><a href="#__codelineno-14-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="n">report</span> <span class="o">=</span> <span class="n">build_ingestion_quality_report</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="n">gate_result</span> <span class="o">=</span> <span class="n">evaluate_report_against_gate</span><span class="p">(</span><span class="n">report</span><span class="p">,</span> <span class="n">thresholds</span><span class="p">)</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">gate_result</span><span class="p">[</span><span class="s2">&quot;ok&quot;</span><span class="p">]:</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>    <span class="n">save_ingestion_quality_report</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a>
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">activate</span><span class="p">:</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>    <span class="n">version_store</span><span class="o">.</span><span class="n">activate_version</span><span class="p">(</span><span class="n">kb_version</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>这段逻辑表达的是：版本已经入库不代表可以上线；只有质量门禁通过，才允许切换 active 指针。</p>
+<p><strong>关键安全点</strong>：即使新的 STAGED 版本已经写入了 Milvus，只要没有执行激活步骤，线上检索仍然使用旧的 ACTIVE 版本。用户完全无感知。</p>
+<hr />
+<h2 id="_8">本讲实践闭环<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本讲类型</td>
+<td>工程治理</td>
+</tr>
+<tr>
+<td>实践产物</td>
+<td><code>KnowledgeBaseVersionStore</code>、版本状态机、激活和回滚能力、激活前质量门禁边界</td>
+</tr>
+<tr>
+<td>是否进入最终项目</td>
+<td>是</td>
+</tr>
+<tr>
+<td>验收方式</td>
+<td>创建 staged 版本，生成入库质量报告，门禁通过后激活为 active，再归档旧版本</td>
+</tr>
+<tr>
+<td>后续落点</td>
+<td>第 16 讲入库生成版本，第 17 讲质量门禁控制激活</td>
+</tr>
+</tbody>
+</table>
+<p>通过标准：任意时刻每个场景只有一个 active 版本，版本可追踪、可回滚；质量门禁失败时不会切换线上版本。</p>
+<h3 id="0-1">本讲从 0 到 1 实现闭环<a class="headerlink" href="#0-1" title="Permanent link">&para;</a></h3>
+<p>这一讲的核心是把“重建知识库”变成可追踪、可回滚的发布动作。实现顺序如下：</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; STAGED: 新建版本并入库
+    STAGED --&gt; ACTIVE: 质量门禁通过 + activate
+    ACTIVE --&gt; ARCHIVED: 新版本激活后旧版本归档
+    ARCHIVED --&gt; ACTIVE: 回滚到历史版本
+    STAGED --&gt; ARCHIVED: 构建失败或废弃</code></pre>
+<ol>
+<li>先定义版本状态：<code>STAGED</code>、<code>ACTIVE</code>、<code>ARCHIVED</code>。</li>
+<li>再实现版本清单 store，把每个场景的版本列表和 active 指针持久化。</li>
+<li>然后在入库脚本里先创建 staged 版本，入库后生成质量报告。</li>
+<li>质量门禁通过后再激活，失败则保留 staged 且线上仍用旧 active。</li>
+<li>最后保证同一个场景任意时刻只有一个 active 版本。</li>
+</ol>
+<p>实现完成后，相关代码结构应该是下面这张图：</p>
+<pre class="mermaid"><code>flowchart LR
+    VersionStore["qa_core/governance/kb_versions.py&lt;br/&gt;版本记录/状态机/active 指针"] --&gt; Rebuild["scripts/rebuild_kb_version.py&lt;br/&gt;创建 STAGED&lt;br/&gt;质量通过后激活"]
+    VersionStore --&gt; Filters["qa_core/retrieval/filters.py&lt;br/&gt;按 active kb_version 检索"]
+    VersionStore --&gt; Admin["qa_core/api/kb_versions.py&lt;br/&gt;版本查询/管理接口"]
+    Rebuild --&gt; Reports["reports/&lt;br/&gt;构建与质量报告"]</code></pre>
+<p>来源：真实代码逻辑压缩版，对应 <code>qa_core/governance/kb_versions.py::KnowledgeBaseVersion</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span>
+<span class="normal"><a href="#__codelineno-15-14">14</a></span>
+<span class="normal"><a href="#__codelineno-15-15">15</a></span>
+<span class="normal"><a href="#__codelineno-15-16">16</a></span>
+<span class="normal"><a href="#__codelineno-15-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="nd">@dataclass</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">KnowledgeBaseVersion</span><span class="p">:</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>    <span class="n">kb_version</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a>    <span class="n">scenario_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;STAGED&quot;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a>    <span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">utc_now</span><span class="p">)</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a>    <span class="n">activated_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a>    <span class="n">archived_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a>    <span class="n">doc_collection</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a>    <span class="n">faq_collection</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a>    <span class="n">embedding_model_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a>    <span class="n">reranker_model_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14"></a>    <span class="n">chunk_schema_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15"></a>    <span class="n">created_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16"></a>    <span class="n">sources</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17"></a>    <span class="n">stats</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>激活版本不是改 Milvus 数据，而是修改 MySQL 控制面里的 active 指针。这样切换速度快，也能随时回滚。</p>
+<p>来源：真实代码逻辑压缩版，对应 <code>qa_core/governance/kb_versions.py::activate_version()</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span>
+<span class="normal"><a href="#__codelineno-16-11">11</a></span>
+<span class="normal"><a href="#__codelineno-16-12">12</a></span>
+<span class="normal"><a href="#__codelineno-16-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">activate_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kb_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">KnowledgeBaseVersion</span><span class="p">:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a>    <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kb_version</span><span class="p">)</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a>    <span class="k">if</span> <span class="n">record</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;知识库版本不存在：</span><span class="si">{</span><span class="n">kb_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a>    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a>        <span class="n">previous</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_pointer_with_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a>        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;UPDATE kb_versions SET status=&#39;STAGED&#39; WHERE scenario_id=:scenario_id AND status=&#39;ACTIVE&#39;&quot;</span><span class="p">),</span> <span class="o">...</span><span class="p">)</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a>        <span class="n">record</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;ACTIVE&quot;</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a>        <span class="n">record</span><span class="o">.</span><span class="n">activated_at</span> <span class="o">=</span> <span class="n">utc_now</span><span class="p">()</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_upsert_version_with_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_set_active_pointer_with_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">kb_version</span><span class="p">,</span> <span class="n">previous</span><span class="p">)</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kb_version</span><span class="p">)</span> <span class="ow">or</span> <span class="n">record</span>
+</code></pre></div></td></tr></table></div>
+<p>注意：真实代码激活新版本时，旧 ACTIVE 会降为 <code>STAGED</code>，不是自动归档为 <code>ARCHIVED</code>。归档是单独的 <code>archive_version()</code> 操作，并且不能归档当前 active 版本。</p>
+<p>入库时，每个 chunk 都要写入 <code>scenario_id</code> 和 <code>kb_version</code>。线上检索通过 Milvus expr 只查当前 active 版本。</p>
+<p>来源：真实代码调用点，见 <code>qa_core/governance/kb_versions.py</code> 和 <code>qa_core/retrieval/filters.py</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>    <span class="s2">&quot;scenario_id&quot;</span><span class="p">:</span> <span class="n">scenario_id</span><span class="p">,</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>    <span class="s2">&quot;kb_version&quot;</span><span class="p">:</span> <span class="n">kb_version</span><span class="p">,</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>验收时先创建 staged，再激活，再检查旧 active 是否归档。</p>
+<p>来源：命令行验收，对应 <code>scripts/rebuild_kb_version.py</code>。
+Docker Compose 模式下执行前，先确认项目根目录已经存在 <code>.env.compose</code>。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="n">docker</span> <span class="n">compose</span> <span class="p">-</span><span class="n">-env</span><span class="o">-file</span> <span class="p">.</span><span class="n">env</span><span class="p">.</span><span class="n">compose</span> <span class="n">run</span> <span class="p">-</span><span class="n">-rm</span> <span class="n">api</span> <span class="n">python</span> <span class="n">scripts</span><span class="p">/</span><span class="n">rebuild_kb_version</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-scenario</span> <span class="n">enterprise_knowledge</span> <span class="p">-</span><span class="n">-new-version</span> <span class="p">-</span><span class="n">-force</span> <span class="p">-</span><span class="n">-quality-gate</span> <span class="p">-</span><span class="n">-activate</span>
+</code></pre></div></td></tr></table></div>
+<p>闭环验证重点：</p>
+<table>
+<thead>
+<tr>
+<th>验证项</th>
+<th>验证方式</th>
+<th>期望结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新建版本</td>
+<td>执行 <code>--new-version</code></td>
+<td>生成 STAGED 版本</td>
+</tr>
+<tr>
+<td>入库质量报告</td>
+<td>默认生成，或显式使用 <code>--quality-gate</code></td>
+<td>报告写入 <code>reports/ingestion/</code>，包含当前 <code>kb_version</code></td>
+</tr>
+<tr>
+<td>激活版本</td>
+<td>加 <code>--quality-gate --activate</code></td>
+<td>门禁通过后新版本变 ACTIVE</td>
+</tr>
+<tr>
+<td>旧版本转为 STAGED</td>
+<td>多次激活</td>
+<td>旧 ACTIVE 变 STAGED，保留回滚能力</td>
+</tr>
+<tr>
+<td>检索过滤</td>
+<td>查看 expr</td>
+<td>包含当前 <code>kb_version</code></td>
+</tr>
+<tr>
+<td>回滚能力</td>
+<td>指定历史版本激活</td>
+<td>active 指针切回历史版本</td>
+</tr>
+<tr>
+<td>手动归档</td>
+<td>调用 archive</td>
+<td>非 active 版本变 ARCHIVED</td>
+</tr>
+</tbody>
+</table>
+<p>验收重点：知识库更新必须可追踪、可回滚，不能直接覆盖线上数据。</p>
+<h2 id="_9">重点掌握<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>内容</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★★★ 必会</td>
+<td>版本状态机：STAGED（已入库待验证）→ ACTIVE（在线检索使用）→ ARCHIVED（归档保留）</td>
+<td>知识库版本管理的核心模型</td>
+</tr>
+<tr>
+<td>★★★ 必会</td>
+<td>O(1) 版本切换：激活只更新 MySQL active 指针，不更新 Milvus 数据</td>
+<td>理解版本切换为什么是即时的</td>
+</tr>
+<tr>
+<td>★★★ 必会</td>
+<td>控制面 / 数据面分离：Milvus 保存所有版本数据，MySQL 控制哪个版本上线</td>
+<td>理解为什么 STAGED 数据不会污染线上</td>
+</tr>
+<tr>
+<td>★★★ 必会</td>
+<td>版本号设计：<code>kb_{scenario_id}_{timestamp}_{config_hash}</code>，配置哈希体现版本差异</td>
+<td>从版本号直接判断配置是否变化</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td>resolve_active_version() 的三级优先级：请求传入 &gt; 环境变量 &gt; MySQL active 指针</td>
+<td>理解版本解析流程</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td>version_metadata() 将版本信息写入每个 chunk 的 metadata，检索时通过 expr 过滤</td>
+<td>写入和检索的版本关联机制</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td>安全入库流程：创建 STAGED → 入库 → 生成质量报告 → 质量门禁 → 激活</td>
+<td>生产环境的完整安全操作</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td>质量报告记录事实，质量门禁给出是否允许激活的结论</td>
+<td>避免把“发现问题”和“阻断上线”混成一个概念</td>
+</tr>
+<tr>
+<td>★★ 理解</td>
+<td>质量报告在第 14 章是版本激活前置条件，具体检查算法在第 17 章展开</td>
+<td>避免把版本治理和质量评估混成一章</td>
+</tr>
+<tr>
+<td>★ 了解</td>
+<td>跨版本增量构建仍然产出完整的新 kb_version</td>
+<td>理解企业项目如何减少重复 embedding，同时保持版本确定性</td>
+</tr>
+<tr>
+<td>★ 了解</td>
+<td>评测时可以显式指定历史版本做对比</td>
+<td>了解版本管理的扩展用途</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_10">本讲小结<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>版本管理让知识库更新成为可逆操作</strong>：入库 → 评测 → 激活 →（效果不好）→ 回滚</li>
+<li><strong>版本状态机</strong>：STAGED（待验证）→ ACTIVE（在线使用）→ ARCHIVED（归档保留）</li>
+<li><strong>版本切换是 O(1) 操作</strong>：只更新 MySQL 中的 active 指针，不更新 Milvus 数据</li>
+<li><strong>控制面和数据面分离</strong>：Milvus 保存各版本数据，MySQL 决定哪个版本在线</li>
+<li><strong>版本号</strong> = 时间戳 + 配置哈希，可以肉眼判断先后和配置差异</li>
+<li><strong>每个场景独立 active 指针</strong>，不同行业场景可以独立管理知识库版本</li>
+<li><strong>入库质量报告是激活前置条件</strong>：报告或门禁失败时，新版本保持 STAGED，线上仍使用旧 ACTIVE</li>
+<li><strong>质量报告记录问题，质量门禁决定是否激活</strong>，两者职责不能混淆</li>
+<li><strong>增量构建也要产出完整版本</strong>，线上始终只查一个 active <code>kb_version</code></li>
+<li><strong>评测脚本可以显式指定历史版本</strong>，实现新老版本对比</li>
+</ul>
+<p><strong>下一讲</strong>：<a href="15-data-isolation.html">数据隔离与多租户</a> — 租户/数据集/角色隔离、Milvus 表达式过滤</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tracking", "navigation.expand", "navigation.indexes", "navigation.top", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="assets/vendor/mermaid.min.js"></script>
+      
+        <script src="assets/javascripts/mermaid-init.js"></script>
+      
+        <script src="assets/javascripts/mathjax-config.js"></script>
+      
+        <script src="assets/vendor/mathjax/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

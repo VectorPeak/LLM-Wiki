@@ -1,0 +1,2490 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>7.3 Prompts 全解析 - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#73-prompts" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7.3 Prompts 全解析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%20RAG%20%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          7.3 Prompts 全解析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link md-nav__link--active">
+        7.3 Prompts 全解析
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#731" class="md-nav__link">
+    7.3.1 系统提示词
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#732-prompt" class="md-nav__link">
+    7.3.2 动态出题 Prompt（题库的第一备选项）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#733" class="md-nav__link">
+    7.3.3 破冰热身阶段
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#734-warmup-tech_base-prompt" class="md-nav__link">
+    7.3.4 WARMUP → TECH_BASE 过渡专用 Prompt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#735-prompts" class="md-nav__link">
+    7.3.5 技术基础阶段 Prompts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#736-prompts" class="md-nav__link">
+    7.3.6 项目深挖阶段 Prompts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#737-prompts" class="md-nav__link">
+    7.3.7 反问收尾阶段 Prompts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#738-promptsthink-tool" class="md-nav__link">
+    7.3.8 回答质量评估 Prompts（Think Tool）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#739-prompt" class="md-nav__link">
+    7.3.9 报告生成 Prompt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    🧪 本节实测
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#731" class="md-nav__link">
+    7.3.1 系统提示词
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#732-prompt" class="md-nav__link">
+    7.3.2 动态出题 Prompt（题库的第一备选项）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#733" class="md-nav__link">
+    7.3.3 破冰热身阶段
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#734-warmup-tech_base-prompt" class="md-nav__link">
+    7.3.4 WARMUP → TECH_BASE 过渡专用 Prompt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#735-prompts" class="md-nav__link">
+    7.3.5 技术基础阶段 Prompts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#736-prompts" class="md-nav__link">
+    7.3.6 项目深挖阶段 Prompts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#737-prompts" class="md-nav__link">
+    7.3.7 反问收尾阶段 Prompts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#738-promptsthink-tool" class="md-nav__link">
+    7.3.8 回答质量评估 Prompts（Think Tool）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#739-prompt" class="md-nav__link">
+    7.3.9 报告生成 Prompt
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    🧪 本节实测
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="73-prompts">7.3 Prompts 全解析<a class="headerlink" href="#73-prompts" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解每个 Prompt 的设计意图和输入参数</li>
+<li>掌握 <code>TECH_BASE_GENERATE_PROMPT</code> 动态出题的工作原理</li>
+<li>理解 <code>EVALUATE_THINK_PROMPT</code> 在 Think Tool 中的作用</li>
+</ul>
+<blockquote>
+<p>💡 <strong>本节新建文件</strong>：<code>backend/agents/interview/prompts.py</code></p>
+</blockquote>
+<hr />
+<h2 id="_2">📁 本节要创建的文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/agents/interview/prompts.py</code></td>
+<td>🆕 新建</td>
+<td>按阶段分组的全部 Prompt 模板</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="731">7.3.1 系统提示词<a class="headerlink" href="#731" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/agents/interview/prompts.py</span>
+
+<span class="n">SYSTEM_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;你是一位经验丰富的 IT 公司技术面试官，正在对应届生或初级工程师候选人进行模拟面试，岗位为</span><span class="si">{position}</span><span class="s2">。</span>
+
+<span class="s2">【面试官角色要求】</span>
+<span class="s2">- 语气专业但不严苛，模拟真实面试氛围，让候选人感到适度紧张但不焦虑</span>
+<span class="s2">- 每次只问一个问题，不连续抛出多个问题</span>
+<span class="s2">- 对回答给予简短反应（&quot;嗯，好的&quot; / &quot;有意思&quot; / &quot;可以&quot;），不直接评判对错</span>
+<span class="s2">- 不主动透露答案，可以用引导性提示（&quot;可以从XXX角度思考&quot;）</span>
+<span class="s2">- 对于确实超出候选人能力范围的问题，轻描淡写地跳过（&quot;没关系，我们换一个话题&quot;）</span>
+<span class="s2">- 面试结束前不暴露评分或评价结论&quot;&quot;&quot;</span>
+</code></pre></div>
+<p><code>SYSTEM_PROMPT</code> 注入所有 LLM 调用（通过 <code>_build_system_with_summary</code>），让 LLM 始终以"面试官"角色回应，而不是助手角色。注入 <code>{position}</code> 使面试官提问聚焦在目标岗位的技术方向上。</p>
+<hr />
+<h2 id="732-prompt">7.3.2 动态出题 Prompt（题库的第一备选项）<a class="headerlink" href="#732-prompt" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">TECH_BASE_GENERATE_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;你是一位</span><span class="si">{position}</span><span class="s2">岗位的资深技术面试官。</span>
+<span class="s2">请为该岗位生成</span><span class="si">{count}</span><span class="s2">道技术面试题，要真实考察候选人对核心概念的理解深度。</span>
+
+<span class="s2">岗位：</span><span class="si">{position}</span><span class="s2"></span>
+
+<span class="s2">出题要求：</span>
+<span class="s2">- 难度分布：中等（60%）、简单（20%）、困难（20%）</span>
+<span class="s2">- 题目要考察原理理解，不是死记硬背，例如&quot;请解释XXX的工作原理/核心思想&quot;</span>
+<span class="s2">- 每道题不超过60字，表述清晰</span>
+<span class="s2">- 标签填该题涉及的技术方向（如 [&quot;深度学习&quot;, &quot;Transformer&quot;]）</span>
+
+<span class="s2">如果岗位是 AI/大模型/算法/NLP 方向，必须包含以下类型题目：</span>
+<span class="s2">- Transformer 架构（Encoder/Decoder 各包含哪些模块，注意力机制如何计算）</span>
+<span class="s2">- 过拟合与欠拟合的概念及解决过拟合的方法</span>
+<span class="s2">- 自回归语言模型的生成原理</span>
+<span class="s2">- RAG（检索增强生成）的基本流程</span>
+<span class="s2">- 向量相似度检索的原理（如余弦相似度）</span>
+<span class="s2">- 大模型微调方法（如 LoRA 的核心思想）</span>
+
+<span class="s2">按 JSON 数组格式输出，每项格式：</span>
+<span class="s2">{{&quot;content&quot;: &quot;题目内容&quot;, &quot;difficulty&quot;: &quot;medium/easy/hard&quot;, &quot;tags&quot;: [&quot;标签1&quot;]}}</span>
+
+<span class="s2">只输出 JSON 数组，不要任何其他文字。&quot;&quot;&quot;</span>
+</code></pre></div>
+<p><code>load_context_node</code> 首轮执行时同时发起两路查询：从 DB <code>interview_questions</code> 表拉题（按 <code>target_position</code> 过滤），和用此 Prompt 让 LLM 生成 8 道岗位定制题。**LLM 生成题优先**放在题库前面（更精准），DB 题附加在后面（通用兜底）。如果 LLM 生成失败，纯用 DB 题。</p>
+<hr />
+<h2 id="733">7.3.3 破冰热身阶段<a class="headerlink" href="#733" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">WARMUP_PROMPT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;opening&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;请生成模拟面试的欢迎开场白，邀请候选人自我介绍。</span>
+
+<span class="s2">要求：</span>
+<span class="s2">- 第一句以&quot;欢迎来到</span><span class="si">{position}</span><span class="s2">岗位的模拟面试&quot;开头</span>
+<span class="s2">- 自然友好，总共2-3句话</span>
+<span class="s2">- 明确说&quot;请先做个简单的自我介绍&quot;，可提示包含学习背景、技术栈、感兴趣的方向&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>WARMUP 阶段只有这一个 Prompt，只生成欢迎开场白，不做任何技术问题。热身阶段只持续1轮：学员发任意消息（自我介绍）就立即推进到 TECH_BASE。</p>
+<hr />
+<h2 id="734-warmup-tech_base-prompt">7.3.4 WARMUP → TECH_BASE 过渡专用 Prompt<a class="headerlink" href="#734-warmup-tech_base-prompt" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">INTRO_EVAL_TECH_FIRST_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;候选人刚才的自我介绍如下：</span>
+<span class="si">{intro}</span><span class="s2"></span>
+
+<span class="s2">岗位：</span><span class="si">{position}</span><span class="s2"></span>
+<span class="s2">第一道技术题：</span><span class="si">{first_question}</span><span class="s2"></span>
+
+<span class="s2">请以面试官身份，在同一条回复中完成以下三件事：</span>
+<span class="s2">1. 用2-3句话中肯评价自我介绍（重点：逻辑是否清晰、各部分是否自洽、有无明显矛盾或遗漏，给出具体的正向反馈或改进提示）</span>
+<span class="s2">2. 一句自然过渡语，引导进入技术基础环节（如&quot;好的，接下来我们进入技术基础环节&quot;）</span>
+<span class="s2">3. 直接问出第一道技术题</span>
+
+<span class="s2">语气自然，总共不超过5句话。&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>这是一个**阶段衔接专用 Prompt**，只在 TECH_BASE 阶段的第一轮（<code>stage_turns == 1</code> 且 <code>current_question is None</code>）使用一次。它把"评价自我介绍"和"问第一道技术题"合并在一条回复里，避免两次单独的 LLM 调用。</p>
+<hr />
+<h2 id="735-prompts">7.3.5 技术基础阶段 Prompts<a class="headerlink" href="#735-prompts" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">TECH_BASE_PROMPT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># 上题反馈 + 出下一题（主流程）</span>
+    <span class="s2">&quot;ask_with_feedback&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;上一道题：</span><span class="si">{question}</span><span class="s2"></span>
+<span class="s2">候选人回答：</span><span class="si">{answer}</span><span class="s2"></span>
+<span class="s2">回答质量：</span><span class="si">{quality}</span><span class="s2">（excellent=优秀/adequate=基本达到/weak=较弱/no_answer=未作答）</span>
+
+<span class="s2">下一道题：</span><span class="si">{next_question}</span><span class="s2"></span>
+
+<span class="s2">请以面试官身份，在同一条回复中：</span>
+<span class="s2">1. 先用1-2句话对上一道题的回答给出具体反馈：</span>
+<span class="s2">   - excellent：肯定核心亮点，点出1个可以进一步深化的方向</span>
+<span class="s2">   - adequate：肯定基本思路，明确指出1个遗漏的关键知识点</span>
+<span class="s2">   - weak：轻描淡写跳过（&quot;好的，我们换个话题&quot;），不展开评价</span>
+<span class="s2">   - no_answer：给一句简短提示思路，然后说&quot;我们换下一题&quot;</span>
+<span class="s2">2. 自然过渡后，直接问出下一道题</span>
+
+<span class="s2">总共不超过4句话，语气自然像真实面试官。&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="c1"># 追问（回答 EXCELLENT 时触发）</span>
+    <span class="s2">&quot;followup&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;候选人对&quot;</span><span class="si">{question}</span><span class="s2">&quot;的回答如下：</span>
+<span class="si">{answer}</span><span class="s2"></span>
+
+<span class="s2">候选人回答质量：</span><span class="si">{quality}</span><span class="s2">（excellent=优秀）</span>
+
+<span class="s2">请生成一个深入追问，要求：</span>
+<span class="s2">- 基于候选人回答中提到的具体技术点追问（如&quot;你提到了X，能说说它的内部实现吗？&quot;）</span>
+<span class="s2">- 不重复相同问题</span>
+<span class="s2">- 技术栈背景：</span><span class="si">{tech_stack}</span><span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;weak_transition&quot;</span><span class="p">:</span>  <span class="s2">&quot;好的，我们换一个话题。&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;no_answer_hint&quot;</span><span class="p">:</span>   <span class="s2">&quot;&quot;&quot;对于&quot;</span><span class="si">{question}</span><span class="s2">&quot;，可以先从这个角度想想：它主要解决什么问题？我们换下一个话题。&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>ask_with_feedback</code> 是 TECH_BASE 的主 Prompt，把"上题评价"和"出下题"合并在一次 LLM 调用里——面试官听完回答自然地给个反馈，然后问下一题，这正是真实面试的节奏。</p>
+<p><code>weak_transition</code> 和 <code>no_answer_hint</code> 是静态字符串（不调用 LLM），直接作为面试官回应输出，节省 LLM 调用。</p>
+<hr />
+<h2 id="736-prompts">7.3.6 项目深挖阶段 Prompts<a class="headerlink" href="#736-prompts" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">PROJECT_PROMPT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># 开始一个新项目的第1问</span>
+    <span class="s2">&quot;new_project&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;接下来我要深挖简历上的&quot;</span><span class="si">{project_name}</span><span class="s2">&quot;项目。</span>
+
+<span class="s2">项目信息（内部参考，不要直接读出）：</span>
+<span class="s2">- 角色：</span><span class="si">{project_role}</span><span class="s2"></span>
+<span class="s2">- 技术栈：</span><span class="si">{tech_stack}</span><span class="s2"></span>
+<span class="s2">- 亮点：</span><span class="si">{highlights}</span><span class="s2"></span>
+<span class="s2">- 描述摘要：</span><span class="si">{description}</span><span class="s2"></span>
+
+<span class="s2">请生成项目第1问（共3问），评估项目背景合理性和候选人的实际参与度。</span>
+<span class="s2">要求：</span>
+<span class="s2">- 1-2句自然过渡语（像翻简历的面试官）</span>
+<span class="s2">- 问题重点：这个项目的背景是什么？你在其中承担的核心职责是什么？</span>
+<span class="s2">- 不超过3句话&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="c1"># 项目环节追问 + 反馈（带质量反馈版）</span>
+    <span class="s2">&quot;followup_with_feedback&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;候选人在&quot;</span><span class="si">{project_name}</span><span class="s2">&quot;项目中的回答：</span>
+<span class="si">{answer}</span><span class="s2"></span>
+
+<span class="s2">上一个问题：</span><span class="si">{question}</span><span class="s2"></span>
+<span class="s2">回答质量：</span><span class="si">{quality}</span><span class="s2">（excellent=优秀/adequate=基本达到/weak=较弱/no_answer=未作答）</span>
+<span class="s2">项目技术栈：</span><span class="si">{tech_stack}</span><span class="s2"></span>
+<span class="s2">当前是第 </span><span class="si">{question_num}</span><span class="s2"> 个追问（共最多2次）</span>
+
+<span class="s2">请以面试官身份，在同一条回复中：</span>
+<span class="s2">1. 先用1-2句话对上一个回答给出具体反馈：</span>
+<span class="s2">   - excellent/adequate：肯定回答中的亮点，同时指出1个可以深化的点</span>
+<span class="s2">   - weak：轻描淡写（&quot;好的，我们继续往下聊&quot;）</span>
+<span class="s2">   - no_answer：简短引导（&quot;没关系，我们看下一个方向&quot;）</span>
+<span class="s2">2. 然后问出深度追问（根据技术栈选择最合适的方向）：</span>
+
+<span class="s2">【RAG / 知识库检索相关项目】</span>
+<span class="s2">- 数据量级：知识库有多少条数据？如何做分块（chunk）的？</span>
+<span class="s2">- PDF 解析：遇到 PDF 中有图片或表格时如何处理？</span>
+<span class="s2">- 混合检索：有没有结合稠密检索和稀疏检索？</span>
+<span class="s2">- 精排：用了什么方法做 Reranker？</span>
+
+<span class="s2">【LLM 微调相关项目】</span>
+<span class="s2">- LoRA 的核心原理是什么？可训练参数比例大概是多少？</span>
+<span class="s2">- 微调数据集怎么构建的？</span>
+<span class="s2">- 微调前后效果如何对比？</span>
+
+<span class="s2">【通用深挖方向】</span>
+<span class="s2">- 项目中最大的技术难点是什么？你是怎么解决的？</span>
+<span class="s2">- 为什么选择 </span><span class="si">{tech_stack}</span><span class="s2"> 而不是其他方案？</span>
+
+<span class="s2">总共不超过4句话，语气自然。&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="c1"># 项目环节纯追问（首问无反馈版）</span>
+    <span class="s2">&quot;followup&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;候选人在&quot;</span><span class="si">{project_name}</span><span class="s2">&quot;项目中的回答：</span>
+<span class="si">{answer}</span><span class="s2"></span>
+
+<span class="s2">项目技术栈：</span><span class="si">{tech_stack}</span><span class="s2"></span>
+<span class="s2">当前是第 </span><span class="si">{question_num}</span><span class="s2"> 个追问（共最多2次）</span>
+
+<span class="s2">请生成1个深度技术追问，优先考虑以下方向（根据技术栈选择最合适的）：</span>
+
+<span class="s2">【RAG / 知识库检索相关项目】</span>
+<span class="s2">- 数据量级：知识库有多少条数据？如何做分块（chunk）的？</span>
+<span class="s2">- PDF 解析：遇到 PDF 中有图片或表格时如何处理？</span>
+<span class="s2">- 混合检索：有没有结合稠密检索和稀疏检索？召回策略是什么？</span>
+<span class="s2">- 精排：用了什么方法做 Reranker？BGE-Reranker 的原理是什么？</span>
+
+<span class="s2">【LLM 微调相关项目】</span>
+<span class="s2">- LoRA 微调方法的核心原理是什么？可训练参数占模型总参数的比例大概是多少？</span>
+<span class="s2">- 微调数据集怎么构建的？数量级是多少条？</span>
+<span class="s2">- 微调前后效果如何对比的？用了什么评估指标？</span>
+
+<span class="s2">【通用深挖方向】</span>
+<span class="s2">- 项目中遇到的最大技术难点是什么？你是怎么解决的？</span>
+<span class="s2">- 为什么选择 </span><span class="si">{tech_stack}</span><span class="s2"> 而不是其他方案？</span>
+
+<span class="s2">直接输出追问内容，不超过2句话，语气自然像真实面试官。&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="c1"># 所有项目深挖完毕后的综合题</span>
+    <span class="s2">&quot;synthesis&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;项目经历我们了解得差不多了。最后问你一个综合性问题：</span>
+
+<span class="s2">在你的所有项目经历中，遇到过最复杂的技术问题是什么？你是如何排查和解决的？</span>
+
+<span class="s2">这是针对</span><span class="si">{position}</span><span class="s2">岗位的综合考查。&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="c1"># 无简历联动时的应对</span>
+    <span class="s2">&quot;no_resume&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;我们来聊聊你的项目经验。</span>
+<span class="si">{answer}</span><span class="s2"></span>
+
+<span class="s2">请根据候选人的回答，针对</span><span class="si">{position}</span><span class="s2">岗位设计一个项目经验问题：</span>
+<span class="s2">- 如果候选人提到了具体项目，顺势深挖</span>
+<span class="s2">- 如果候选人没有明显项目经验，问一个&quot;如果让你设计一个XXX系统，你会怎么考虑架构？&quot;的设计题</span>
+<span class="s2">- 1个问题，不超过3句话&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>项目 Prompt 有两个关键设计：</p>
+<p><strong>"内部参考，不要直接读出"</strong>：<code>new_project</code> 把简历项目的原始数据（角色、技术栈、亮点）注入 Prompt 作为上下文，但明确告知 LLM 这是内部参考，不要逐字读出，这样面试官提问时更自然（像翻简历找到这个项目，然后问）。</p>
+<p><strong>技术栈定向追问</strong>：<code>followup</code> 里按 RAG/LLM微调/通用方向分类列出追问方向，让面试官的追问更有针对性，而不是每次都问"这个项目最大的挑战是什么？"这种泛化问题。</p>
+<hr />
+<h2 id="737-prompts">7.3.7 反问收尾阶段 Prompts<a class="headerlink" href="#737-prompts" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">CLOSING_PROMPT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;opening&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;面试问题我们差不多问完了。</span>
+
+<span class="s2">最后这个环节，请问你有什么想了解的吗？比如关于岗位要求、技术栈方向、团队情况，</span>
+<span class="s2">或者你有什么想补充的都可以说。&quot;&quot;&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;respond_question&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;候选人提问如下：</span>
+<span class="si">{question}</span><span class="s2"></span>
+
+<span class="s2">请以面试官身份给出回应，要求：</span>
+<span class="s2">- 对候选人的提问表示欢迎（&quot;很好的问题&quot;）</span>
+<span class="s2">- 给出合理的、积极的回答（可以适当模糊，如&quot;团队目前主要使用xxx技术栈&quot;）</span>
+<span class="s2">- 结合</span><span class="si">{position}</span><span class="s2">岗位背景回答</span>
+<span class="s2">- 结束时自然引导候选人是否还有其他问题&quot;&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">STAGE_TRANSITION_PROMPTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="s2">&quot;好的，技术基础题我们就到这里了。那接下来，我们进入项目深挖环节，我想结合你的项目经历再聊聊。&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;closing&quot;</span><span class="p">:</span> <span class="s2">&quot;好的，我这边的问题差不多都问完了，进入最后一个环节。&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>注意：<code>STAGE_TRANSITION_PROMPTS</code> 只有 <code>"project"</code> 和 <code>"closing"</code> 两个键。TECH_BASE 阶段的过渡（评价自我介绍 + 第一题）由 <code>INTRO_EVAL_TECH_FIRST_PROMPT</code> 在 <code>_respond_tech_base</code> 内部处理，不走这里的静态过渡语。WARMUP 没有过渡语（它是第一个阶段）。</p>
+</blockquote>
+<p><code>STAGE_TRANSITION_PROMPTS</code> 是静态字符串，在 <code>generate_response_node</code> 里检测到 <code>stage_turns == 1</code>（阶段刚切换）时，拼接在当前阶段回复的开头，起到"换场"提示作用，不消耗额外 LLM 调用。</p>
+<hr />
+<h2 id="738-promptsthink-tool">7.3.8 回答质量评估 Prompts（Think Tool）<a class="headerlink" href="#738-promptsthink-tool" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># 前置推理（不约束输出格式）</span>
+<span class="n">EVALUATE_THINK_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;在评估这道面试题的回答质量之前，请先进行深入分析。</span>
+
+<span class="s2">【面试问题】</span>
+<span class="si">{question}</span><span class="s2"></span>
+
+<span class="s2">【候选人回答】</span>
+<span class="si">{answer}</span><span class="s2"></span>
+
+<span class="s2">请分析以下几点（中文，4-6句话）：</span>
+<span class="s2">1. 候选人具体说明了哪些技术要点？（列举实质性内容）</span>
+<span class="s2">2. 有哪些关键技术点完全未提及或一带而过？</span>
+<span class="s2">3. 候选人是在真实理解基础上作答，还是在背诵模板答案？有何判断依据？</span>
+<span class="s2">4. 回答的技术深度和覆盖广度总体如何？</span>
+
+<span class="s2">直接输出分析内容，不加任何前缀标签。&quot;&quot;&quot;</span>
+
+
+<span class="c1"># 主评估（输出质量标签）</span>
+<span class="n">EVALUATE_ANSWER_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;请评估候选人对以下面试问题的回答质量。</span>
+
+<span class="s2">【问题】</span>
+<span class="si">{question}</span><span class="s2"></span>
+
+<span class="s2">【候选人回答】</span>
+<span class="si">{answer}</span><span class="s2"></span>
+
+<span class="s2">请只输出以下4个标签之一，不要任何其他内容：</span>
+<span class="s2">- excellent：回答有具体技术细节/量化数据/原理解释，深度足够</span>
+<span class="s2">- adequate：回答方向正确但缺乏深度，表述较笼统</span>
+<span class="s2">- weak：回答方向偏差、过于表面或明显不理解</span>
+<span class="s2">- no_answer：明确表示不知道、回答为空或内容无关&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>Think Tool 是两步评估流程：先用 <code>EVALUATE_THINK_PROMPT</code> 让 LLM 自由分析（不约束格式），得到 <code>reasoning_trace</code>；再把这段推理追加到 <code>EVALUATE_ANSWER_PROMPT</code> 末尾，让质量标签的判断更有依据。</p>
+<p><strong>关键差异</strong>：不用 Think Tool 时，LLM 对"用不同表述说对了同一个知识点"和"背了模板答案"这两类情况容易误判。有了推理步骤后，LLM 先分析"是否真实理解"，再打标签，判断更准确。</p>
+<hr />
+<h2 id="739-prompt">7.3.9 报告生成 Prompt<a class="headerlink" href="#739-prompt" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">GENERATE_REPORT_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;请基于以下模拟面试记录，生成五维度评估报告。</span>
+
+<span class="s2">【岗位】</span><span class="si">{position}</span><span class="s2"></span>
+<span class="s2">【总轮数】</span><span class="si">{total_turns}</span><span class="s2"></span>
+
+<span class="s2">【历史摘要（前期对话压缩）】</span>
+<span class="si">{history_summary}</span><span class="s2"></span>
+
+<span class="s2">【近期完整对话】</span>
+<span class="si">{conversation}</span><span class="s2"></span>
+
+<span class="s2">五个评估维度及权重：</span>
+<span class="s2">1. 技术深度（35%）：技术知识掌握程度、概念理解深度、原理解释能力</span>
+<span class="s2">2. 表达逻辑（20%）：回答条理性、是否使用 STAR 结构、语言表达清晰度</span>
+<span class="s2">3. 项目经验（25%）：项目贡献清晰度、技术选型理由、难点解决过程</span>
+<span class="s2">4. 抗压反应（10%）：遇到不会的问题如何应对、是否能快速调整思路</span>
+<span class="s2">5. 整体印象（10%）：积极性、学习态度、对岗位的准备程度</span>
+
+<span class="s2">评分标准：</span>
+<span class="s2">- 90-100：远超初级岗位期望</span>
+<span class="s2">- 75-89： 达到初级岗位要求</span>
+<span class="s2">- 60-74： 基本达标，有明显提升空间</span>
+<span class="s2">- 45-59： 差距较大，需系统补强</span>
+<span class="s2">- 0-44：  尚未达到申请门槛</span>
+
+<span class="s2">输出要求：</span>
+<span class="s2">- overall_score：五维度加权平均（技术深度35% + 项目经验25% + 表达逻辑20% + 抗压反应10% + 整体印象10%）</span>
+<span class="s2">- strengths：找出2-3条候选人在面试中真实表现出的优势</span>
+<span class="s2">- improvements：基于实际表现，提出2-3条最重要的改进方向</span>
+<span class="s2">- recommended_topics：列出3-5个候选人需要重点复习的知识点</span>
+<span class="s2">- next_step_advice：给出一句具体的下一步备考建议&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>报告 Prompt 同时接收两部分对话：<code>{history_summary}</code>（前期对话压缩摘要）和 <code>{conversation}</code>（最近40条完整对话）。这解决了面试对话可能超出 LLM 上下文窗口的问题——早期对话被压缩成摘要，保留关键信息；近期对话保持完整，让报告生成时能看到细节。</p>
+<hr />
+<h2 id="_3">🧪 本节实测<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Prompt 本质是字符串模板，<strong>测试就是用真实简历 / 题目 / 答案去 <code>.format()</code>，把"最终送进 LLM 的文本"完整打印出来</strong>。这一步纯离线（不调用 LLM），却最能帮你看懂每个 <code>{占位符}</code> 填进去之后到底长什么样。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="c1"># scripts/manual_tests/itv_07_03_prompts.py</span>
+<span class="c1"># 纯离线，无需启动服务。运行：python scripts/manual_tests/itv_07_03_prompts.py</span>
+
+<span class="kn">from</span> <span class="nn">itv_fixtures</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">load_env</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">TARGET_POSITION</span><span class="p">,</span> <span class="n">RESUME_PROJECTS</span><span class="p">,</span> <span class="n">ANSWER_SCRIPT</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">load_env</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">backend.agents.interview.prompts</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SYSTEM_PROMPT</span><span class="p">,</span> <span class="n">TECH_BASE_GENERATE_PROMPT</span><span class="p">,</span> <span class="n">WARMUP_PROMPT</span><span class="p">,</span>
+    <span class="n">INTRO_EVAL_TECH_FIRST_PROMPT</span><span class="p">,</span> <span class="n">TECH_BASE_PROMPT</span><span class="p">,</span> <span class="n">PROJECT_PROMPT</span><span class="p">,</span>
+    <span class="n">CLOSING_PROMPT</span><span class="p">,</span> <span class="n">STAGE_TRANSITION_PROMPTS</span><span class="p">,</span>
+    <span class="n">EVALUATE_THINK_PROMPT</span><span class="p">,</span> <span class="n">EVALUATE_ANSWER_PROMPT</span><span class="p">,</span> <span class="n">GENERATE_REPORT_PROMPT</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">Q_TRANSFORMER</span> <span class="o">=</span> <span class="s2">&quot;请解释 Transformer 中自注意力机制的计算过程。&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rendered</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">----- </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> -----&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">rendered</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;① SYSTEM_PROMPT（注入每次 LLM 调用，固定面试官角色）&quot;</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="s2">&quot;SYSTEM_PROMPT&quot;</span><span class="p">,</span> <span class="n">SYSTEM_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">TARGET_POSITION</span><span class="p">))</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;② TECH_BASE_GENERATE_PROMPT（首轮让 LLM 动态出 8 道岗位题）&quot;</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="s2">&quot;动态出题&quot;</span><span class="p">,</span> <span class="n">TECH_BASE_GENERATE_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">TARGET_POSITION</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">8</span><span class="p">))</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;④ INTRO_EVAL_TECH_FIRST（评价自我介绍 + 出第一题，仅过渡轮用一次）&quot;</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="s2">&quot;过渡专用&quot;</span><span class="p">,</span> <span class="n">INTRO_EVAL_TECH_FIRST_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">intro</span><span class="o">=</span><span class="n">ANSWER_SCRIPT</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">position</span><span class="o">=</span><span class="n">TARGET_POSITION</span><span class="p">,</span>
+        <span class="n">first_question</span><span class="o">=</span><span class="n">Q_TRANSFORMER</span><span class="p">,</span>
+    <span class="p">))</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;⑥ PROJECT new_project（深挖简历第一个项目，项目数据注入为内部参考）&quot;</span><span class="p">)</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">RESUME_PROJECTS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">show</span><span class="p">(</span><span class="s2">&quot;new_project&quot;</span><span class="p">,</span> <span class="n">PROJECT_PROMPT</span><span class="p">[</span><span class="s2">&quot;new_project&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">project_name</span><span class="o">=</span><span class="n">proj</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+        <span class="n">project_role</span><span class="o">=</span><span class="n">proj</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">],</span>
+        <span class="n">tech_stack</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">proj</span><span class="p">[</span><span class="s2">&quot;tech_stack&quot;</span><span class="p">]),</span>
+        <span class="n">highlights</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">proj</span><span class="p">[</span><span class="s2">&quot;highlights&quot;</span><span class="p">]),</span>
+        <span class="n">description</span><span class="o">=</span><span class="n">proj</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">][:</span><span class="mi">200</span><span class="p">],</span>
+    <span class="p">))</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;⑦ STAGE_TRANSITION_PROMPTS（静态过渡语，仅 project / closing 两键）&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;可用的过渡键：&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">STAGE_TRANSITION_PROMPTS</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">STAGE_TRANSITION_PROMPTS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;⑧ Think Tool 两步：EVALUATE_THINK → EVALUATE_ANSWER&quot;</span><span class="p">)</span>
+    <span class="n">show</span><span class="p">(</span><span class="s2">&quot;第一步 EVALUATE_THINK&quot;</span><span class="p">,</span> <span class="n">EVALUATE_THINK_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">question</span><span class="o">=</span><span class="n">Q_TRANSFORMER</span><span class="p">,</span> <span class="n">answer</span><span class="o">=</span><span class="n">ANSWER_SCRIPT</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">show</span><span class="p">(</span><span class="s2">&quot;第二步 EVALUATE_ANSWER&quot;</span><span class="p">,</span> <span class="n">EVALUATE_ANSWER_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">question</span><span class="o">=</span><span class="n">Q_TRANSFORMER</span><span class="p">,</span> <span class="n">answer</span><span class="o">=</span><span class="n">ANSWER_SCRIPT</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="n">section</span><span class="p">(</span><span class="s2">&quot;✅ 07-03 全部 Prompt 渲染成功（完整脚本见仓库，含全部 10 个模块）&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<p>运行：</p>
+<div class="highlight"><pre><span></span><code>conda activate edu_agent
+python scripts/manual_tests/itv_07_03_prompts.py
+</code></pre></div>
+<p>实际输出（节选 ④ 和 ⑦）：</p>
+<div class="highlight"><pre><span></span><code>----- 过渡专用 -----
+候选人刚才的自我介绍如下：
+你好，我是李明，华东师范大学计算机专业应届生。主要技术栈是 Python、PyTorch 和 LangChain，
+做过一个企业知识库 RAG 问答系统，还有一个客服领域的大模型 LoRA 微调项目，对大模型应用开发很感兴趣。
+
+岗位：AI大模型开发工程师
+第一道技术题：请解释 Transformer 中自注意力机制的计算过程。
+
+请以面试官身份，在同一条回复中完成以下三件事：
+1. 用2-3句话中肯评价自我介绍...
+...
+
+----- STAGE_TRANSITION_PROMPTS -----
+可用的过渡键： [&#39;project&#39;, &#39;closing&#39;]
+  [project] 好的，技术基础题我们就到这里了。那接下来，我们进入项目深挖环节...
+  [closing] 好的，我这边的问题差不多都问完了，进入最后一个环节。
+</code></pre></div>
+<blockquote>
+<p>💡 <strong>读懂这个测试</strong>：渲染后能清楚看到 <code>new_project</code> 把简历项目的角色 / 技术栈 / 量化亮点都注入成了"内部参考"——面试官提问时手里其实握着这些细节，但 Prompt 要求它不要逐字读出。这正是后面 7.8 节 <code>_respond_project</code> 生成自然项目追问的基础。</p>
+</blockquote>
+<hr />
+<h2 id="_4">章节总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>10 个 Prompt 模块</strong>：SYSTEM / WARMUP / INTRO_EVAL_TECH_FIRST / TECH_BASE / PROJECT / CLOSING / STAGE_TRANSITION / EVALUATE_THINK / EVALUATE_ANSWER / GENERATE_REPORT</li>
+<li><strong>动态出题</strong>：<code>TECH_BASE_GENERATE_PROMPT</code> 让 LLM 为任意岗位生成面试题，不依赖 DB 必须有数据</li>
+<li><strong>合并 Prompt 的价值</strong>：<code>INTRO_EVAL_TECH_FIRST</code> 和 <code>ask_with_feedback</code> 把"评价 + 出题"合一，减少 LLM 调用，节奏更自然</li>
+<li><strong>Think Tool 两步</strong>：先自由推理（EVALUATE_THINK），再打标签（EVALUATE_ANSWER），减少对模板答案的误判</li>
+</ul>
+<p><strong>下一节 <code>7.4 load_context 节点</code></strong> 实现首轮初始化：并行 DB 查询 + LLM 动态出题 + 历史摘要加载。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 7.2 State 与枚举" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              7.2 State 与枚举
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 7.4 load_context 节点" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              7.4 load_context 节点
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>

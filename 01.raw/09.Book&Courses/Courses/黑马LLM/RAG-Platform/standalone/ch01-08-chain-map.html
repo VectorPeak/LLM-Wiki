@@ -1,0 +1,1577 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>05-11 章完整问答闭环地图 - KnowForge RAG Platform</title>
+  <script src="../assets/vendor/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #5f6f86;
+      --line: #d8dee9;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #059669;
+      --amber: #d97706;
+      --violet: #7c3aed;
+      --red: #dc2626;
+      --slate: #334155;
+      --code: #f1f5f9;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+      line-height: 1.72;
+      letter-spacing: 0;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+      font-size: 0.92em;
+      background: var(--code);
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 1px 5px;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 22px;
+      background: #111827;
+      color: #dbeafe;
+      overflow: auto;
+    }
+    .sidebar h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.35;
+      color: #ffffff;
+    }
+    .sidebar p {
+      margin: 0 0 20px;
+      color: #aab7cf;
+      font-size: 14px;
+    }
+    .sidebar nav {
+      display: grid;
+      gap: 7px;
+    }
+    .sidebar a {
+      display: block;
+      color: #dbeafe;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+    .sidebar a:hover {
+      background: #1f2937;
+      border-color: #334155;
+      text-decoration: none;
+    }
+    .content {
+      min-width: 0;
+      padding: 34px 44px 72px;
+    }
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+    .hero h2 {
+      margin: 0 0 14px;
+      font-size: 34px;
+      line-height: 1.25;
+      color: #111827;
+    }
+    .hero .lead {
+      max-width: 1180px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 5px 11px;
+      color: #334155;
+      background: #f8fafc;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    section {
+      margin-top: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    section > header {
+      padding: 22px 26px 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    section h2 {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.35;
+      color: #111827;
+    }
+    section header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+    .section-body {
+      padding: 24px 26px 28px;
+    }
+    .diagram-panel {
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #fbfdff;
+      padding: 18px;
+      overflow: auto;
+    }
+    .diagram-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .mermaid {
+      min-width: 1180px;
+      text-align: center;
+    }
+    .diagram-medium .mermaid {
+      min-width: 1550px;
+    }
+    .diagram-panel svg {
+      max-width: none !important;
+      height: auto;
+    }
+    .big-map-svg {
+      width: 3600px;
+      max-width: none;
+      display: block;
+      background: #ffffff;
+    }
+    .svg-card {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 10px 12px;
+      color: #1f2937;
+      font-size: 13px;
+      line-height: 1.32;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+    .svg-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #111827;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+    .svg-card small {
+      display: block;
+      color: #475569;
+      line-height: 1.35;
+    }
+    .svg-card.ch05 { background: #fff7ed; border-color: #d97706; }
+    .svg-card.ch06 { background: #eff6ff; border-color: #2563eb; }
+    .svg-card.ch07 { background: #fef2f2; border-color: #dc2626; }
+    .svg-card.ch08 { background: #ecfdf5; border-color: #059669; }
+    .svg-card.ch09 { background: #f5f3ff; border-color: #7c3aed; }
+    .svg-card.ch10 { background: #ecfeff; border-color: #0891b2; }
+    .svg-card.ch11 { background: #f8fafc; border-color: #334155; }
+    .svg-card.out { background: #dcfce7; border-color: #16a34a; }
+    .svg-card.warn { background: #fffbeb; border-color: #d97706; }
+    .svg-card.decision { border-radius: 18px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .map-step-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .map-step {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 12px;
+      border: 1px solid #dbe3ef;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 12px;
+    }
+    .map-step .num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--blue);
+      font-weight: 900;
+      border: 1px solid #bfdbfe;
+      line-height: 1;
+    }
+    .map-step .num.branch {
+      background: #fffbeb;
+      color: #92400e;
+      border-color: #fde68a;
+    }
+    .map-step h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      color: #111827;
+      line-height: 1.35;
+    }
+    .map-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .map-step code {
+      font-size: 0.86em;
+    }
+    .card {
+      border: 1px solid #dbe3ef;
+      border-radius: 9px;
+      padding: 16px;
+      background: #ffffff;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #111827;
+    }
+    .card p {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+    .card ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+    .chapter-card { border-left: 5px solid var(--blue); }
+    .chapter-card.ch05 { border-left-color: var(--amber); }
+    .chapter-card.ch06 { border-left-color: var(--blue); }
+    .chapter-card.ch07 { border-left-color: var(--red); }
+    .chapter-card.ch08 { border-left-color: var(--green); }
+    .chapter-card.ch09 { border-left-color: var(--violet); }
+    .chapter-card.ch10 { border-left-color: var(--cyan); }
+    .chapter-card.ch11 { border-left-color: var(--slate); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #dbe3ef;
+      padding: 10px 11px;
+      vertical-align: top;
+    }
+    th {
+      background: #f1f5f9;
+      color: #334155;
+      text-align: left;
+      font-weight: 800;
+    }
+    tbody tr:nth-child(even) td { background: #fafcff; }
+    .step-no {
+      display: inline-block;
+      min-width: 36px;
+      text-align: center;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--blue);
+      font-weight: 800;
+      padding: 2px 8px;
+    }
+    .callout {
+      border: 1px solid #fde68a;
+      background: #fffbeb;
+      border-radius: 9px;
+      padding: 14px 16px;
+      color: #78350f;
+    }
+    .callout strong { color: #92400e; }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .legend span {
+      display: block;
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid #dbe3ef;
+      background: #f8fafc;
+    }
+    .legend .l1 { color: var(--amber); }
+    .legend .l2 { color: var(--blue); }
+    .legend .l3 { color: var(--green); }
+    .legend .l4 { color: var(--violet); }
+    .path-list {
+      counter-reset: path;
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .path-list li {
+      counter-increment: path;
+      position: relative;
+      border: 1px solid #dbe3ef;
+      border-radius: 9px;
+      background: #fff;
+      padding: 14px 16px 14px 58px;
+    }
+    .path-list li::before {
+      content: counter(path);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .path-list strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+    .path-list p {
+      margin: 3px 0;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+    @media (max-width: 1180px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; }
+      .content { padding: 24px 18px 48px; }
+      .grid, .cards-3, .map-step-grid, .split, .legend { grid-template-columns: 1fr; }
+      .hero h2 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <h1>05-11 章闭环地图</h1>
+      <p>独立参考页，用于把意图、计划、改写、检索、服务编排、Pipeline 和 Prompt 串成一条完整问答链路。</p>
+      <nav>
+        <a href="#overview">总览</a>
+        <a href="#big-map">完整闭环总图</a>
+        <a href="#node-functions">节点函数说明</a>
+        <a href="#code-flow">代码执行主线</a>
+        <a href="#chapter-closures">章节交付闭环</a>
+        <a href="#execution-steps">逐步执行表</a>
+        <a href="#objects">关键对象流</a>
+        <a href="#branches">关键分支边界</a>
+        <a href="#talk-track">讲解顺序建议</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="hero" id="overview">
+        <h2>05-11 章：从用户问题到可信回答的完整流程闭环</h2>
+        <p class="lead">
+          这张地图只覆盖第 05 到第 11 章。第 05-08 章完成“判断问题、生成检索计划、改写追问、执行真实 Milvus 检索”，
+          第 09-11 章把这些能力接入 QAService 和 RAG Pipeline，补齐 FAQ 高置信直出、文档检索、上下文构建、Prompt Profile 选择、
+          LLM 流式生成、引用增强、历史写入和结束事件。闭环终点是一次完整问答请求返回稳定答案，并把本轮问答写入历史，供下一轮追问继续使用。
+        </p>
+        <div class="badges">
+          <span class="badge">覆盖 05-11 章</span>
+          <span class="badge">对齐章节代码</span>
+          <span class="badge">完整问答闭环</span>
+          <span class="badge">独立参考页</span>
+        </div>
+      </div>
+
+      <section id="big-map">
+        <header>
+          <h2>完整闭环总图</h2>
+          <p>这张图保留 05-11 章完整闭环，并把容易漏讲的辅助输入和收口分支一起画出来：中间是在线主链路，上方是场景、版本、过滤、Prompt 和历史，下方是 prepare_retrieval 展开、Hybrid Search 细节、提前收口与异常收口。</p>
+        </header>
+        <div class="section-body">
+          <p class="diagram-note">读图顺序：先读中间主链路 1-16，再读上方辅助输入 17-22，最后读下方展开节点 23-26 与 A-D 收口分支。</p>
+          <div class="diagram-panel">
+            <svg class="big-map-svg" viewBox="0 0 3600 1180" role="img" aria-labelledby="bigMapTitle bigMapDesc">
+              <title id="bigMapTitle">05-11 章完整问答闭环大图</title>
+              <desc id="bigMapDesc">从 QAService 入口到 RAG Pipeline、意图路由、检索准备、FAQ 和文档检索、Prompt Profile、答案生成、引用增强、历史写入和结束事件的完整链路。</desc>
+              <defs>
+                <marker id="arrowDark" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#334155"></path></marker>
+                <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#059669"></path></marker>
+                <marker id="arrowAmber" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#d97706"></path></marker>
+                <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#2563eb"></path></marker>
+                <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#dc2626"></path></marker>
+              </defs>
+
+              <rect x="20" y="18" width="3560" height="1120" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"></rect>
+              <text x="56" y="58" font-size="24" font-weight="800" fill="#111827">05-11 章完整问答闭环：一张大图读完整链路</text>
+              <text x="56" y="86" font-size="15" fill="#64748b">中间是在线主链路；上方是场景、版本、过滤、Prompt 和历史；下方展开 prepare_retrieval、Hybrid Search、提前收口和异常收口。</text>
+
+              <line x1="70" y1="180" x2="3460" y2="180" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 10"></line>
+              <text x="58" y="162" font-size="13" font-weight="800" fill="#64748b">上下文/辅助输入</text>
+              <line x1="70" y1="455" x2="3460" y2="455" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 8"></line>
+              <text x="58" y="437" font-size="13" font-weight="800" fill="#64748b">在线主链路</text>
+              <line x1="70" y1="745" x2="3460" y2="745" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 10"></line>
+              <text x="58" y="727" font-size="13" font-weight="800" fill="#64748b">prepare_retrieval 展开 / 提前收口</text>
+
+              <foreignObject x="70" y="385" width="140" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card"><strong>1 用户问题</strong><small>query / source_filter<br/>session_id / history</small></div></foreignObject>
+              <foreignObject x="235" y="385" width="170" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch09"><strong>2 QAService</strong><small>stream_query()<br/>validate_source()</small></div></foreignObject>
+              <foreignObject x="430" y="385" width="170" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>3 Pipeline 入口</strong><small>rag.stream_query()<br/>start_event()</small></div></foreignObject>
+              <foreignObject x="625" y="385" width="180" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>4 请求上下文</strong><small>create_query_context()<br/>RAGQueryContext</small></div></foreignObject>
+              <foreignObject x="830" y="370" width="190" height="148"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch05 decision"><strong>5 查询路由</strong><small>decide_route()<br/>direct_answer<br/>source_boundary<br/>faq_exact / retrieval</small></div></foreignObject>
+              <foreignObject x="1045" y="385" width="180" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>6 检索准备</strong><small>prepare_retrieval()<br/>生成参数包</small></div></foreignObject>
+              <foreignObject x="1250" y="385" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card out"><strong>7 参数包</strong><small>RetrievalPreparation<br/>intent / plan / variants / profile</small></div></foreignObject>
+              <foreignObject x="1485" y="385" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch08"><strong>8 FAQ 检索</strong><small>search_faq()<br/>get_faq_store().search_many()</small></div></foreignObject>
+              <foreignObject x="1720" y="370" width="210" height="148"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10 decision"><strong>9 FAQ 高置信？</strong><small>get_faq_direct_answer()<br/>精确匹配或分数阈值<br/>可直接返回标准答案</small></div></foreignObject>
+              <foreignObject x="1955" y="385" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch08"><strong>10 文档检索</strong><small>search_doc()<br/>get_doc_store().search_many()</small></div></foreignObject>
+              <foreignObject x="2190" y="385" width="220" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>11 上下文筛选</strong><small>select_context_docs()<br/>build_context()</small></div></foreignObject>
+              <foreignObject x="2435" y="370" width="220" height="148"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10 decision"><strong>12 上下文足够？</strong><small>context_docs 非空<br/>达到 min_context_score<br/>否则信息不足</small></div></foreignObject>
+              <foreignObject x="2680" y="385" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>13 LLM 生成</strong><small>stream_llm_answer()<br/>token_event()</small></div></foreignObject>
+              <foreignObject x="2915" y="385" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>14 引用增强</strong><small>enforce_answer_citations()<br/>补充参考来源</small></div></foreignObject>
+              <foreignObject x="3150" y="385" width="175" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card out"><strong>15 写历史</strong><small>history.add_turn()<br/>供追问读取</small></div></foreignObject>
+              <foreignObject x="3350" y="385" width="180" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card out"><strong>16 结束事件</strong><small>finish_success()<br/>sources / trace / metrics</small></div></foreignObject>
+
+              <foreignObject x="625" y="115" width="180" height="120"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>17 场景/数据域</strong><small>scenario<br/>DataScope<br/>tenant / roles / visibility</small></div></foreignObject>
+              <foreignObject x="830" y="115" width="190" height="120"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>18 Active 版本</strong><small>resolve_active_kb_version()<br/>MySQL active 指针<br/>kb_version</small></div></foreignObject>
+              <foreignObject x="1955" y="115" width="210" height="120"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch08"><strong>19 检索过滤</strong><small>build_source_expr()<br/>source + kb_version<br/>DataScope</small></div></foreignObject>
+              <foreignObject x="2190" y="115" width="220" height="120"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch11"><strong>20 Prompt Profile</strong><small>build_answer_prompt_profile()<br/>类别优先，意图兜底</small></div></foreignObject>
+              <foreignObject x="2435" y="115" width="220" height="120"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch09"><strong>21 历史消息</strong><small>history.get_context_messages()<br/>FOLLOW_UP 改写<br/>Prompt 填充</small></div></foreignObject>
+              <foreignObject x="2680" y="115" width="210" height="120"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch10"><strong>22 Prompt 组装</strong><small>prepare_answer()<br/>system_prompt<br/>user_prompt</small></div></foreignObject>
+
+              <foreignObject x="830" y="680" width="190" height="126"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card warn"><strong>A 直接收口</strong><small>问候 / 越界 / 转人工<br/>source 边界提示<br/>不查库，不调用 LLM</small></div></foreignObject>
+              <foreignObject x="1045" y="660" width="180" height="166"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch05"><strong>23 意图与 source</strong><small>classify_intent()<br/>resolve_effective_source_filter()<br/>IntentResult</small></div></foreignObject>
+              <foreignObject x="1250" y="660" width="210" height="166"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch07"><strong>24 历史改写</strong><small>load_history<br/>rewrite_query_if_needed()<br/>追问变独立问题</small></div></foreignObject>
+              <foreignObject x="1485" y="660" width="210" height="166"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch06"><strong>25 计划与变体</strong><small>build_retrieval_plan()<br/>generate_query_variants()<br/>run_faq / run_doc</small></div></foreignObject>
+              <foreignObject x="1720" y="660" width="210" height="166"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card ch08"><strong>26 Hybrid Search</strong><small>Dense + BM25 Sparse<br/>merge_hits_by_document()<br/>rerank_hits()</small></div></foreignObject>
+              <foreignObject x="1720" y="875" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card warn"><strong>B FAQ 标准答案</strong><small>FAQ 高置信直出<br/>_finish_with_single_answer()</small></div></foreignObject>
+              <foreignObject x="2435" y="875" width="220" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card warn"><strong>C 信息不足</strong><small>build_insufficient_context_answer()<br/>不调用 LLM</small></div></foreignObject>
+              <foreignObject x="2915" y="875" width="210" height="118"><div xmlns="http://www.w3.org/1999/xhtml" class="svg-card warn"><strong>D 异常收口</strong><small>finish_error()<br/>WebSocket 不断连<br/>返回可恢复错误</small></div></foreignObject>
+
+              <path d="M210 444 L235 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M405 444 L430 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M600 444 L625 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M805 444 L830 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M1020 444 L1045 444" stroke="#059669" stroke-width="2.8" marker-end="url(#arrowGreen)"></path>
+              <path d="M1225 444 L1250 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M1460 444 L1485 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M1695 444 L1720 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M1930 444 L1955 444" stroke="#059669" stroke-width="2.8" marker-end="url(#arrowGreen)"></path>
+              <path d="M2165 444 L2190 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M2410 444 L2435 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M2655 444 L2680 444" stroke="#059669" stroke-width="2.8" marker-end="url(#arrowGreen)"></path>
+              <path d="M2890 444 L2915 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M3125 444 L3150 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+              <path d="M3325 444 L3350 444" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowDark)"></path>
+
+              <path d="M715 385 L715 235" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M925 370 L925 235" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M805 175 L830 175" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M910 235 C920 300 995 330 1045 380" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+
+              <path d="M1140 503 L1140 660" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M1225 743 L1250 743" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M1460 743 L1485 743" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M1695 743 L1720 743" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M1590 660 C1590 595 1355 545 1355 503" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M1825 660 C1825 610 1588 548 1588 503" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+
+              <path d="M1018 448 C1040 600 1010 690 1020 743" stroke="#d97706" stroke-width="2.4" fill="none" marker-end="url(#arrowAmber)"></path>
+              <path d="M1020 743 L830 743" stroke="#d97706" stroke-width="2.4" fill="none" marker-end="url(#arrowAmber)"></path>
+              <text x="880" y="640" font-size="13" font-weight="800" fill="#92400e">direct / boundary</text>
+
+              <path d="M2060 385 L2060 235" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M1930 175 L1955 175" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M2165 175 L2190 175" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M2410 175 L2435 175" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M2655 175 L2680 175" stroke="#334155" stroke-width="2" marker-end="url(#arrowDark)"></path>
+              <path d="M2288 385 L2288 235" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M2550 370 L2550 235" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <path d="M2785 385 L2785 235" stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrowDark)"></path>
+              <text x="2060" y="105" font-size="13" font-weight="800" fill="#334155">过滤、Prompt、历史和上下文作为辅助输入进入检索与生成</text>
+
+              <path d="M1825 518 L1825 875" stroke="#d97706" stroke-width="2.4" fill="none" marker-end="url(#arrowAmber)"></path>
+              <text x="1840" y="620" font-size="13" font-weight="800" fill="#92400e">FAQ direct</text>
+              <path d="M1930 934 L3150 444" stroke="#d97706" stroke-width="2.2" fill="none" marker-end="url(#arrowAmber)"></path>
+              <path d="M2545 518 L2545 875" stroke="#d97706" stroke-width="2.4" fill="none" marker-end="url(#arrowAmber)"></path>
+              <text x="2560" y="620" font-size="13" font-weight="800" fill="#92400e">insufficient</text>
+              <path d="M2655 934 L3150 444" stroke="#d97706" stroke-width="2.2" fill="none" marker-end="url(#arrowAmber)"></path>
+              <path d="M3125 934 L3350 444" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="8 8" fill="none" marker-end="url(#arrowRed)"></path>
+              <text x="3020" y="855" font-size="13" font-weight="800" fill="#991b1b">except</text>
+
+              <path d="M3238 503 C3238 610 2540 660 2440 535" stroke="#334155" stroke-width="1.8" stroke-dasharray="7 7" fill="none"></path>
+              <text x="2935" y="620" font-size="13" font-weight="800" fill="#64748b">下一轮追问读取历史</text>
+            </svg>
+          </div>
+          <div class="legend">
+            <span class="l1">05-07：判断、计划、改写</span>
+            <span class="l2">08：真实 Milvus 检索</span>
+            <span class="l3">09-10：服务入口与 Pipeline 闭环</span>
+            <span class="l4">11：Prompt Profile 决定回答口径</span>
+          </div>
+          <div class="callout" style="margin-top:18px;">
+            <strong>读图方法：</strong>
+            先按中间主链路 1-16 读完整在线问答，再看上方 17-22，理解场景、版本、过滤、Prompt 和历史如何作为辅助输入；最后看下方 23-26 与 A-D，理解检索准备展开、Hybrid Search 细节以及提前/异常收口。
+          </div>
+          <div class="map-step-grid" aria-label="大图编号步骤说明">
+            <article class="map-step">
+              <div class="num">1</div>
+              <div>
+                <h3>用户问题进入系统</h3>
+                <p>输入不只是 query，还包括 source_filter、session_id 和历史会话标识；这些字段决定后续是否限定来源、是否可追问改写、最终历史写到哪里。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">2</div>
+              <div>
+                <h3>QAService 服务入口</h3>
+                <p><code>QAService.stream_query()</code> 是 Web/API 层调用的稳定服务门面，先校验 source，再把请求交给 <code>rag.stream_query()</code> 产生事件流。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">3</div>
+              <div>
+                <h3>Pipeline 入口</h3>
+                <p><code>rag.stream_query()</code> 开启一次完整问答流程，先发 start 事件，然后按路由、检索、上下文、生成、收口的顺序推进。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">4</div>
+              <div>
+                <h3>创建请求上下文</h3>
+                <p><code>create_query_context()</code> 生成 <code>RAGQueryContext</code>，集中保存场景、数据域、active_kb_version、trace_id、session_id 和运行阶段信息。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">5</div>
+              <div>
+                <h3>第 05 章：查询路由</h3>
+                <p><code>decide_route()</code> 先做低成本确定性判断：问候、越界、转人工、source 边界和 FAQ 精确命中可以提前收口；只有 retrieval 才继续进入检索链路。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">6</div>
+              <div>
+                <h3>检索准备入口</h3>
+                <p><code>prepare_retrieval()</code> 是 05-07 和 11 章能力的汇合点，内部完成意图、source、历史改写、检索计划、查询变体和 Prompt Profile 选择。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">7</div>
+              <div>
+                <h3>参数包回到 Pipeline</h3>
+                <p><code>RetrievalPreparation</code> 把 intent、plan、rewritten_query、query_variants、prompt_profile、effective_source_filter 和 history 统一交还给主流程。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">8</div>
+              <div>
+                <h3>FAQ 检索</h3>
+                <p><code>search_faq()</code> 调用 <code>get_faq_store().search_many()</code> 查询 FAQ collection。这里既服务 FAQ 标准答案直出，也为最终上下文提供 FAQ 证据。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">9</div>
+              <div>
+                <h3>FAQ 高置信判断</h3>
+                <p><code>get_faq_direct_answer()</code> 根据精确匹配或阈值判断是否可以返回标准答案；命中时不调用 LLM，直接进入 FAQ 标准答案收口分支。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">10</div>
+              <div>
+                <h3>文档检索</h3>
+                <p>FAQ 不能直出且计划允许文档检索时，<code>search_doc()</code> 调用 <code>get_doc_store().search_many()</code> 查询文档 collection，补齐长文档证据。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">11</div>
+              <div>
+                <h3>上下文筛选与拼装</h3>
+                <p><code>select_context_docs()</code> 从 FAQ 和 Doc 命中中挑选最终证据，<code>build_context()</code> 把这些证据拼成 Prompt 可用的上下文文本。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">12</div>
+              <div>
+                <h3>上下文是否足够</h3>
+                <p>如果没有可用证据或分数不足，Pipeline 返回信息不足答案；只有 context_docs 足够可信时，才允许进入 LLM 生成。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">13</div>
+              <div>
+                <h3>LLM 流式生成</h3>
+                <p><code>stream_llm_answer()</code> 基于已组装的 Prompt 生成答案，并持续产出 token 事件，前端或调用方可以边生成边展示。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">14</div>
+              <div>
+                <h3>引用增强</h3>
+                <p><code>enforce_answer_citations()</code> 在生成完成后检查和补强参考来源，保证最终答案可以回溯到检索证据。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">15</div>
+              <div>
+                <h3>写入会话历史</h3>
+                <p><code>history.add_turn()</code> 把本轮用户问题和系统答案写入历史。下一轮“那审批呢”这类追问，才能读取上一轮上下文完成改写。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">16</div>
+              <div>
+                <h3>结束事件</h3>
+                <p><code>finish_success()</code> 返回 answer、sources、intent、retrieval_info、trace 和耗时指标。到这里，一次问答请求才算完整闭环。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">17</div>
+              <div>
+                <h3>场景与数据域</h3>
+                <p>场景配置决定有效来源、collection、Prompt 和数据路径；<code>DataScope</code> 进一步约束租户、数据集、可见性和角色范围。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">18</div>
+              <div>
+                <h3>Active 知识库版本</h3>
+                <p><code>resolve_active_kb_version()</code> 从 MySQL 中读取当前场景的 active 版本，后续 FAQ/Doc 检索都必须带上 kb_version 过滤。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">19</div>
+              <div>
+                <h3>检索过滤条件</h3>
+                <p><code>build_source_expr()</code> 把 source_filter、valid_sources、kb_version 和 DataScope 组合成 Milvus 查询表达式，确保只查允许访问的数据。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">20</div>
+              <div>
+                <h3>Prompt Profile 选择</h3>
+                <p><code>build_answer_prompt_profile()</code> 根据问题类别优先、意图兜底选择回答模板，控制 FAQ、知识问答、费用、合规、排障等不同回答口径。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">21</div>
+              <div>
+                <h3>历史消息读取</h3>
+                <p><code>history.get_context_messages()</code> 为 FOLLOW_UP 改写和 Prompt 填充提供历史。它是辅助输入，不是独立收口路径。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">22</div>
+              <div>
+                <h3>Prompt 组装</h3>
+                <p><code>prepare_answer()</code> 把 Prompt Profile、用户问题、历史和检索上下文组装为 system_prompt/user_prompt，随后交给 LLM。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">23</div>
+              <div>
+                <h3>意图与有效 source</h3>
+                <p><code>classify_intent()</code> 产出 <code>IntentResult</code>，<code>resolve_effective_source_filter()</code> 决定最终生效的 source 过滤，避免用户输入和意图冲突。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">24</div>
+              <div>
+                <h3>历史改写</h3>
+                <p><code>rewrite_query_if_needed()</code> 使用最近历史把 FOLLOW_UP 短问题改写成独立问题，例如把“那审批呢”改写为围绕上一轮主题的完整问题。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">25</div>
+              <div>
+                <h3>检索计划与查询变体</h3>
+                <p><code>build_retrieval_plan()</code> 决定 FAQ/Doc、top_k、阈值、rerank 和上下文数量；<code>generate_query_variants()</code> 生成多路查询表达提升召回。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num">26</div>
+              <div>
+                <h3>Milvus Hybrid Search 内部</h3>
+                <p>每个 collection 内部执行 Dense + BM25 Sparse 混合检索，再做多变体合并、按文档去重和 rerank，输出统一的 <code>RetrievalResult</code>。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num branch">A</div>
+              <div>
+                <h3>直接收口</h3>
+                <p>问候、越界、转人工和 source 边界提示不查 Milvus，也不调用 LLM，直接通过 <code>_finish_with_single_answer()</code> 返回确定性答案。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num branch">B</div>
+              <div>
+                <h3>FAQ 标准答案收口</h3>
+                <p>FAQ 命中足够可靠时返回 FAQ 标准答案。这条路径仍会写历史和发 finish 事件，但不会走文档检索和 LLM 生成。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num branch">C</div>
+              <div>
+                <h3>信息不足收口</h3>
+                <p>检索后没有足够证据时返回信息不足答案，避免模型在无上下文支撑时编造。这条路径同样会写历史并结束请求。</p>
+              </div>
+            </article>
+            <article class="map-step">
+              <div class="num branch">D</div>
+              <div>
+                <h3>异常收口</h3>
+                <p><code>finish_error()</code> 处理流程中的异常，返回可恢复错误事件，保证调用方能收到明确失败原因，而不是连接无声中断。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="node-functions">
+        <header>
+          <h2>节点函数说明</h2>
+          <p>这张表按大图编号解释每个节点里的函数、字段和分支值。讲课时可以先看大图串主线，再用这张表展开每个代码名在业务闭环中的职责。</p>
+        </header>
+        <div class="section-body">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:86px;">节点</th>
+                <th style="width:180px;">图中名称</th>
+                <th>函数 / 字段</th>
+                <th>作用说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="step-no">1</span></td>
+                <td>用户问题</td>
+                <td><code>query</code> / <code>source_filter</code> / <code>session_id</code> / <code>history</code></td>
+                <td><code>query</code> 是本轮问题；<code>source_filter</code> 限定资料来源；<code>session_id</code> 决定历史读写位置；<code>history</code> 为追问改写和 Prompt 提供上下文。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">2</span></td>
+                <td>QAService</td>
+                <td><code>QAService.stream_query()</code> / <code>validate_source()</code></td>
+                <td><code>stream_query()</code> 是服务层统一入口；<code>validate_source()</code> 校验前端传入的 source 是否属于当前场景，避免无效来源进入 Pipeline。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">3</span></td>
+                <td>Pipeline 入口</td>
+                <td><code>rag.stream_query()</code> / <code>start_event()</code></td>
+                <td><code>rag.stream_query()</code> 执行完整问答主流程；<code>start_event()</code> 告诉调用方请求已经进入 Pipeline，后续会持续输出事件。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">4</span></td>
+                <td>请求上下文</td>
+                <td><code>create_query_context()</code> / <code>RAGQueryContext</code></td>
+                <td><code>create_query_context()</code> 创建请求级状态对象；<code>RAGQueryContext</code> 保存 query、scenario、DataScope、active_kb_version、trace_id、retrieval_info 等运行数据。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">5</span></td>
+                <td>查询路由</td>
+                <td><code>decide_route()</code> / <code>direct_answer</code> / <code>source_boundary</code> / <code>faq_exact</code> / <code>retrieval</code></td>
+                <td><code>decide_route()</code> 判断问题下一步走哪条路；<code>direct_answer</code> 表示问候、越界、转人工等确定性直答；<code>source_boundary</code> 表示用户选择的来源和问题明显不匹配；<code>faq_exact</code> 表示 FAQ 精确命中可直接返回；<code>retrieval</code> 表示没有确定性答案，需要进入完整检索。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">6</span></td>
+                <td>检索准备</td>
+                <td><code>prepare_retrieval()</code></td>
+                <td>把第 05-07 章和第 11 章能力合在一起：读取历史、分类意图、解析 source、按需改写追问、生成检索计划、生成查询变体，并选择 Prompt Profile。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">7</span></td>
+                <td>参数包</td>
+                <td><code>RetrievalPreparation</code> / <code>intent</code> / <code>plan</code> / <code>variants</code> / <code>profile</code></td>
+                <td><code>RetrievalPreparation</code> 是检索和生成共用的数据包；<code>intent</code> 保存意图；<code>plan</code> 保存检索策略；<code>variants</code> 保存多路查询；<code>profile</code> 保存回答模板。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">8</span></td>
+                <td>FAQ 检索</td>
+                <td><code>search_faq()</code> / <code>get_faq_store().search_many()</code></td>
+                <td><code>search_faq()</code> 是 Pipeline 的 FAQ 检索步骤；<code>search_many()</code> 对多个 query variant 查询 FAQ collection，返回 FAQ 命中结果。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">9</span></td>
+                <td>FAQ 高置信</td>
+                <td><code>get_faq_direct_answer()</code> / 阈值 / 精确匹配</td>
+                <td><code>get_faq_direct_answer()</code> 判断 FAQ 命中是否足够可靠。精确匹配或分数超过阈值时直接返回 FAQ 标准答案，不再调用 LLM。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">10</span></td>
+                <td>文档检索</td>
+                <td><code>search_doc()</code> / <code>get_doc_store().search_many()</code></td>
+                <td><code>search_doc()</code> 是 Pipeline 的文档检索步骤；<code>search_many()</code> 查询文档 collection，补齐制度、流程、材料、表格等长文档证据。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">11</span></td>
+                <td>上下文筛选</td>
+                <td><code>select_context_docs()</code> / <code>build_context()</code></td>
+                <td><code>select_context_docs()</code> 从 FAQ 和 Doc hits 中筛选最终证据；<code>build_context()</code> 把证据拼成 Prompt 可读取的上下文文本。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">12</span></td>
+                <td>上下文足够</td>
+                <td><code>context_docs</code> / <code>min_context_score</code></td>
+                <td><code>context_docs</code> 为空或分数过低时，系统返回信息不足；只有证据足够时才进入 LLM，避免无依据生成。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">13</span></td>
+                <td>LLM 生成</td>
+                <td><code>stream_llm_answer()</code> / <code>token_event()</code></td>
+                <td><code>stream_llm_answer()</code> 调用大模型流式生成答案；<code>token_event()</code> 把生成中的 token 持续返回给调用方。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">14</span></td>
+                <td>引用增强</td>
+                <td><code>enforce_answer_citations()</code></td>
+                <td>检查答案是否带有可追溯来源；模型漏写引用时补充来源，引用不可信时回退为更保守的回答。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">15</span></td>
+                <td>写历史</td>
+                <td><code>history.add_turn()</code></td>
+                <td>把本轮用户问题和最终答案写入会话历史，下一轮 FOLLOW_UP 才能基于历史完成改写。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">16</span></td>
+                <td>结束事件</td>
+                <td><code>finish_success()</code></td>
+                <td>输出成功结束事件，携带 answer、sources、intent、retrieval_info、trace、metrics 等诊断信息。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">17</span></td>
+                <td>场景 / 数据域</td>
+                <td><code>scenario</code> / <code>DataScope</code> / <code>tenant</code> / <code>roles</code> / <code>visibility</code></td>
+                <td><code>scenario</code> 决定场景配置和 collection；<code>DataScope</code> 决定租户、数据集、角色、可见性等数据访问范围。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">18</span></td>
+                <td>Active 版本</td>
+                <td><code>resolve_active_kb_version()</code> / MySQL active 指针 / <code>kb_version</code></td>
+                <td><code>resolve_active_kb_version()</code> 从 MySQL 中解析当前场景的线上知识库版本；<code>kb_version</code> 会进入检索过滤，保证只查当前版本。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">19</span></td>
+                <td>检索过滤</td>
+                <td><code>build_source_expr()</code> / <code>source</code> / <code>kb_version</code> / <code>DataScope</code></td>
+                <td><code>build_source_expr()</code> 把来源、版本和数据域条件组合成 Milvus 表达式，确保检索只命中当前用户允许访问的数据。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">20</span></td>
+                <td>Prompt Profile</td>
+                <td><code>build_answer_prompt_profile()</code> / 类别优先 / 意图兜底</td>
+                <td>根据问题类别优先选择模板，类别不明确时再按意图兜底，保证费用、合规、排障、FAQ、知识问答等回答口径不同。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">21</span></td>
+                <td>历史消息</td>
+                <td><code>history.get_context_messages()</code> / <code>FOLLOW_UP</code></td>
+                <td>读取最近会话消息；当意图是 <code>FOLLOW_UP</code> 时，为问题改写提供上一轮主题，也可进入 Prompt 作为对话上下文。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">22</span></td>
+                <td>Prompt 组装</td>
+                <td><code>prepare_answer()</code> / <code>system_prompt</code> / <code>user_prompt</code></td>
+                <td><code>prepare_answer()</code> 把 Prompt Profile、问题、历史和检索上下文组装成 LLM 输入；<code>system_prompt</code> 控制角色和规则，<code>user_prompt</code> 承载问题和证据。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">23</span></td>
+                <td>意图与 source</td>
+                <td><code>classify_intent()</code> / <code>resolve_effective_source_filter()</code> / <code>IntentResult</code></td>
+                <td><code>classify_intent()</code> 判断 FAQ、知识问答、追问等意图；<code>resolve_effective_source_filter()</code> 计算最终生效 source；<code>IntentResult</code> 是后续计划和 Prompt 的输入。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">24</span></td>
+                <td>历史改写</td>
+                <td><code>load_history</code> / <code>rewrite_query_if_needed()</code></td>
+                <td><code>load_history</code> 提供最近对话；<code>rewrite_query_if_needed()</code> 把“那审批呢”这类短追问改成可以独立检索的问题。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">25</span></td>
+                <td>计划与变体</td>
+                <td><code>build_retrieval_plan()</code> / <code>generate_query_variants()</code> / <code>run_faq</code> / <code>run_doc</code></td>
+                <td><code>build_retrieval_plan()</code> 决定是否查 FAQ/Doc、top_k、阈值、rerank 和上下文限制；<code>generate_query_variants()</code> 生成多种表达，提高召回。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">26</span></td>
+                <td>Hybrid Search</td>
+                <td>Dense / BM25 Sparse / <code>merge_hits_by_document()</code> / <code>rerank_hits()</code></td>
+                <td>Dense 捕捉语义相似，BM25 Sparse 捕捉关键词匹配；多变体结果会按文档合并去重，再用 rerank 精排，最终输出 <code>RetrievalResult</code>。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">A</span></td>
+                <td>直接收口</td>
+                <td><code>direct</code> / <code>boundary</code> / <code>_finish_with_single_answer()</code></td>
+                <td>问候、越界、转人工和来源冲突不查 Milvus、不调用 LLM，直接用统一收口函数返回确定性答案并写历史。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">B</span></td>
+                <td>FAQ 标准答案</td>
+                <td><code>FAQ direct</code> / <code>_finish_with_single_answer()</code></td>
+                <td>FAQ 高置信命中后直接返回标准答案，跳过文档检索和 LLM，但仍保持历史写入和 finish 事件一致。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">C</span></td>
+                <td>信息不足</td>
+                <td><code>build_insufficient_context_answer()</code></td>
+                <td>没有足够证据时构造信息不足答案，明确告诉用户当前知识库无法支持回答，避免模型编造。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">D</span></td>
+                <td>异常收口</td>
+                <td><code>finish_error()</code></td>
+                <td>捕获 Pipeline 异常并返回错误事件，调用方能看到失败原因和 trace，而不是只看到连接中断。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section id="code-flow">
+        <header>
+          <h2>代码执行主线</h2>
+          <p>这张图只保留主调用关系，适合快速解释一次请求在代码中如何从服务层进入 Pipeline，再回到事件流和历史写入。</p>
+        </header>
+        <div class="section-body">
+          <div class="diagram-panel diagram-medium">
+            <div class="mermaid">
+sequenceDiagram
+  autonumber
+  participant U as 用户请求
+  participant S as QAService.stream_query
+  participant R as rag.stream_query
+  participant C as RAGQueryContext
+  participant P as prepare_retrieval
+  participant F as FAQ 检索
+  participant D as Doc 检索
+  participant A as prepare_answer
+  participant L as LLM
+  participant H as ChatHistoryStore
+
+  U->>S: query / source_filter / session_id
+  S->>R: yield from rag_stream_query(...)
+  R->>C: create_query_context()
+  R-->>U: start_event
+  R->>C: decide_route()
+  alt direct_answer / source_boundary / faq_exact
+    R-->>U: token_event(answer)
+    R->>H: add_turn()
+    R-->>U: finish_success()
+  else retrieval
+    R->>P: prepare_retrieval()
+    P->>H: get_context_messages()
+    P->>P: classify_intent()
+    P->>P: rewrite_query_if_needed()
+    P->>P: build_retrieval_plan()
+    P->>P: generate_query_variants()
+    P->>P: build_answer_prompt_profile()
+    P-->>R: RetrievalPreparation
+    R->>F: search_faq()
+    F-->>R: RetrievalResult(faq)
+    alt FAQ 高置信直出
+      R-->>U: token_event(标准答案)
+      R->>H: add_turn()
+      R-->>U: finish_success()
+    else 继续文档检索
+      R->>D: search_doc()
+      D-->>R: RetrievalResult(doc)
+      R->>A: prepare_answer()
+      A-->>R: system_prompt / user_prompt / sources
+      alt 上下文不足
+        R-->>U: token_event(信息不足)
+        R->>H: add_turn()
+        R-->>U: finish_success()
+      else 上下文足够
+        R->>L: stream_llm_answer()
+        loop token
+          L-->>R: chunk.content
+          R-->>U: token_event(token)
+        end
+        R->>R: enforce_answer_citations()
+        R->>H: add_turn()
+        R-->>U: finish_success()
+      end
+    end
+  end
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="chapter-closures">
+        <header>
+          <h2>每章交付闭环</h2>
+          <p>每章都交付一个能被下一章消费的明确产物，05-11 章组合后形成一次完整问答请求的闭环。</p>
+        </header>
+        <div class="section-body">
+          <div class="grid">
+            <article class="card chapter-card ch05">
+              <h3>05 意图分类与路由入口</h3>
+              <p><strong>闭环目标：</strong>把用户问题变成可解释的路由结果和检索意图。</p>
+              <ul>
+                <li><code>decide_route()</code> 处理 direct_answer、source_boundary、faq_exact、retrieval。</li>
+                <li><code>classify_intent()</code> 输出 <code>IntentResult</code>，标记是否需要追问改写。</li>
+                <li><code>resolve_effective_source_filter()</code> 处理前端 source 与意图推断 source。</li>
+                <li>交付给第 06 章：<code>IntentResult</code> 与有效 source。</li>
+              </ul>
+            </article>
+            <article class="card chapter-card ch06">
+              <h3>06 检索策略与动态计划</h3>
+              <p><strong>闭环目标：</strong>把“需要检索”变成“按什么策略检索”。</p>
+              <ul>
+                <li><code>infer_question_category()</code> 识别费用、合规、排障、总结等问题类别。</li>
+                <li><code>is_table_query()</code> 判断是否偏向表格资料。</li>
+                <li><code>build_retrieval_plan()</code> 输出 <code>RetrievalPlan</code>。</li>
+                <li>交付给第 07/08/10 章：run_faq、run_doc、top_k、阈值、rerank、variants 开关。</li>
+              </ul>
+            </article>
+            <article class="card chapter-card ch07">
+              <h3>07 查询改写与变体生成</h3>
+              <p><strong>闭环目标：</strong>把追问补全成独立检索问题，并生成多路查询表达。</p>
+              <ul>
+                <li><code>history.get_context_messages()</code> 读取压缩历史和最近消息。</li>
+                <li><code>rewrite_query_if_needed()</code> 对 FOLLOW_UP 调用 LLM 改写。</li>
+                <li><code>generate_query_variants()</code> 结合结构化 LLM 输出和配置化规则生成变体。</li>
+                <li>交付给第 08 章：<code>rewritten_query</code> 与 <code>query_variants</code>。</li>
+              </ul>
+            </article>
+            <article class="card chapter-card ch08">
+              <h3>08 Milvus 混合检索</h3>
+              <p><strong>闭环目标：</strong>按照计划执行真实 Milvus FAQ 与文档检索。</p>
+              <ul>
+                <li><code>get_faq_store()</code> / <code>get_doc_store()</code> 取得真实 collection store。</li>
+                <li><code>build_source_expr()</code> 拼接 source、kb_version、DataScope 过滤条件。</li>
+                <li><code>search_many()</code> 对每个 query variant 执行 Dense + BM25 Sparse Hybrid Search。</li>
+                <li>交付给第 10 章：FAQ / Doc <code>RetrievalResult</code>。</li>
+              </ul>
+            </article>
+            <article class="card chapter-card ch09">
+              <h3>09 QAService 核心编排</h3>
+              <p><strong>闭环目标：</strong>提供稳定服务门面，让 API 或脚本只调用服务方法。</p>
+              <ul>
+                <li><code>get_qa_service()</code> 集中创建服务实例。</li>
+                <li><code>QAService.stream_query()</code> 委托 <code>rag.stream_query()</code> 产出事件流。</li>
+                <li><code>QAService.debug_retrieval()</code> 复用检索半链路用于诊断。</li>
+                <li>交付给第 10/12 章：稳定的问答服务入口。</li>
+              </ul>
+            </article>
+            <article class="card chapter-card ch10">
+              <h3>10 RAG Pipeline 主流程</h3>
+              <p><strong>闭环目标：</strong>把 05-09 章能力串成在线问答的 Stage 0-7。</p>
+              <ul>
+                <li><code>stream_query()</code> 串联 route、prepare、FAQ、doc、answer、save、end。</li>
+                <li><code>search_faq()</code> 与 <code>get_faq_direct_answer()</code> 实现 FAQ 高置信直出。</li>
+                <li><code>prepare_answer()</code> 构建上下文、来源和 Prompt 输入。</li>
+                <li>交付结果：token 事件、finish_success、历史写入和 trace 信息。</li>
+              </ul>
+            </article>
+            <article class="card chapter-card ch11">
+              <h3>11 Prompt 工程与 Profile 系统</h3>
+              <p><strong>闭环目标：</strong>根据意图、问题类别和场景选择稳定回答口径。</p>
+              <ul>
+                <li><code>PromptProfile</code> 保存 system_template、user_template、reason。</li>
+                <li><code>build_answer_prompt_profile()</code> 按问题类别优先，再按意图兜底。</li>
+                <li><code>_scenario_prompt_context()</code> 注入 assistant_name、business_domain、support_contact。</li>
+                <li>交付给第 10 章：可直接填充上下文和问题的 PromptProfile。</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="execution-steps">
+        <header>
+          <h2>逐步执行表</h2>
+          <p>这张表按一次完整请求的真实顺序排列，可以直接用来对照代码阅读。</p>
+        </header>
+        <div class="section-body">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:70px;">步骤</th>
+                <th style="width:90px;">章节</th>
+                <th>代码落点</th>
+                <th>输入</th>
+                <th>输出</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="step-no">1</span></td>
+                <td>09</td>
+                <td><code>qa_core/application/factory.py:get_qa_service()</code></td>
+                <td>应用或脚本请求</td>
+                <td><code>QAService</code></td>
+                <td>统一创建服务门面，调用方不直接依赖 Pipeline 内部实现。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">2</span></td>
+                <td>09</td>
+                <td><code>QAService.stream_query()</code></td>
+                <td>query、source_filter、session_id</td>
+                <td>事件生成器</td>
+                <td>通过 <code>yield from rag_stream_query(...)</code> 把主流程事件透传给上层。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">3</span></td>
+                <td>10</td>
+                <td><code>qa_core/pipeline/runtime.py:create_query_context()</code></td>
+                <td>history、validate_source、query、场景、数据域、版本</td>
+                <td><code>RAGQueryContext</code></td>
+                <td>创建请求级状态，后续 stage、trace、source、kb_version 都从这里读取。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">4</span></td>
+                <td>10</td>
+                <td><code>start_event()</code></td>
+                <td><code>RAGQueryContext</code></td>
+                <td>start 事件</td>
+                <td>前端或脚本收到“请求已进入 Pipeline”的第一个事件。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">5</span></td>
+                <td>05/10</td>
+                <td><code>qa_core/pipeline/steps.py:decide_route()</code></td>
+                <td>query、history、scenario、source_filter</td>
+                <td><code>RouteDecision</code></td>
+                <td>先走低成本确定性判断，能直答或边界拦截时不进入完整检索。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">6</span></td>
+                <td>05</td>
+                <td><code>classify_direct_intent()</code> / <code>detect_source_boundary()</code></td>
+                <td>用户问题和场景配置</td>
+                <td>direct_answer 或 boundary answer</td>
+                <td>问候、越界、转人工、source 不匹配等问题在这里提前收口。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">7</span></td>
+                <td>10</td>
+                <td><code>_finish_with_single_answer()</code></td>
+                <td>确定性答案</td>
+                <td>token、历史写入、finish_success</td>
+                <td>直接答案、FAQ 直出、信息不足都会复用同一个收口函数。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">8</span></td>
+                <td>10</td>
+                <td><code>prepare_retrieval()</code></td>
+                <td>route=retrieval 的请求上下文</td>
+                <td><code>RetrievalPreparation</code></td>
+                <td>这是 05-07、11 章能力的集中编排点。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">9</span></td>
+                <td>09/07</td>
+                <td><code>history.get_context_messages()</code></td>
+                <td>session_id</td>
+                <td>历史消息</td>
+                <td>为追问改写、Prompt 填充和下一轮对话提供上下文。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">10</span></td>
+                <td>05</td>
+                <td><code>classify_intent()</code></td>
+                <td>query、history_messages、scenario</td>
+                <td><code>IntentResult</code></td>
+                <td>标记 FOLLOW_UP、FAQ_QUERY、KNOWLEDGE_QUERY，并给出 requires_rewrite。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">11</span></td>
+                <td>05</td>
+                <td><code>resolve_effective_source_filter()</code></td>
+                <td>前端 source、intent.suggested_source、scenario</td>
+                <td>effective_source_filter</td>
+                <td>过滤优先级是前端显式选择高于意图推断。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">12</span></td>
+                <td>07</td>
+                <td><code>rewrite_query_if_needed()</code></td>
+                <td>query、history_messages、requires_rewrite</td>
+                <td><code>rewritten_query</code></td>
+                <td>例如“那审批呢”会结合“报销流程是什么”改写成可独立检索的问题。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">13</span></td>
+                <td>06</td>
+                <td><code>build_retrieval_plan()</code></td>
+                <td>rewritten_query、IntentResult</td>
+                <td><code>RetrievalPlan</code></td>
+                <td>确定是否查 FAQ、是否查 Doc、top_k、阈值、rerank 和上下文限制。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">14</span></td>
+                <td>07</td>
+                <td><code>generate_query_variants()</code></td>
+                <td>rewritten_query、plan.use_query_variants</td>
+                <td><code>query_variants</code></td>
+                <td>多路表达用于提升 FAQ 和文档检索的召回覆盖面。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">15</span></td>
+                <td>11</td>
+                <td><code>build_answer_prompt_profile()</code></td>
+                <td>intent、scenario、rewritten_query</td>
+                <td><code>PromptProfile</code></td>
+                <td>问题类别模板优先，意图模板兜底，场景变量在这里注入。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">16</span></td>
+                <td>10</td>
+                <td><code>RetrievalPreparation</code></td>
+                <td>历史、意图、source、改写、计划、变体、profile</td>
+                <td>检索参数包</td>
+                <td>下游检索和回答准备只消费这个对象，不重复做判断。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">17</span></td>
+                <td>08/10</td>
+                <td><code>search_faq()</code> -> <code>get_faq_store().search_many()</code></td>
+                <td>query_variants、faq_top_k、filter、kb_version、DataScope</td>
+                <td>FAQ <code>RetrievalResult</code></td>
+                <td>先查 FAQ，是为了发现可直接返回的标准答案，也可作为后续上下文补充。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">18</span></td>
+                <td>10</td>
+                <td><code>get_faq_direct_answer()</code></td>
+                <td>FAQ top document、top_score、faq_direct_threshold</td>
+                <td>标准答案或 None</td>
+                <td>高置信 FAQ 直接返回，不调用 LLM，降低延迟和幻觉。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">19</span></td>
+                <td>08/10</td>
+                <td><code>search_doc()</code> -> <code>get_doc_store().search_many()</code></td>
+                <td>query_variants、doc_top_k、filter、kb_version、DataScope</td>
+                <td>Doc <code>RetrievalResult</code></td>
+                <td>FAQ 未直出时继续查文档 collection，补齐制度、流程、材料、表格等证据。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">20</span></td>
+                <td>08</td>
+                <td><code>MilvusHybridStore.search_many()</code></td>
+                <td>多个查询变体</td>
+                <td>合并重排后的 hits</td>
+                <td>每个 collection 内执行 Dense + BM25 Sparse Hybrid Search，再按文档去重和 rerank。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">21</span></td>
+                <td>10</td>
+                <td><code>prepare_answer()</code></td>
+                <td>prepared、faq_result、doc_result</td>
+                <td><code>AnswerPreparation</code></td>
+                <td>把候选结果整理成上下文、来源、hit_type、system_prompt、user_prompt。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">22</span></td>
+                <td>10</td>
+                <td><code>select_context_docs()</code> / <code>build_context()</code></td>
+                <td>FAQ hits、Doc hits、RetrievalPlan</td>
+                <td>Prompt 上下文文本</td>
+                <td>按分数阈值、条数、字符数、表格偏好筛选最终证据。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">23</span></td>
+                <td>11</td>
+                <td><code>PromptProfile.user_template.format(...)</code></td>
+                <td>history、question、context</td>
+                <td>最终 user_prompt</td>
+                <td>第 11 章的模板选择在这里真正进入 LLM 调用。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">24</span></td>
+                <td>10</td>
+                <td><code>build_insufficient_context_answer()</code></td>
+                <td>上下文为空或低于阈值</td>
+                <td>确定性信息不足答案</td>
+                <td>没有可用证据时不让 LLM 编答案。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">25</span></td>
+                <td>10</td>
+                <td><code>stream_llm_answer()</code></td>
+                <td>system_prompt、user_prompt</td>
+                <td>token 事件流</td>
+                <td>上下文足够时调用 LLM 流式生成，并逐 token 推送。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">26</span></td>
+                <td>10</td>
+                <td><code>enforce_answer_citations()</code></td>
+                <td>raw_answer、context_docs</td>
+                <td>带引用增强的答案</td>
+                <td>模型漏写来源时补充参考来源；若来源验证失败则回退信息不足。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">27</span></td>
+                <td>09/10</td>
+                <td><code>history.add_turn()</code></td>
+                <td>session_id、query、answer</td>
+                <td>历史写入</td>
+                <td>本轮问答写回历史，下一轮 FOLLOW_UP 可以读取。</td>
+              </tr>
+              <tr>
+                <td><span class="step-no">28</span></td>
+                <td>10</td>
+                <td><code>finish_success()</code></td>
+                <td>context、answer</td>
+                <td>end 事件</td>
+                <td>返回 sources、intent、retrieval_info、耗时、trace 等完整诊断信息。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="objects">
+        <header>
+          <h2>关键对象流</h2>
+          <p>对象流能帮助快速看清每章产物如何被下一章接住。</p>
+        </header>
+        <div class="section-body split">
+          <div class="diagram-panel diagram-medium">
+            <div class="mermaid">
+flowchart TD
+  A["用户输入<br/>query / source_filter / session_id"] --> B["RAGQueryContext<br/>请求级运行状态"]
+  B --> C["RouteDecision<br/>route / reason / answer"]
+  C --> D["IntentResult<br/>intent / confidence / requires_rewrite / suggested_source"]
+  D --> E["RetrievalPlan<br/>run_faq / run_doc / top_k / threshold / rerank"]
+  D --> F["rewritten_query<br/>追问改写后的独立问题"]
+  E --> G["query_variants<br/>多路查询表达"]
+  F --> G
+  D --> H["PromptProfile<br/>system_template / user_template / reason"]
+  G --> I["RetrievalPreparation<br/>检索与生成参数包"]
+  E --> I
+  H --> I
+  I --> J["FAQ RetrievalResult<br/>FAQ collection hits"]
+  I --> K["Doc RetrievalResult<br/>Doc collection hits"]
+  J --> L["AnswerPreparation<br/>context_docs / sources / prompts"]
+  K --> L
+  H --> L
+  L --> M["answer<br/>token stream / citations"]
+  M --> N["finish_success<br/>sources / retrieval_info / trace"]
+  M --> O["ChatHistoryStore.add_turn()<br/>写入历史"]
+  O --> D
+
+  style B fill:#ecfeff,stroke:#0891b2,stroke-width:2px
+  style C fill:#fff7ed,stroke:#d97706,stroke-width:2px
+  style D fill:#fff7ed,stroke:#d97706,stroke-width:2px
+  style E fill:#eff6ff,stroke:#2563eb,stroke-width:2px
+  style F fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+  style G fill:#fef2f2,stroke:#dc2626,stroke-width:2px
+  style H fill:#f8fafc,stroke:#334155,stroke-width:2px
+  style I fill:#dcfce7,stroke:#16a34a,stroke-width:3px
+  style J fill:#ecfdf5,stroke:#059669,stroke-width:2px
+  style K fill:#ecfdf5,stroke:#059669,stroke-width:2px
+  style L fill:#ecfeff,stroke:#0891b2,stroke-width:2px
+  style M fill:#dcfce7,stroke:#16a34a,stroke-width:3px
+            </div>
+          </div>
+          <div class="card">
+            <h3>对象解释</h3>
+            <p><code>RouteDecision</code> 是第 05 章低成本路由结果：如果已有答案，直接进入收口。</p>
+            <p><code>IntentResult</code> 是第 05-06 章之间的桥：它告诉策略层问题类型和是否需要改写。</p>
+            <p><code>RetrievalPlan</code> 是第 06 章核心产物：它只描述检索策略，不执行检索。</p>
+            <p><code>RetrievalPreparation</code> 是第 10 章的参数包：把第 05-07、11 章产物合并给第 08/10 章消费。</p>
+            <p><code>RetrievalResult</code> 是第 08 章检索结果对象：FAQ 和 Doc 两路各有一份。</p>
+            <p><code>AnswerPreparation</code> 是进入 LLM 前的最后对象：包含上下文、来源和最终 Prompt。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="branches">
+        <header>
+          <h2>关键分支边界</h2>
+          <p>这些分支是 05-11 章最容易讲混的位置，建议明确区分。</p>
+        </header>
+        <div class="section-body">
+          <div class="cards-3">
+            <article class="card">
+              <h3>direct_answer 分支</h3>
+              <p>第 05 章 <code>decide_route()</code> 可直接返回问候、感谢、越界、转人工等确定性答案。</p>
+              <p>这类请求不会进入第 06-08 章检索，也不会调用 LLM 生成。</p>
+            </article>
+            <article class="card">
+              <h3>source_boundary 分支</h3>
+              <p>当用户选择的 source 与问题明显不匹配时，系统先返回边界提示。</p>
+              <p>这样避免带着错误过滤条件继续查 Milvus。</p>
+            </article>
+            <article class="card">
+              <h3>retrieval 分支</h3>
+              <p>只有 route=retrieval 才进入 <code>prepare_retrieval()</code>。</p>
+              <p>此后才会执行意图识别、检索计划、追问改写、查询变体和 Prompt Profile 选择。</p>
+            </article>
+            <article class="card">
+              <h3>FOLLOW_UP 改写分支</h3>
+              <p>“那审批呢”这种问题依赖上一轮历史，必须先改写成独立问题再检索。</p>
+              <p>第 07 章的输出会同时影响 FAQ 和 Doc 两路检索。</p>
+            </article>
+            <article class="card">
+              <h3>FAQ 高置信直出</h3>
+              <p>第 08 章只负责返回 FAQ <code>RetrievalResult</code>；第 10 章用 <code>get_faq_direct_answer()</code> 判断是否直出。</p>
+              <p>如果直出，直接返回标准答案，不调用 LLM。</p>
+            </article>
+            <article class="card">
+              <h3>FAQ 与 Doc 两路检索</h3>
+              <p><code>run_faq</code> 和 <code>run_doc</code> 由第 06 章 <code>RetrievalPlan</code> 决定。</p>
+              <p>FAQ/Doc 是两个 collection；Hybrid Search 指单个 collection 内 Dense + BM25 Sparse。</p>
+            </article>
+            <article class="card">
+              <h3>信息不足分支</h3>
+              <p>文档召回后，若没有候选通过阈值或上下文为空，第 10 章返回确定性信息不足。</p>
+              <p>这个分支不调用 LLM，避免没有证据时生成幻觉答案。</p>
+            </article>
+            <article class="card">
+              <h3>Prompt Profile 优先级</h3>
+              <p>第 11 章先按问题类别选择风险模板，再按意图选择 FAQ/知识/追问模板，最后才用默认模板。</p>
+              <p>模板选择发生在 <code>prepare_retrieval()</code>，模板填充发生在 <code>prepare_answer()</code>。</p>
+            </article>
+            <article class="card">
+              <h3>历史闭环</h3>
+              <p>不管是直答、FAQ 直出、信息不足还是 LLM 生成，只要成功收口都会写入历史。</p>
+              <p>下一轮请求再读取历史，形成完整多轮问答闭环。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="talk-track">
+        <header>
+          <h2>讲解顺序建议</h2>
+          <p>按这条线讲，可以把 05-11 章从“分散功能点”收束成“一个问题如何被可靠回答”。</p>
+        </header>
+        <div class="section-body">
+          <ol class="path-list">
+            <li>
+              <strong>先从服务入口讲起</strong>
+              <p>用第 09 章说明外部只需要调用 <code>QAService.stream_query()</code>，内部细节由 Pipeline 接管。</p>
+            </li>
+            <li>
+              <strong>再进入 Pipeline 上下文</strong>
+              <p>第 10 章先创建 <code>RAGQueryContext</code>，把场景、数据域、版本、trace、session 都放到一个请求对象里。</p>
+            </li>
+            <li>
+              <strong>第 05 章先判断，不急着检索</strong>
+              <p>先处理 direct_answer、source_boundary、FAQ 快路径和 retrieval 路由，避免所有问题都一股脑查库。</p>
+            </li>
+            <li>
+              <strong>第 06 章把意图变成计划</strong>
+              <p><code>RetrievalPlan</code> 决定 FAQ/Doc 是否执行、查多少、阈值多高、是否重排、是否启用变体。</p>
+            </li>
+            <li>
+              <strong>第 07 章处理追问和多表达</strong>
+              <p>依赖历史的短追问先被改写，再生成 query variants，为真实检索提升召回覆盖面。</p>
+            </li>
+            <li>
+              <strong>第 11 章提前选好回答口径</strong>
+              <p>Prompt Profile 随 <code>RetrievalPreparation</code> 一起向后传递，生成前不再临时让模型自己决定回答风格。</p>
+            </li>
+            <li>
+              <strong>第 08 章执行真实 Milvus 检索</strong>
+              <p>FAQ 和 Doc 分别查询自己的 collection；每个 collection 内部执行 Dense + BM25 Sparse Hybrid Search。</p>
+            </li>
+            <li>
+              <strong>第 10 章收口成最终答案</strong>
+              <p>FAQ 高置信直出时不调用 LLM；否则构建上下文、填充 Prompt、流式生成、补强引用、写历史、发结束事件。</p>
+            </li>
+          </ol>
+          <div class="callout" style="margin-top:16px;">
+            <strong>闭环边界：</strong>
+            05-11 章讲完后，闭环不是停在检索结果，而是一次请求能经过服务入口、路由、计划、改写、真实检索、上下文、Prompt、生成、引用和历史写入，最终返回可追溯的答案。
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: "loose",
+      theme: "base",
+      flowchart: {
+        htmlLabels: true,
+        curve: "basis",
+        nodeSpacing: 50,
+        rankSpacing: 60,
+        padding: 14
+      },
+      sequence: {
+        useMaxWidth: false,
+        mirrorActors: false
+      },
+      themeVariables: {
+        fontFamily: "Microsoft YaHei, Segoe UI, sans-serif",
+        fontSize: "14px",
+        primaryTextColor: "#111827",
+        lineColor: "#64748b",
+        edgeLabelBackground: "#ffffff"
+      }
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KnowForge RAG Platform - 业务流程动画</title>
+<script src="../assets/vendor/mermaid.min.js"></script>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#090f1d;
+  --panel:#101827;
+  --panel-2:#131d30;
+  --line:#26364f;
+  --text:#eef5ff;
+  --muted:#a6b4c8;
+  --cyan:#38bdf8;
+  --emerald:#34d399;
+  --amber:#fbbf24;
+  --rose:#fb7185;
+  --violet:#a78bfa;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+  font-size:16px;
+  overflow:hidden;
+}
+button{font:inherit}
+.topbar{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:0 24px;
+  border-bottom:1px solid var(--line);
+  background:#0c1424;
+}
+.brand{min-width:320px}
+h1{
+  margin:0;
+  font-size:24px;
+  line-height:1.2;
+  color:#dff5ff;
+}
+.subtitle{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:15px;
+}
+.tabs{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex:1;
+}
+.tabs button,.tool-btn{
+  min-height:40px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#111b2e;
+  color:#d8e6f7;
+  cursor:pointer;
+  padding:0 14px;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease;
+}
+.tabs button:hover,.tool-btn:hover{border-color:#4b6b96;background:#17243b}
+.tabs button.active{
+  color:#07111f;
+  background:var(--cyan);
+  border-color:var(--cyan);
+  font-weight:700;
+}
+.tools{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:360px;
+  justify-content:flex-end;
+}
+.tool-btn{
+  width:42px;
+  padding:0;
+  display:inline-grid;
+  place-items:center;
+  font-weight:700;
+}
+.tool-btn.wide{width:auto;padding:0 14px}
+.tool-btn.primary{
+  background:#164e63;
+  border-color:#22d3ee;
+  color:#ecfeff;
+}
+.zoom-label{
+  min-width:54px;
+  text-align:center;
+  color:#b8c7dc;
+  font-size:15px;
+}
+.workspace{
+  height:calc(100vh - 72px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:16px;
+  padding:16px;
+}
+.stage{
+  min-width:0;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.stage-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:14px 18px;
+  border-bottom:1px solid var(--line);
+  background:#0f1829;
+}
+.stage-title{font-size:18px;font-weight:800;color:#f3f8ff}
+.stage-desc{font-size:14px;color:var(--muted);margin-top:4px}
+.progress-wrap{
+  width:240px;
+  display:grid;
+  gap:7px;
+}
+.progress-meta{
+  display:flex;
+  justify-content:space-between;
+  color:#b6c5d8;
+  font-size:14px;
+}
+.progress{
+  height:8px;
+  border-radius:999px;
+  background:#17243a;
+  overflow:hidden;
+}
+.progress > span{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--cyan),var(--emerald));
+  transition:width .25s ease;
+}
+.viewport{
+  position:relative;
+  flex:1;
+  overflow:hidden;
+  cursor:grab;
+  background:
+    linear-gradient(#162136 1px,transparent 1px),
+    linear-gradient(90deg,#162136 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.viewport.dragging{cursor:grabbing}
+.canvas{
+  position:absolute;
+  left:0;
+  top:0;
+  transform-origin:0 0;
+  transition:transform .22s ease;
+}
+.canvas.no-animate{transition:none}
+.canvas svg{
+  max-width:none!important;
+  overflow:visible;
+  font-size:16px!important;
+}
+.canvas svg .nodeLabel,.canvas svg .edgeLabel,.canvas svg foreignObject{
+  font-size:16px!important;
+  line-height:1.45!important;
+}
+.canvas svg .cluster-label text{font-size:18px!important;font-weight:800!important}
+.loading,.empty-state{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:#c8d8eb;
+  font-size:18px;
+  background:rgba(9,15,29,.78);
+}
+.loading[hidden],.empty-state[hidden]{display:none}
+.side{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.panel{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--panel);
+  overflow:hidden;
+}
+.panel h2{
+  margin:0;
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  font-size:18px;
+}
+.step-card{
+  padding:16px;
+  min-height:146px;
+  background:#101a2c;
+}
+.step-index{
+  color:var(--cyan);
+  font-size:15px;
+  font-weight:800;
+}
+.step-title{
+  margin-top:8px;
+  font-size:20px;
+  line-height:1.35;
+  font-weight:800;
+}
+.step-body{
+  margin-top:10px;
+  color:#c1cede;
+  line-height:1.65;
+  font-size:16px;
+}
+.legend{
+  display:grid;
+  gap:10px;
+  padding:14px 16px 16px;
+}
+.legend-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#d4e2f2;
+  font-size:15px;
+}
+.swatch{
+  width:14px;
+  height:14px;
+  border-radius:4px;
+  border:1px solid rgba(255,255,255,.32);
+}
+.hint{
+  padding:12px 16px;
+  border-top:1px solid var(--line);
+  color:#9fb0c7;
+  font-size:14px;
+  line-height:1.6;
+}
+@media (max-width:1360px){
+  body{overflow:auto}
+  .topbar{height:auto;align-items:flex-start;flex-direction:column;padding:16px}
+  .brand,.tools{min-width:0;width:100%}
+  .tabs{width:100%;justify-content:flex-start;overflow:auto}
+  .tools{justify-content:flex-start;flex-wrap:wrap}
+}
+@media (max-width:1200px){
+  .workspace{height:auto;grid-template-columns:1fr}
+  .viewport{height:680px;flex:auto}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>KnowForge RAG Platform 业务流程动画</h1>
+    <div class="subtitle">在线问答、离线入库、系统全景、章节实现四种视角，支持播放、单步、缩放与拖拽查看</div>
+  </div>
+  <nav class="tabs" aria-label="流程视角">
+    <button class="active" data-view="online">在线问答流程</button>
+    <button data-view="offline">离线入库流程</button>
+    <button data-view="overview">系统全景图</button>
+    <button data-view="chapter-route">章节实现路线图</button>
+  </nav>
+  <div class="tools" aria-label="动画控制">
+    <button class="tool-btn primary wide" id="playBtn" title="播放或暂停流程">▶ 播放</button>
+    <button class="tool-btn" id="prevBtn" title="上一步">‹</button>
+    <button class="tool-btn" id="nextBtn" title="下一步">›</button>
+    <button class="tool-btn" id="zoomOutBtn" title="缩小">−</button>
+    <span class="zoom-label" id="zoomLabel">100%</span>
+    <button class="tool-btn" id="zoomInBtn" title="放大">＋</button>
+    <button class="tool-btn wide" id="fitBtn" title="适配窗口">适配</button>
+  </div>
+</header>
+
+<main class="workspace">
+  <section class="stage">
+    <div class="stage-header">
+      <div>
+        <div class="stage-title" id="stageTitle">在线问答流程</div>
+        <div class="stage-desc" id="stageDesc">当前页面以 WebSocket 作为在线问答唯一主路径。</div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta"><span id="progressName">步骤 1</span><span id="progressCount">1/17</span></div>
+        <div class="progress"><span id="progressBar"></span></div>
+      </div>
+    </div>
+    <div class="viewport" id="viewport">
+      <div class="canvas" id="canvas"></div>
+      <div class="loading" id="loading">正在绘制流程图...</div>
+      <div class="empty-state" id="emptyState" hidden>Mermaid 加载失败，请检查网络或刷新页面。</div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <section class="panel">
+      <h2>当前步骤</h2>
+      <div class="step-card">
+        <div class="step-index" id="stepIndex">STEP 1</div>
+        <div class="step-title" id="stepTitle">用户浏览器</div>
+        <div class="step-body" id="stepBody">用户输入问题，并带上业务分类、租户、数据集、可见级别等上下文。</div>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>图例</h2>
+      <div class="legend">
+        <div class="legend-row"><span class="swatch" style="background:#1e3a5f"></span>入口与前端交互</div>
+        <div class="legend-row"><span class="swatch" style="background:#064e3b"></span>成功直出或知识就绪</div>
+        <div class="legend-row"><span class="swatch" style="background:#0f766e"></span>Milvus 与存储系统</div>
+        <div class="legend-row"><span class="swatch" style="background:#3b0764"></span>Embedding 与模型能力</div>
+        <div class="legend-row"><span class="swatch" style="background:#500724"></span>LLM 生成服务</div>
+      </div>
+      <div class="hint">鼠标滚轮可缩放，按住图表区域可拖拽移动。切换视角后会重新适配当前画布。</div>
+    </section>
+  </aside>
+</main>
+
+<script type="text/plain" id="diagram-online">
+flowchart TD
+    USER["👤 用户浏览器<br/>输入问题 + 选择业务分类"]
+    WS["🔌 WS /api/stream<br/>在线问答唯一入口"]
+
+    USER -->|"1. 当前页面直接建立长连接"| WS
+
+    subgraph WSAPI["WebSocket 入口层"]
+        WACCEPT["接受连接<br/>websocket.accept()"]
+        WRATE["消息级限流<br/>check_rate_limit()"]
+        WPARSE["解析 JSON<br/>QueryServiceContext"]
+        WACCEPT --> WRATE --> WPARSE
+    end
+
+    WS --> WSAPI
+
+    subgraph PIPELINE["RAG Pipeline - stream_query() 在线主链路"]
+        S0["🏗️ Stage 0<br/>create_query_context()<br/>场景/数据域/会话/trace_id/KB版本"]
+        S1["🧭 Stage 1<br/>decide_route()<br/>direct_answer / faq_exact / retrieval"]
+        S3["🧠 Stage 2<br/>prepare_retrieval()<br/>历史加载→意图识别→source/计划→变体"]
+        S4["📋 Stage 3<br/>search_faq()<br/>FAQ 混合检索 + 置信度判断"]
+        S5["📄 Stage 4<br/>search_doc() + Reranker<br/>文档混合检索→CrossEncoder精排"]
+        S6["📊 Stage 5<br/>prepare_answer()<br/>上下文筛选→去重→格式化来源"]
+        S7["🤖 Stage 6<br/>stream_llm_answer()<br/>LLM 流式生成→引用增强"]
+        S8["💾 Stage 7<br/>finish_success()<br/>保存历史→Trace→end事件"]
+
+        S0 --> S1
+        S1 -->|"route=retrieval"| S3
+        S1 -->|"route=direct_answer"| DIRECT["🚫 直接返回"]
+        S1 -->|"route=faq_exact"| FAST["⚡ FAQ 直出<br/>intent=FAQ_QUERY"]
+        S3 --> S4
+        S4 -->|"分数 < 阈值"| S5
+        S4 -->|"分数 ≥ 阈值"| FAQOUT["📋 FAQ 直出"]
+        S5 --> S6 --> S7 --> S8
+    end
+
+    WSAPI --> PIPELINE
+
+    subgraph EXTERNAL["外部系统依赖"]
+        MILVUS[("🗄️ Milvus 2.5<br/>Dense + Sparse<br/>混合检索")]
+        EMBED["🧮 BGE-M3<br/>文本→1024维向量"]
+        RERANK["⚖️ BGE Reranker<br/>CrossEncoder 精排"]
+        LLM["🤖 LLM<br/>qwen-plus<br/>DashScope/OpenAI兼容"]
+        MYSQL[("🗃️ MySQL 8.0<br/>历史·摘要·反馈")]
+    end
+
+    S4 -.->|"Dense向量"| EMBED
+    S4 -.->|"Hybrid Search"| MILVUS
+    S5 -.->|"Dense向量"| EMBED
+    S5 -.->|"Hybrid Search"| MILVUS
+    S5 -.->|"精排打分"| RERANK
+    S7 -.->|"流式生成"| LLM
+    S8 -.->|"读写历史"| MYSQL
+    S3 -.->|"意图分类/改写"| LLM
+    S1 -.->|"FAQ 精确试探"| MILVUS
+
+    STREAMOUT["📤 WebSocket 逐 token 推送<br/>打字机效果 + 来源引用"]
+    S7 --> STREAMOUT
+    S8 --> STREAMOUT
+
+    style USER fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px
+    style WS fill:#1e293b,stroke:#818cf8,stroke-width:2px
+    style FAST fill:#064e3b,stroke:#34d399
+    style FAQOUT fill:#064e3b,stroke:#34d399
+    style DIRECT fill:#713f12,stroke:#fbbf24
+    style STREAMOUT fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px
+    style S5 fill:#131c2e,stroke:#f59e0b,stroke-width:2px
+    style S6 fill:#131c2e,stroke:#f59e0b,stroke-width:2px
+    style LLM fill:#500724,stroke:#ec4899
+    style MILVUS fill:#0f766e,stroke:#06b6d4
+    style EMBED fill:#3b0764,stroke:#a78bfa
+    style RERANK fill:#451a03,stroke:#f59e0b
+    style MYSQL fill:#1a2e05,stroke:#84cc16
+</script>
+
+<script type="text/plain" id="diagram-offline">
+flowchart TD
+    START["📁 上传文档<br/>PDF / Word / MD / CSV / Excel"]
+
+    subgraph LOAD["1. 文档加载 - Document Loaders 注册表"]
+        REGISTRY["按后缀匹配 Loader<br/>.pdf→PyPDFLoader<br/>.docx→Docx2txtLoader<br/>.md→TextLoader<br/>.csv/.xlsx→TableLoader"]
+        LOADED["Document 对象<br/>page_content + metadata"]
+        REGISTRY --> LOADED
+    end
+
+    START --> LOAD
+
+    subgraph NORMALIZE["2. 文档标准化"]
+        META["补充元数据<br/>source / file_name / doc_id<br/>scenario_id / kb_version"]
+        DEDUP["去重检测<br/>SHA256 文件指纹"]
+        META --> DEDUP
+    end
+
+    LOAD --> NORMALIZE
+
+    subgraph CHUNK["3. 文档切分 - Parent-Child Chunking"]
+        HEADER["Markdown 按标题切分<br/>保留 h1/h2/h3 层级"]
+        PARENT["父块切分<br/>RecursiveCharacterTextSplitter<br/>chunk_size=2000"]
+        CHILD["子块切分<br/>RecursiveCharacterTextSplitter<br/>chunk_size=500, overlap=50"]
+        HEADER --> PARENT --> CHILD
+    end
+
+    NORMALIZE --> CHUNK
+
+    subgraph EMBEDDING["4. 向量化"]
+        DENSE["BGE-M3 → Dense 向量<br/>1024 维 · L2 归一化"]
+        SPARSE["Milvus BM25 → Sparse 向量<br/>服务端自动生成"]
+    end
+
+    CHILD --> EMBEDDING
+
+    subgraph STORE["5. 写入 Milvus"]
+        SCHEMA["自动创建 Collection<br/>pk / text / dense / sparse<br/>+ source / kb_version"]
+        INDEX["创建向量索引<br/>Dense AUTO/HNSW + Sparse BM25"]
+        INSERT["insert / upsert<br/>+ flush 持久化"]
+        LOADCOL["load_collection()<br/>加载到内存"]
+        SCHEMA --> INDEX --> INSERT --> LOADCOL
+    end
+
+    EMBEDDING --> STORE
+
+    subgraph MANIFEST["6. 索引清单 - MySQL IndexManifest"]
+        RECORD["记录入库文件清单<br/>fingerprint + chunk_ids"]
+        DIFF["版本差异对比<br/>目标版本跳过 / 基准版本复用 / 变化重建"]
+        REUSE["跨版本复用<br/>copy_documents_to_version()<br/>复制旧 chunk + dense 向量"]
+        CLEANUP["变化文件清理旧 chunk<br/>delete by chunk_id"]
+        RECORD --> DIFF
+        DIFF -->|"未变化"| REUSE
+        DIFF -->|"变化"| CLEANUP
+    end
+
+    STORE --> MANIFEST
+    READY["✅ 知识就绪<br/>查询只查新的 active 完整版本"]
+    REUSE --> READY
+    CLEANUP --> READY
+
+    FAQIN["📋 FAQ CSV 入库<br/>并行通道"]
+    FAQIN -->|"CSV → Milvus FAQ Collection<br/>标准问题 + 标准答案"| READY
+
+    style START fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px
+    style READY fill:#064e3b,stroke:#34d399,stroke-width:2px
+    style EMBEDDING fill:#3b0764,stroke:#a78bfa
+    style STORE fill:#0f766e,stroke:#06b6d4
+    style MANIFEST fill:#451a03,stroke:#fbbf24
+    style FAQIN fill:#134e4a,stroke:#2dd4bf
+</script>
+
+<script type="text/plain" id="diagram-overview">
+flowchart TB
+    subgraph STARTUP["🚀 系统启动"]
+        APP["app.py"]
+        PREFLIGHT["Preflight Check<br/>LLM · Milvus · MySQL · 模型 · 场景<br/>任一缺失 → 启动失败"]
+        WARM["检索栈预热<br/>预加载 Embedding + Reranker 模型"]
+        APP --> PREFLIGHT --> WARM
+    end
+
+    subgraph ONLINE["🟢 在线问答（实时）"]
+        direction TB
+        B["浏览器"]
+        API2["FastAPI<br/>HTTP + WebSocket"]
+        QASVC["QAService<br/>编排层"]
+        PIPE["RAG Pipeline<br/>7 阶段管线"]
+        B -->|"提问"| API2 --> QASVC --> PIPE -->|"流式答案"| B
+    end
+
+    subgraph OFFLINE["🔵 离线入库（异步）"]
+        direction TB
+        DOC["文档上传"]
+        INGEST["入库管线<br/>加载→标准化→切分→向量化→存储"]
+        MANIFEST2["MySQL IndexManifest<br/>跨版本增量构建<br/>复用未变化 chunk/dense"]
+        DOC --> INGEST --> MANIFEST2
+    end
+
+    subgraph STORAGE["💾 存储层"]
+        MILVUS2[("Milvus 2.5<br/>Dense 向量<br/>+ Sparse BM25")]
+        MYSQL2[("MySQL 8.0<br/>聊天历史<br/>会话摘要<br/>用户反馈<br/>KB 版本<br/>IndexManifest")]
+        MINIO[("MinIO<br/>向量索引文件<br/>binlog")]
+    end
+
+    subgraph MODELS["🧠 模型层（本地部署）"]
+        BGE3["BGE-M3<br/>Embedding<br/>1024维"]
+        RERANKER["BGE Reranker<br/>CrossEncoder<br/>精排"]
+    end
+
+    subgraph LLM2["🤖 LLM 服务"]
+        DASHSCOPE["DashScope<br/>qwen-plus<br/>OpenAI 兼容接口"]
+    end
+
+    ONLINE -->|"检索"| STORAGE
+    ONLINE -->|"向量化"| MODELS
+    ONLINE -->|"生成"| LLM2
+    OFFLINE -->|"写入"| STORAGE
+    OFFLINE -->|"向量化"| MODELS
+    STARTUP -->|"校验"| STORAGE
+    STARTUP -->|"校验"| MODELS
+    STARTUP -->|"校验"| LLM2
+
+    style ONLINE fill:#064e3b,stroke:#34d399,stroke-width:2px
+    style OFFLINE fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px
+    style STARTUP fill:#451a03,stroke:#f59e0b,stroke-width:2px
+    style STORAGE fill:#0f766e,stroke:#06b6d4,stroke-width:2px
+    style MODELS fill:#3b0764,stroke:#a78bfa,stroke-width:2px
+    style LLM2 fill:#500724,stroke:#ec4899,stroke-width:2px
+</script>
+
+<script type="text/plain" id="diagram-chapter-route">
+flowchart LR
+    START["课程入口<br/>第 01-04 章<br/>环境/RAG/LangChain/Milvus 基础"]
+
+    subgraph ONLINE_COURSE["在线问答主链路：第 05-12 章"]
+        CH05["05 意图分类与路由入口<br/>Stage 1 decide_route()<br/>direct_answer / faq_exact / retrieval"]
+        CH06["06 检索策略与动态计划<br/>Stage 2 检索计划<br/>run_faq / run_doc / top_k / 阈值"]
+        CH07["07 查询改写与变体生成<br/>Stage 2 追问改写 + 查询变体<br/>rewrite_query / query_variants"]
+        CH08["08 Milvus 混合检索<br/>Stage 3-4<br/>FAQ/doc Hybrid Search + Rerank"]
+        CH09["09 QAService 核心编排<br/>服务编排层<br/>把检索能力封装成问答服务"]
+        CH10["10 RAG Pipeline 主流程<br/>Stage 0-7 串联<br/>在线问答闭环"]
+        CH11["11 Prompt 工程与 Profile<br/>Stage 5-6<br/>上下文组织 + 回答口径"]
+        CH12["12 FastAPI 服务入口<br/>WebSocket / HTTP<br/>浏览器可调用"]
+    end
+
+    subgraph ENGINEERING_COURSE["工程化与治理：第 13-19 章"]
+        CH13["13 启动前置校验<br/>Preflight Check<br/>依赖缺失直接失败"]
+        CH14["14 知识库版本管理<br/>Stage 0 KB 版本<br/>查询绑定有效版本"]
+        CH15["15 数据隔离<br/>场景 / 数据域 / source filter<br/>避免跨域回答"]
+        CH16["16 文档入库链路<br/>离线入库流程<br/>加载→切分→向量化→写入 Milvus"]
+        CH17["17 质量评估<br/>问答评测集<br/>衡量召回和回答质量"]
+        CH18["18 测试体系与门禁<br/>自动化测试 / 接口验收<br/>防止链路回退"]
+        CH19["19 可观测性与 Trace<br/>Stage 7 Trace / 日志<br/>定位每一步耗时和错误"]
+    end
+
+    DONE["最终项目闭环<br/>可启动 / 可入库 / 可问答 / 可测试 / 可观测"]
+
+    START --> CH05 --> CH06 --> CH07 --> CH08 --> CH09 --> CH10 --> CH11 --> CH12
+    CH12 --> CH13 --> CH14 --> CH15 --> CH16 --> CH17 --> CH18 --> CH19 --> DONE
+
+    CH05 -.对应.-> ONLINE_STAGE1["动画在线流程 Stage 1<br/>decide_route()"]
+    CH06 -.对应.-> ONLINE_STAGE2A["动画在线流程 Stage 2<br/>检索计划"]
+    CH07 -.对应.-> ONLINE_STAGE2B["动画在线流程 Stage 2<br/>追问改写/查询变体"]
+    CH08 -.对应.-> ONLINE_STAGE34["动画在线流程 Stage 3-4<br/>FAQ/文档检索"]
+    CH10 -.对应.-> ONLINE_STAGE07["动画在线流程 Stage 0-7<br/>主链路串联"]
+    CH16 -.对应.-> OFFLINE_FLOW["动画离线入库流程<br/>文档/FAQ 入库"]
+    CH19 -.对应.-> TRACE_FLOW["动画在线流程 Stage 7<br/>Trace/end 事件"]
+
+    style START fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px
+    style DONE fill:#064e3b,stroke:#34d399,stroke-width:2px
+    style CH05 fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style CH06 fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style CH07 fill:#713f12,stroke:#fbbf24,stroke-width:2px
+    style CH08 fill:#0f766e,stroke:#06b6d4,stroke-width:2px
+    style CH09 fill:#1e293b,stroke:#818cf8,stroke-width:2px
+    style CH10 fill:#1e293b,stroke:#818cf8,stroke-width:2px
+    style CH11 fill:#500724,stroke:#ec4899,stroke-width:2px
+    style CH12 fill:#1e3a5f,stroke:#3b82f6,stroke-width:2px
+    style CH13 fill:#451a03,stroke:#f59e0b
+    style CH14 fill:#0f766e,stroke:#06b6d4
+    style CH15 fill:#0f766e,stroke:#06b6d4
+    style CH16 fill:#1e3a5f,stroke:#3b82f6
+    style CH17 fill:#3b0764,stroke:#a78bfa
+    style CH18 fill:#3b0764,stroke:#a78bfa
+    style CH19 fill:#451a03,stroke:#f59e0b
+    style ONLINE_STAGE1 fill:#1e293b,stroke:#fbbf24
+    style ONLINE_STAGE2A fill:#1e293b,stroke:#fbbf24
+    style ONLINE_STAGE2B fill:#1e293b,stroke:#fbbf24
+    style ONLINE_STAGE34 fill:#0f766e,stroke:#06b6d4
+    style ONLINE_STAGE07 fill:#1e293b,stroke:#818cf8
+    style OFFLINE_FLOW fill:#1e3a5f,stroke:#3b82f6
+    style TRACE_FLOW fill:#451a03,stroke:#f59e0b
+</script>
+
+<script>
+const views = {
+  online: {
+    title: "在线问答流程",
+    desc: "当前页面以 WebSocket 作为在线问答唯一主路径。",
+    source: document.getElementById("diagram-online").textContent.trim(),
+    steps: [
+      ["USER","用户浏览器","用户输入问题，并带上业务分类、租户、数据集、可见级别等上下文。"],
+      ["WS","WebSocket 主通道","当前前端代码直接建立 /api/stream 长连接，并把问题参数作为第一条消息发送。"],
+      ["WSAPI","WebSocket 入口层","后端接受连接，对每条消息做限流、JSON 解析和 QueryServiceContext 构造。"],
+      ["S0","创建运行上下文","汇总场景、数据域、会话、trace_id、知识库版本等运行参数。"],
+      ["S1","查询路由","统一决定 direct_answer / faq_exact / retrieval。FAQ 精确命中是 route=faq_exact，intent 仍是 FAQ_QUERY。"],
+      ["S3","检索准备","route=retrieval 后，加载历史并做检索类意图识别；必要时改写追问，再确定 source 过滤、检索计划、查询变体和 Prompt Profile。"],
+      ["S4","FAQ 混合检索","使用 Dense + Sparse Hybrid Search 检索 FAQ，并根据阈值决定是否直出。"],
+      ["S5","文档检索与精排","文档混合检索后进入 CrossEncoder rerank。"],
+      ["S6","上下文构建","筛选 FAQ 和文档候选，去重、截断并格式化为带来源编号的 Prompt Context。"],
+      ["S7","LLM 流式生成","调用 qwen-plus 流式生成答案，并在生成后增强来源引用。"],
+      ["S8","保存与结束","保存聊天历史，写入 Trace，并发送 end 事件。"],
+      ["STREAMOUT","逐 token 推送","通过 WebSocket 将答案持续推回浏览器，形成打字机效果。"]
+    ]
+  },
+  offline: {
+    title: "离线入库流程",
+    desc: "从文件进入系统到 Milvus 可检索，展示文档处理、向量化、索引清单和 FAQ 并行通道。",
+    source: document.getElementById("diagram-offline").textContent.trim(),
+    steps: [
+      ["START","上传文档","支持 PDF、Word、Markdown、CSV、Excel 等知识资料进入入库流程。"],
+      ["LOAD","文档加载","根据文件后缀选择 Loader，把原始文件转换成 Document 对象。"],
+      ["NORMALIZE","文档标准化","补充 source、doc_id、scenario_id、kb_version 等元数据，并进行文件指纹去重。"],
+      ["CHUNK","父子块切分","先保留标题结构，再生成父块和子块，让检索粒度与上下文粒度分离。"],
+      ["EMBEDDING","向量化","BGE-M3 生成 dense 向量，Milvus BM25 Function 在服务端生成 sparse 向量。"],
+      ["STORE","写入 Milvus","创建 schema 与索引后写入数据，flush 并 load collection。"],
+      ["MANIFEST","索引清单","记录文件和 chunk 的对应关系；跨版本增量时复用未变化 chunk 的 dense 向量，变化文件才重新 embedding。"],
+      ["FAQIN","FAQ 并行入库","FAQ CSV 进入 FAQ Collection，作为在线问答的快速直出来源。"],
+      ["READY","知识就绪","FAQ 与文档索引完成后，在线问答即可检索到新知识。"]
+    ]
+  },
+  overview: {
+    title: "系统全景图",
+    desc: "把启动校验、在线问答、离线入库、存储层、模型层和 LLM 服务放在同一张图中。",
+    source: document.getElementById("diagram-overview").textContent.trim(),
+    steps: [
+      ["STARTUP","系统启动","app.py 启动时执行 Preflight Check，依赖缺失会直接失败。"],
+      ["PREFLIGHT","运行前校验","检查 LLM、Milvus、MySQL、本地模型和场景配置。"],
+      ["WARM","检索栈预热","提前加载 Embedding 与 Reranker，减少首问等待时间。"],
+      ["ONLINE","在线问答","浏览器、FastAPI、QAService、RAG Pipeline 组成实时问答主链路。"],
+      ["OFFLINE","离线入库","文档通过入库管线转换成可检索知识；日常更新在构建阶段做跨版本增量，查询阶段只查新的 active 完整版本。"],
+      ["STORAGE","存储层","Milvus 存向量与 BM25，MySQL 存历史、摘要、反馈和清单，MinIO 承载底层对象。"],
+      ["MODELS","模型层","BGE-M3 负责 Embedding，BGE Reranker 负责 CrossEncoder 精排。"],
+      ["LLM2","LLM 服务","DashScope qwen-plus 以 OpenAI 兼容接口提供生成能力。"]
+    ]
+  },
+  "chapter-route": {
+    title: "章节实现路线图",
+    desc: "从第 05 章开始，把每一章放回业务流程图中，明确当前代码位于整条项目链路的哪里。",
+    source: document.getElementById("diagram-chapter-route").textContent.trim(),
+    steps: [
+      ["START","第 01-04 章：进入项目前的准备","先建立环境、RAG 基础、LangChain 生态和 Milvus 检索基础。第 05 章开始进入项目主链路实现。"],
+      ["CH05","第 05 章：意图分类与路由入口","对应在线流程 Stage 1 decide_route()，并提前实现 Stage 2 的意图识别前半段。本章重点是区分 route（系统下一步）和 intent（用户意图）。"],
+      ["CH06","第 06 章：检索策略与动态计划","对应在线流程 Stage 2 的检索计划。进入 retrieval 后，系统会决定 FAQ/doc 查多少、阈值多高、是否使用查询变体。"],
+      ["CH07","第 07 章：查询改写与变体生成","继续补完 Stage 2：追问改写和查询变体，说明 FOLLOW_UP 为什么需要 requires_rewrite。"],
+      ["CH08","第 08 章：Milvus 混合检索","对应 Stage 3 search_faq() 和 Stage 4 search_doc()+Reranker，第一次真正从 Milvus 召回候选内容。"],
+      ["CH09","第 09 章：QAService 核心编排","把前面零散能力封装成服务类，让入口层不用关心检索细节。"],
+      ["CH10","第 10 章：RAG Pipeline 主流程","把 Stage 0 到 Stage 7 串起来，形成在线问答主链路闭环。"],
+      ["CH11","第 11 章：Prompt 工程与 Profile","对应上下文构建和 LLM 生成阶段，控制回答口径、引用格式和不同场景下的提示词策略。"],
+      ["CH12","第 12 章：FastAPI 服务入口","把项目能力变成浏览器和接口都能调用的 Web 服务，对应 WebSocket/HTTP 入口层。"],
+      ["CH13","第 13 章：启动前置校验","对应系统全景图的 Preflight Check，启动前确认 LLM、Milvus、MySQL、模型和场景配置可用。"],
+      ["CH14","第 14 章：知识库版本管理","对应 Stage 0 中的 KB 版本，让查询绑定当前激活版本，支持后续重建和回滚。"],
+      ["CH15","第 15 章：数据隔离","对应 Stage 0 的场景、数据域和 source filter，避免跨场景、跨分类、跨租户误答。"],
+      ["CH16","第 16 章：文档入库链路","对应离线入库流程，把文档和 FAQ 处理成 Milvus 可检索的数据。"],
+      ["CH17","第 17 章：质量评估","建立评测集，衡量召回、直出和生成结果，避免只靠主观感觉判断效果。"],
+      ["CH18","第 18 章：测试体系与门禁","把单元测试、接口验收和回归检查串起来，防止后续修改破坏前面章节成果。"],
+      ["CH19","第 19 章：可观测性与 Trace","对应 Stage 7 的 Trace、日志和 end 事件，让每次问答能追踪每一步耗时、输入、输出和错误。"],
+      ["DONE","最终项目闭环","第 19 章结束时，项目应具备可启动、可入库、可问答、可测试、可观测的完整闭环。"]
+    ]
+  }
+};
+
+const state = {view:"online",step:0,scale:1,panX:0,panY:0,playing:false,timer:null,cache:{}};
+const el = {
+  canvas:document.getElementById("canvas"),
+  viewport:document.getElementById("viewport"),
+  loading:document.getElementById("loading"),
+  empty:document.getElementById("emptyState"),
+  stageTitle:document.getElementById("stageTitle"),
+  stageDesc:document.getElementById("stageDesc"),
+  progressName:document.getElementById("progressName"),
+  progressCount:document.getElementById("progressCount"),
+  progressBar:document.getElementById("progressBar"),
+  stepIndex:document.getElementById("stepIndex"),
+  stepTitle:document.getElementById("stepTitle"),
+  stepBody:document.getElementById("stepBody"),
+  zoomLabel:document.getElementById("zoomLabel"),
+  playBtn:document.getElementById("playBtn")
+};
+
+function bootMermaid(){
+if(!window.mermaid){
+  el.loading.hidden = true;
+  el.empty.hidden = false;
+  return;
+}
+
+mermaid.initialize({
+  startOnLoad:false,
+  securityLevel:"loose",
+  theme:"base",
+  flowchart:{curve:"basis",htmlLabels:true,nodeSpacing:54,rankSpacing:70,padding:18},
+  themeVariables:{
+    darkMode:true,
+    background:"#101827",
+    mainBkg:"#162238",
+    primaryColor:"#17243a",
+    primaryTextColor:"#edf6ff",
+    primaryBorderColor:"#38bdf8",
+    lineColor:"#7dd3fc",
+    secondaryColor:"#1d2b45",
+    tertiaryColor:"#0f172a",
+    fontFamily:"Microsoft YaHei, Segoe UI, sans-serif",
+    fontSize:"16px",
+    clusterBkg:"#0d1829",
+    clusterBorder:"#334155",
+    edgeLabelBackground:"#111b2e"
+  }
+});
+
+async function renderView(viewId){
+  stopPlayback();
+  state.view = viewId;
+  state.step = 0;
+  const view = views[viewId];
+  el.stageTitle.textContent = view.title;
+  el.stageDesc.textContent = view.desc;
+  document.querySelectorAll(".tabs button").forEach(btn => btn.classList.toggle("active", btn.dataset.view === viewId));
+  el.loading.hidden = false;
+  el.empty.hidden = true;
+  el.canvas.innerHTML = "";
+  try{
+    if(!state.cache[viewId]){
+      const result = await mermaid.render(`business-flow-${viewId}`, view.source);
+      state.cache[viewId] = result.svg;
+    }
+    el.canvas.innerHTML = state.cache[viewId];
+    decorateSvg();
+    requestAnimationFrame(() => {
+      fitToView();
+      activateStep(0, false);
+      el.loading.hidden = true;
+    });
+  }catch(err){
+    console.error(err);
+    el.loading.hidden = true;
+    el.empty.hidden = false;
+  }
+}
+
+function decorateSvg(){
+  const svg = el.canvas.querySelector("svg");
+  if(!svg) return;
+  const vb = svg.viewBox && svg.viewBox.baseVal;
+  if(vb && vb.width && vb.height){
+    svg.setAttribute("width", String(Math.ceil(vb.width)));
+    svg.setAttribute("height", String(Math.ceil(vb.height)));
+  }
+  svg.style.maxWidth = "none";
+  svg.style.overflow = "visible";
+  const style = document.createElementNS("http://www.w3.org/2000/svg","style");
+  style.textContent = `
+    g.node > rect,g.node > polygon,g.node > path,g.node > circle { filter: drop-shadow(0 6px 14px rgba(0,0,0,.28)); }
+    g.node.is-active > rect,g.node.is-active > polygon,g.node.is-active > path,g.node.is-active > circle {
+      stroke:#fbbf24!important;
+      stroke-width:4px!important;
+      filter: drop-shadow(0 0 18px rgba(251,191,36,.62));
+    }
+    g.cluster.is-active > rect {
+      stroke:#fbbf24!important;
+      stroke-width:4px!important;
+      filter: drop-shadow(0 0 18px rgba(251,191,36,.62));
+    }
+    g.cluster.is-active .cluster-label text,
+    g.cluster.is-active .cluster-label span {
+      fill:#fde68a!important;
+      color:#fde68a!important;
+      font-weight:800!important;
+    }
+    g.node.is-dim { opacity:.38; }
+    .edgePath path { stroke-width:2.2px!important; }
+    .edgeLabel { color:#eaf5ff!important; }
+  `;
+  svg.insertBefore(style, svg.firstChild);
+}
+
+function getSvgBox(){
+  const svg = el.canvas.querySelector("svg");
+  if(!svg) return {width:1000,height:700,x:0,y:0};
+  const vb = svg.viewBox && svg.viewBox.baseVal;
+  if(vb && vb.width && vb.height) return {width:vb.width,height:vb.height,x:vb.x,y:vb.y};
+  const box = svg.getBBox();
+  return {width:box.width,height:box.height,x:box.x,y:box.y};
+}
+
+function fitToView(){
+  const box = getSvgBox();
+  const vw = el.viewport.clientWidth;
+  const vh = el.viewport.clientHeight;
+  state.scale = Math.max(.28, Math.min(1.18, Math.min((vw - 64) / box.width, (vh - 64) / box.height)));
+  state.panX = (vw - box.width * state.scale) / 2 - box.x * state.scale;
+  state.panY = Math.max(28, (vh - box.height * state.scale) / 2) - box.y * state.scale;
+  applyTransform();
+}
+
+function applyTransform(animate=true){
+  el.canvas.classList.toggle("no-animate", !animate);
+  el.canvas.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.scale})`;
+  el.zoomLabel.textContent = `${Math.round(state.scale * 100)}%`;
+}
+
+function findNode(nodeId){
+  const svg = el.canvas.querySelector("svg");
+  if(!svg) return null;
+  const escaped = nodeId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const generatedId = new RegExp(`^flowchart-${escaped}-\\d+$`);
+  const nodes = Array.from(svg.querySelectorAll("g.node, g.cluster"));
+  return nodes.find(node => node.id === nodeId || generatedId.test(node.id));
+}
+
+function activateStep(index, center=true){
+  const view = views[state.view];
+  const steps = view.steps;
+  state.step = (index + steps.length) % steps.length;
+  const [nodeId,title,body] = steps[state.step];
+  el.canvas.querySelectorAll("g.node, g.cluster").forEach(node => node.classList.remove("is-active","is-dim"));
+  const node = findNode(nodeId);
+  if(node){
+    node.classList.add("is-active");
+    if(center) focusNode(node);
+  }
+  el.progressName.textContent = `步骤 ${state.step + 1}`;
+  el.progressCount.textContent = `${state.step + 1}/${steps.length}`;
+  el.progressBar.style.width = `${((state.step + 1) / steps.length) * 100}%`;
+  el.stepIndex.textContent = `STEP ${state.step + 1}`;
+  el.stepTitle.textContent = title;
+  el.stepBody.textContent = body;
+}
+
+function focusNode(node){
+  const box = getNodeSvgBox(node);
+  const svgBox = getSvgBox();
+  const viewportW = el.viewport.clientWidth;
+  const viewportH = el.viewport.clientHeight;
+  const padding = 48;
+  const desiredScale = Math.min(
+    1.05,
+    Math.max(
+      .34,
+      Math.min(
+        (viewportW - padding * 2) / Math.max(box.width, 1),
+        (viewportH - padding * 2) / Math.max(box.height, 1)
+      )
+    )
+  );
+  if(box.width * state.scale > viewportW - padding * 2 || box.height * state.scale > viewportH - padding * 2 || state.scale < .42){
+    state.scale = desiredScale;
+  }
+  const cx = box.x + box.width / 2;
+  const cy = box.y + box.height / 2;
+  state.panX = viewportW / 2 - (cx - svgBox.x) * state.scale;
+  state.panY = viewportH / 2 - (cy - svgBox.y) * state.scale;
+  keepNodeVisible(box, svgBox, padding);
+  applyTransform();
+}
+
+function getNodeSvgBox(node){
+  const raw = node.getBBox();
+  const matrix = node.getCTM();
+  if(!matrix) return raw;
+  const points = [
+    {x:raw.x, y:raw.y},
+    {x:raw.x + raw.width, y:raw.y},
+    {x:raw.x, y:raw.y + raw.height},
+    {x:raw.x + raw.width, y:raw.y + raw.height}
+  ].map(point => ({
+    x:matrix.a * point.x + matrix.c * point.y + matrix.e,
+    y:matrix.b * point.x + matrix.d * point.y + matrix.f
+  }));
+  const xs = points.map(point => point.x);
+  const ys = points.map(point => point.y);
+  const x = Math.min(...xs);
+  const y = Math.min(...ys);
+  return {
+    x,
+    y,
+    width:Math.max(...xs) - x,
+    height:Math.max(...ys) - y
+  };
+}
+
+function keepNodeVisible(box, svgBox, padding=48){
+  const viewportW = el.viewport.clientWidth;
+  const viewportH = el.viewport.clientHeight;
+  const left = (box.x - svgBox.x) * state.scale + state.panX;
+  const right = (box.x + box.width - svgBox.x) * state.scale + state.panX;
+  const top = (box.y - svgBox.y) * state.scale + state.panY;
+  const bottom = (box.y + box.height - svgBox.y) * state.scale + state.panY;
+  if(right - left <= viewportW - padding * 2){
+    if(left < padding) state.panX += padding - left;
+    if(right > viewportW - padding) state.panX -= right - (viewportW - padding);
+  }
+  if(bottom - top <= viewportH - padding * 2){
+    if(top < padding) state.panY += padding - top;
+    if(bottom > viewportH - padding) state.panY -= bottom - (viewportH - padding);
+  }
+}
+
+function setScale(nextScale, anchorX=el.viewport.clientWidth/2, anchorY=el.viewport.clientHeight/2){
+  const oldScale = state.scale;
+  const bounded = Math.max(.25, Math.min(2.4, nextScale));
+  const worldX = (anchorX - state.panX) / oldScale;
+  const worldY = (anchorY - state.panY) / oldScale;
+  state.scale = bounded;
+  state.panX = anchorX - worldX * bounded;
+  state.panY = anchorY - worldY * bounded;
+  applyTransform();
+}
+
+function togglePlayback(){
+  state.playing ? stopPlayback() : startPlayback();
+}
+
+function startPlayback(){
+  state.playing = true;
+  el.playBtn.textContent = "Ⅱ 暂停";
+  state.timer = window.setInterval(() => activateStep(state.step + 1), 1300);
+}
+
+function stopPlayback(){
+  state.playing = false;
+  el.playBtn.textContent = "▶ 播放";
+  if(state.timer) window.clearInterval(state.timer);
+  state.timer = null;
+}
+
+document.querySelectorAll(".tabs button").forEach(btn => btn.addEventListener("click", () => renderView(btn.dataset.view)));
+document.getElementById("playBtn").addEventListener("click", togglePlayback);
+document.getElementById("prevBtn").addEventListener("click", () => activateStep(state.step - 1));
+document.getElementById("nextBtn").addEventListener("click", () => activateStep(state.step + 1));
+document.getElementById("zoomInBtn").addEventListener("click", () => setScale(state.scale * 1.15));
+document.getElementById("zoomOutBtn").addEventListener("click", () => setScale(state.scale / 1.15));
+document.getElementById("fitBtn").addEventListener("click", fitToView);
+window.addEventListener("resize", () => fitToView());
+
+let dragging = false;
+let dragStart = {x:0,y:0,panX:0,panY:0};
+el.viewport.addEventListener("pointerdown", event => {
+  dragging = true;
+  dragStart = {x:event.clientX,y:event.clientY,panX:state.panX,panY:state.panY};
+  el.viewport.classList.add("dragging");
+  el.viewport.setPointerCapture(event.pointerId);
+});
+el.viewport.addEventListener("pointermove", event => {
+  if(!dragging) return;
+  state.panX = dragStart.panX + event.clientX - dragStart.x;
+  state.panY = dragStart.panY + event.clientY - dragStart.y;
+  applyTransform(false);
+});
+el.viewport.addEventListener("pointerup", event => {
+  dragging = false;
+  el.viewport.classList.remove("dragging");
+  el.viewport.releasePointerCapture(event.pointerId);
+});
+el.viewport.addEventListener("wheel", event => {
+  event.preventDefault();
+  const rect = el.viewport.getBoundingClientRect();
+  const factor = event.deltaY < 0 ? 1.1 : .9;
+  setScale(state.scale * factor, event.clientX - rect.left, event.clientY - rect.top);
+},{passive:false});
+
+renderView("online");
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", bootMermaid, {once:true});
+}else{
+  bootMermaid();
+}
+</script>
+</body>
+</html>

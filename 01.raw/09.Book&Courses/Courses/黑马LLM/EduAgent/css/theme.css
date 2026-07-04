@@ -1,0 +1,7 @@
+/* 黑马程序员品牌色变量，供 material 主题 primary: custom 使用 */
+:root {
+  --md-primary-fg-color:        #2d3494;
+  --md-primary-fg-color--light: #4a55b8;
+  --md-primary-fg-color--dark:  #1e2470;
+  --md-primary-bg-color:        #ffffff;
+}

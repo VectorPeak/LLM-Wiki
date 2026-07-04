@@ -1,0 +1,2526 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../img/logo.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>5.12 节点①：分类、HyDE、Multi-Query - EduAgent — 教育场景的AI多智能体辅助平台</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/theme.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  
+  <style>
+    /* 顶栏深蓝背景，对齐黑马品牌色 */
+    .md-header {
+      background-color: #2d3494 !important;
+    }
+    /* 右侧公司 logo 容器 */
+    .itheima-header-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-right: 16px;
+    }
+    .itheima-header-logo img {
+      height: 36px;
+      display: block;
+    }
+  </style>
+
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#512-1hydemulti-query" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-header__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EduAgent — 教育场景的AI多智能体辅助平台
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.12 节点①：分类、HyDE、Multi-Query
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EduAgent — 教育场景的AI多智能体辅助平台" class="md-nav__button md-logo" aria-label="EduAgent — 教育场景的AI多智能体辅助平台" data-md-component="logo">
+      
+  <img src="../img/logo.png" alt="logo">
+
+    </a>
+    EduAgent — 教育场景的AI多智能体辅助平台
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          第一章 项目简介
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第一章 项目简介" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          第一章 项目简介
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/01-%E9%A1%B9%E7%9B%AE%E5%85%A8%E6%99%AF%E4%BB%8B%E7%BB%8D.html" class="md-nav__link">
+        1.1 项目全景介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B/02-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5.html" class="md-nav__link">
+        1.2 多 Agent 系统核心概念
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          第二章 工具介绍
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第二章 工具介绍" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          第二章 工具介绍
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/01-Python%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.1 Python 异步编程速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/02-Pydantic%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.2 Pydantic 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/03-LangChain%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.3 LangChain 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/04-LangGraph%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.4 LangGraph 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/05-FastAPI%E9%80%9F%E6%88%90.html" class="md-nav__link">
+        2.5 FastAPI 速成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/06-PostgreSQL%E5%AE%9E%E6%93%8D.html" class="md-nav__link">
+        2.6 PostgreSQL 实操：MySQL 用户快速上手
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/07-%E7%94%A8SQLAlchemy%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="md-nav__link">
+        2.7 用 SQLAlchemy 异步操作数据库
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/08-%E6%8B%93%E5%B1%95-%E7%8A%B6%E6%80%81%E5%90%88%E5%B9%B6%E4%B8%8EReducer%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.8 状态合并与 Reducer（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/09-%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%BC%82%E6%AD%A5%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.9 后台任务与异步上下文管理器（选读）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D/10-%E6%B5%8B%E8%AF%95FastAPI%28%E6%89%A9%E5%B1%95%29.html" class="md-nav__link">
+        2.10 测试FastAPI（选读）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          第三章 环境搭建与工程地基
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第三章 环境搭建与工程地基" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          第三章 环境搭建与工程地基
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/01-%E7%8E%AF%E5%A2%83%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD.html" class="md-nav__link">
+        3.1 环境与基础设施
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/02-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%BB%BA%E8%A1%A8.html" class="md-nav__link">
+        3.2 数据库设计与建表
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/03-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E4%B8%8E%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB.html" class="md-nav__link">
+        3.3 配置、日志与异常体系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/04-LLM-Factory.html" class="md-nav__link">
+        3.4 LLM Factory：统一的大模型工厂
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/05-%E4%B8%89%E5%B1%82%E5%85%9C%E5%BA%95%E4%B8%8E%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6.html" class="md-nav__link">
+        3.5 三层兜底与重试机制
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%B7%A5%E7%A8%8B%E5%9C%B0%E5%9F%BA/06-%E8%AE%A4%E8%AF%81%E4%B8%8E%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5.html" class="md-nav__link">
+        3.6 认证与依赖注入
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          第四章 简历审查 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第四章 简历审查 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          第四章 简历审查 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/01-%E7%AE%80%E5%8E%86Agent%E5%85%A8%E6%99%AF%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%B5%81.html" class="md-nav__link">
+        4.1 简历审查 Agent：全景与数据流
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/02-State%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B.html" class="md-nav__link">
+        4.2 State 与数据模型（state.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/03-%E6%8F%90%E7%A4%BA%E8%AF%8D.html" class="md-nav__link">
+        4.3 提示词（prompts.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/04-PDF%E8%A7%A3%E6%9E%90%E4%B8%8E%E7%BB%93%E6%9E%84%E5%8C%96%E6%8F%90%E5%8F%96.html" class="md-nav__link">
+        4.4 PDF 解析与结构化提取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/05-%E5%85%AD%E7%BB%B4%E5%BA%A6%E5%B9%B6%E8%A1%8C%E8%AF%84%E5%AE%A1.html" class="md-nav__link">
+        4.5 六维度并行评审
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/06-%E9%97%AE%E9%A2%98%E8%AF%8A%E6%96%AD%E4%B8%8E%E6%95%B4%E4%BD%93%E8%AF%84%E4%BB%B7.html" class="md-nav__link">
+        4.6 问题诊断与整体评价
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/07-%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        4.7 持久化与图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/08-API%E6%8E%A5%E5%8F%A3%E4%B8%8E%E7%AB%AF%E5%88%B0%E7%AB%AF.html" class="md-nav__link">
+        4.8 API 接口与端到端
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%AE%80%E5%8E%86%E5%AE%A1%E6%9F%A5%20Agent/09-%E6%8B%93%E5%B1%95-%E7%AE%80%E5%8E%86API%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE.html" class="md-nav__link">
+        04-8 拓展：简历 API 常见疑问答疑（resume.py）
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          第五章 RAG 问答系统
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第五章 RAG 问答系统" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          第五章 RAG 问答系统
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-01-RAG%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        5.1 RAG 问答系统：全景与架构
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-02-%E6%96%87%E6%A1%A3%E8%AF%BB%E5%8F%96.html" class="md-nav__link">
+        5.2 文档读取
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-03-%E6%99%BA%E8%83%BD%E5%88%86%E5%9D%97.html" class="md-nav__link">
+        5.3 智能分块
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-04-BGE-M3%E5%B5%8C%E5%85%A5.html" class="md-nav__link">
+        5.4 BGE-M3 嵌入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-05-Milvus%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E5%86%99%E5%85%A5.html" class="md-nav__link">
+        5.5 Milvus 初始化与知识库写入
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-06-Hybrid%E5%8F%AC%E5%9B%9E%E4%B8%8EWeightedRanker.html" class="md-nav__link">
+        5.6 Hybrid 召回与 WeightedRanker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-07-%E9%87%8D%E6%8E%92%E5%BA%8F%EF%BC%88Reranker%EF%BC%89.html" class="md-nav__link">
+        5.7 重排序（Reranker）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-08-%E6%84%8F%E5%9B%BE%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88Query%20Classifier%EF%BC%89.html" class="md-nav__link">
+        5.8 意图分类器（Query Classifier）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-09-%E8%AE%B0%E5%BF%86%E7%AE%A1%E7%90%86%EF%BC%88Memory%EF%BC%89.html" class="md-nav__link">
+        5.9 记忆管理（Memory）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-10-MCP%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        5.10 MCP 工具
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-11-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        5.11 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5.12 节点①：分类、HyDE、Multi-Query
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="05-12-%E8%8A%82%E7%82%B9%E2%91%A0%E5%88%86%E7%B1%BBHyDE%E5%A4%9AQuery.html" class="md-nav__link md-nav__link--active">
+        5.12 节点①：分类、HyDE、Multi-Query
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5121" class="md-nav__link">
+    5.12.1 文件结构与常量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5122" class="md-nav__link">
+    5.12.2 工具函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5123" class="md-nav__link">
+    5.12.3 联网指令识别
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5124" class="md-nav__link">
+    5.12.4 三层分类架构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5125-classify_query_node" class="md-nav__link">
+    5.12.5 classify_query_node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5126-hyde_generate_nodevague" class="md-nav__link">
+    5.12.6 hyde_generate_node（VAGUE 分支）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5127-multi_query_rewrite_nodebroad" class="md-nav__link">
+    5.12.7 multi_query_rewrite_node（BROAD 分支）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    ✅ 本节验证（import 检查）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-nav__link">
+        5.13 节点②：检索与精排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-14-%E8%8A%82%E7%82%B9%E2%91%A2%E7%94%9F%E6%88%90WebSearch%E5%AD%98%E8%AE%B0%E5%BF%86.html" class="md-nav__link">
+        5.14 节点③：生成、Web 兜底、存记忆
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-15-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        5.15 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-16-HTTP%E6%8E%A5%E5%8F%A3qa.html" class="md-nav__link">
+        5.16 HTTP 接口（qa.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="05-17-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        5.17 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          第六章 试卷批改 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第六章 试卷批改 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          第六章 试卷批改 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-01-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        6.1 试卷批改 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-02-State%E4%B8%8EPrompts.html" class="md-nav__link">
+        6.2 State 与 Prompts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-03-Word%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        6.3 Word 文件解析（parse_word_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-04-%E9%A2%98%E7%9B%AE%E5%85%83%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        6.4 题目元数据加载（load_questions_meta_node）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-05-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E5%AE%A2%E8%A7%82%E9%A2%98%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E.html" class="md-nav__link">
+        6.5 三轨并行—客观题规则引擎（第一轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-06-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E7%AE%80%E7%AD%94%E9%A2%98LLM%E8%AF%84%E5%88%86.html" class="md-nav__link">
+        6.6 三轨并行—简答题 LLM 评分（第二轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-07-%E4%B8%89%E8%BD%A8%E5%B9%B6%E8%A1%8C-%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AF%84%E4%BC%B0.html" class="md-nav__link">
+        6.7 三轨并行—代码题 LLM 评估（第三轨）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-08-%E4%B8%89%E8%BD%A8%E7%BB%84%E8%A3%85%E4%B8%8E%E6%B1%87%E6%80%BB.html" class="md-nav__link">
+        6.8 三轨组装、汇总与薄弱点分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-09-Human-in-the-Loop.html" class="md-nav__link">
+        6.9 Human-in-the-Loop（HitL）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-10-%E5%90%88%E5%B9%B6%E5%86%B3%E7%AD%96%E4%B8%8E%E5%8F%91%E5%B8%83.html" class="md-nav__link">
+        6.10 合并教师决策与发布
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-11-%E5%9B%BE%E8%A3%85%E9%85%8Dgraph.html" class="md-nav__link">
+        6.11 图装配（graph.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-12-HTTP%E6%8E%A5%E5%8F%A3exam.html" class="md-nav__link">
+        6.12 HTTP 接口（exam.py）
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E8%AF%95%E5%8D%B7%E6%89%B9%E6%94%B9%20Agent/06-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        6.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          第七章 模拟面试 Agent
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第七章 模拟面试 Agent" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          第七章 模拟面试 Agent
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-01-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95Agent%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        7.1 模拟面试 Agent 全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-02-State%E4%B8%8E%E6%9E%9A%E4%B8%BE.html" class="md-nav__link">
+        7.2 State 与枚举
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-03-Prompts%E5%85%A8%E8%A7%A3%E6%9E%90.html" class="md-nav__link">
+        7.3 Prompts 全解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-04-%E4%BC%9A%E8%AF%9D%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8A%A0%E8%BD%BD.html" class="md-nav__link">
+        7.4 load_context 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-05-%E9%98%B6%E6%AE%B5%E6%8E%A8%E8%BF%9B%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA%E6%8E%A7%E5%88%B6.html" class="md-nav__link">
+        7.5 check_stage 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-06-%E5%9B%9E%E7%AD%94%E8%B4%A8%E9%87%8F%E8%AF%84%E4%BC%B0%E4%B8%8EThink%E5%B7%A5%E5%85%B7.html" class="md-nav__link">
+        7.6 evaluate_answer 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-07-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8A%EF%BC%89.html" class="md-nav__link">
+        7.7 generate_response — WARMUP & TECH_BASE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-08-%E9%9D%A2%E8%AF%95%E5%AE%98%E5%9B%9E%E5%BA%94%E7%94%9F%E6%88%90%EF%BC%88%E4%B8%8B%EF%BC%89.html" class="md-nav__link">
+        7.8 generate_response — PROJECT & CLOSING
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-09-%E9%9D%A2%E8%AF%95%E6%8A%A5%E5%91%8A%E7%94%9F%E6%88%90.html" class="md-nav__link">
+        7.9 generate_report 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-10-%E7%BB%93%E6%9E%9C%E6%8C%81%E4%B9%85%E5%8C%96%E4%B8%8E%E8%AE%B0%E5%BF%86%E4%BF%9D%E5%AD%98.html" class="md-nav__link">
+        7.10 save_report & save_memory 节点
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-11-%E5%9B%BE%E8%A3%85%E9%85%8D.html" class="md-nav__link">
+        7.11 图装配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-12-HTTP%E6%8E%A5%E5%8F%A3interview.html" class="md-nav__link">
+        7.12 HTTP 接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95%20Agent%20/07-13-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        7.13 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          第八章 系统集成
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第八章 系统集成" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          第八章 系统集成
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-01-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        8.1 系统集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-02-Orchestrator-Schema%E4%B8%8E%E5%8D%95Agent%E7%9B%B4%E8%BE%BE.html" class="md-nav__link">
+        8.2 Orchestrator — Schema 与单 Agent 直达
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-03-Orchestrator-%E5%A4%9AAgent%E4%B8%B2%E8%81%94Pipeline.html" class="md-nav__link">
+        8.3 Orchestrator — 多 Agent 串联 Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-04-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-%E5%89%8D%E7%BD%AE%E6%8B%A6%E6%88%AA%E4%B8%8ELLM%E8%B7%AF%E7%94%B1.html" class="md-nav__link">
+        8.4 统一入口 — 前置拦截与 LLM 路由
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-05-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3-SSE%E5%88%86%E5%8F%91.html" class="md-nav__link">
+        8.5 统一入口 — SSE 分发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-06-%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88%E4%B8%8Emain%E9%9B%86%E6%88%90.html" class="md-nav__link">
+        8.6 路由聚合与 main.py 最终集成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90/08-07-%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%B5%8B%E8%AF%95.html" class="md-nav__link">
+        8.7 端到端测试
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          第九章 前端集成扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第九章 前端集成扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          第九章 前端集成扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-01-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E5%85%A8%E6%99%AF.html" class="md-nav__link">
+        9.1 前端集成全景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-02-%E5%9B%9B%E5%A4%A7%E5%8A%9F%E8%83%BD%E9%A1%B5%E9%9D%A2%E8%A7%A3%E8%AF%BB.html" class="md-nav__link">
+        9.2 四大功能页面解读
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-%E5%89%8D%E7%AB%AF%E9%9B%86%E6%88%90%E6%89%A9%E5%B1%95/09-03-%E5%AE%8C%E6%95%B4%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%81%94%E8%B0%83%E9%AA%8C%E8%AF%81.html" class="md-nav__link">
+        9.3 完整系统启动与联调验证
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10">
+          第十章 收尾与扩展
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="第十章 收尾与扩展" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          第十章 收尾与扩展
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-01-%E5%85%A8%E6%99%AF%E5%9B%9E%E9%A1%BE%E4%B8%8E%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A7%88.html" class="md-nav__link">
+        10.1 全景回顾与系统总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-02-%E5%A4%9AAgent%E8%83%BD%E5%8A%9B%E8%BF%81%E7%A7%BB%E5%9C%BA%E6%99%AF.html" class="md-nav__link">
+        10.2 多 Agent 能力迁移场景
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%94%B6%E5%B0%BE%E4%B8%8E%E6%89%A9%E5%B1%95/10-03-%E5%A4%9AAgent%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86.html" class="md-nav__link">
+        10.3 多 Agent 系统面试题集
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    学习目标
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    📁 本节要创建的文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5121" class="md-nav__link">
+    5.12.1 文件结构与常量
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5122" class="md-nav__link">
+    5.12.2 工具函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5123" class="md-nav__link">
+    5.12.3 联网指令识别
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5124" class="md-nav__link">
+    5.12.4 三层分类架构
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5125-classify_query_node" class="md-nav__link">
+    5.12.5 classify_query_node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5126-hyde_generate_nodevague" class="md-nav__link">
+    5.12.6 hyde_generate_node（VAGUE 分支）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5127-multi_query_rewrite_nodebroad" class="md-nav__link">
+    5.12.7 multi_query_rewrite_node（BROAD 分支）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    ✅ 本节验证（import 检查）
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="512-1hydemulti-query">5.12 节点①：分类、HyDE、Multi-Query<a class="headerlink" href="#512-1hydemulti-query" title="Permanent link">&para;</a></h1>
+<h2 id="_1">学习目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>理解三层分类架构（规则 → MiniLM → LLM）的设计逻辑，掌握各层的触发条件和职责边界</li>
+<li>实现 <code>classify_query_node</code>，包含联网指令识别、内存加载和完整的三层分类</li>
+<li>实现 <code>hyde_generate_node</code>（VAGUE 分支）和 <code>multi_query_rewrite_node</code>（BROAD 分支）</li>
+</ul>
+<blockquote>
+<p>💡 <strong>本节写 <code>nodes.py</code> 前半部分</strong>：文件结构、工具函数、三个节点函数。<code>nodes.py</code> 是 QA Agent 的核心文件，所有业务逻辑都在这里。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📁 本节要创建的文件<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend/agents/qa/nodes.py</code></td>
+<td>🆕 新建（本节写前半部分）</td>
+<td>节点函数，5.13 / 5.14 继续追加</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5121">5.12.1 文件结构与常量<a class="headerlink" href="#5121" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># backend/agents/qa/nodes.py</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">text</span>
+<span class="kn">from</span> <span class="nn">langchain_core.messages</span> <span class="kn">import</span> <span class="n">HumanMessage</span><span class="p">,</span> <span class="n">AIMessage</span><span class="p">,</span> <span class="n">SystemMessage</span>
+
+<span class="kn">from</span> <span class="nn">backend.agents.qa.state</span> <span class="kn">import</span> <span class="n">QAState</span>
+<span class="kn">from</span> <span class="nn">backend.agents.qa.prompts</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">HYDE_PROMPT</span><span class="p">,</span>
+    <span class="n">MULTI_QUERY_REWRITE_PROMPT</span><span class="p">,</span>
+    <span class="n">RAG_ANSWER_PROMPT</span><span class="p">,</span>
+    <span class="n">DIRECT_ANSWER_PROMPT</span><span class="p">,</span>
+    <span class="n">GENERAL_ANSWER_PROMPT</span><span class="p">,</span>
+    <span class="n">RAG_STRATEGY_PROMPT</span><span class="p">,</span>
+    <span class="n">SYSTEM_PROMPT</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">backend.core.llm_factory</span> <span class="kn">import</span> <span class="n">get_llm</span>
+<span class="kn">from</span> <span class="nn">backend.core.memory</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">trim_messages_to_window</span><span class="p">,</span>
+    <span class="n">should_trigger_summary</span><span class="p">,</span>
+    <span class="n">compress_to_summary</span><span class="p">,</span>
+    <span class="n">build_thread_id</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">backend.config</span> <span class="kn">import</span> <span class="n">get_settings</span>
+<span class="kn">from</span> <span class="nn">backend.core.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">backend.core.query_classifier</span> <span class="kn">import</span> <span class="n">get_query_classifier</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># ── 检索相关常量 ───────────────────────────────────────────────</span>
+<span class="n">MAX_BROAD_QUERIES</span>        <span class="o">=</span> <span class="mi">3</span>   <span class="c1"># BROAD 分支最多并行的子 Query 数</span>
+<span class="n">RECALL_TOP_K_PRECISE</span>     <span class="o">=</span> <span class="mi">8</span>   <span class="c1"># PRECISE：直接检索召回数</span>
+<span class="n">RECALL_TOP_K_VAGUE</span>       <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># VAGUE：HyDE 语义扩充后多召回些</span>
+<span class="n">RECALL_TOP_K_BROAD_PER</span>   <span class="o">=</span> <span class="mi">4</span>   <span class="c1"># BROAD：每个子 Query 的召回数</span>
+<span class="n">RERANK_TOP_K</span>             <span class="o">=</span> <span class="mi">3</span>   <span class="c1"># 精排后保留的最终 chunk 数</span>
+</code></pre></div>
+<hr />
+<h2 id="5122">5.12.2 工具函数<a class="headerlink" href="#5122" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># ──────────────────────────────────────────────────────────────</span>
+<span class="c1"># 工具函数</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────</span>
+
+<span class="k">def</span> <span class="nf">_get_message_content</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;统一获取消息文本（兼容 .text 属性和 .content 属性）&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">text</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">content</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_format_history_for_prompt</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;把最近几轮对话格式化为 Prompt 可用的文本&quot;&quot;&quot;</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">HumanMessage</span><span class="p">):</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;学员：</span><span class="si">{</span><span class="n">_get_message_content</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">AIMessage</span><span class="p">):</span>
+            <span class="c1"># AI 回答截断，避免 Prompt 过长</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AI：</span><span class="si">{</span><span class="n">_get_message_content</span><span class="p">(</span><span class="n">msg</span><span class="p">)[:</span><span class="mi">200</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="k">if</span> <span class="n">lines</span> <span class="k">else</span> <span class="s2">&quot;（无历史对话）&quot;</span>
+
+
+<span class="n">_WEEKDAYS_CN</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;星期一&quot;</span><span class="p">,</span> <span class="s2">&quot;星期二&quot;</span><span class="p">,</span> <span class="s2">&quot;星期三&quot;</span><span class="p">,</span> <span class="s2">&quot;星期四&quot;</span><span class="p">,</span> <span class="s2">&quot;星期五&quot;</span><span class="p">,</span> <span class="s2">&quot;星期六&quot;</span><span class="p">,</span> <span class="s2">&quot;星期日&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">_current_datetime_str</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;返回格式化的当前时间字符串，供注入 Prompt 使用&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">weekday</span> <span class="o">=</span> <span class="n">_WEEKDAYS_CN</span><span class="p">[</span><span class="n">now</span><span class="o">.</span><span class="n">weekday</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;%Y年%m月%d日 </span><span class="si">{</span><span class="n">weekday</span><span class="si">}</span><span class="s2"> %H:%M&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_build_system_content</span><span class="p">(</span><span class="n">summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    构建注入了当前时间的 SystemMessage 内容，所有生成节点共用。</span>
+<span class="sd">    summary 非空时追加历史学习摘要，帮助 LLM 保持多轮上下文连贯。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">SYSTEM_PROMPT</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">【当前时间】</span><span class="si">{</span><span class="n">_current_datetime_str</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">summary</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">【学员历史学习摘要】</span><span class="se">\n</span><span class="si">{</span><span class="n">summary</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">content</span>
+</code></pre></div>
+<hr />
+<h2 id="5123">5.12.3 联网指令识别<a class="headerlink" href="#5123" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># ──────────────────────────────────────────────────────────────</span>
+<span class="c1"># 联网请求自动识别</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────</span>
+
+<span class="n">_WEB_SEARCH_HINTS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;联网&quot;</span><span class="p">,</span> <span class="s2">&quot;联网查询&quot;</span><span class="p">,</span> <span class="s2">&quot;联网搜索&quot;</span><span class="p">,</span> <span class="s2">&quot;上网查&quot;</span><span class="p">,</span> <span class="s2">&quot;上网搜&quot;</span><span class="p">,</span> <span class="s2">&quot;网上搜&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;搜索一下&quot;</span><span class="p">,</span> <span class="s2">&quot;可以搜索&quot;</span><span class="p">,</span> <span class="s2">&quot;帮我搜&quot;</span><span class="p">,</span> <span class="s2">&quot;百度一下&quot;</span><span class="p">,</span> <span class="s2">&quot;谷歌一下&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_extract_query_and_web_flag</span><span class="p">(</span><span class="n">raw</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    检测用户消息是否含联网请求指令。</span>
+<span class="sd">    返回 (清洗后的问题, 是否自动启用联网)。</span>
+
+<span class="sd">    联网指令部分被去除，防止被 LLM 当作问题内容处理。</span>
+<span class="sd">    例：&quot;Spring AOP 是什么，如果不知道可以联网搜索&quot;</span>
+<span class="sd">      → (&quot;Spring AOP 是什么&quot;, True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">re</span>
+    <span class="n">needs_web</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">h</span> <span class="ow">in</span> <span class="n">raw</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">_WEB_SEARCH_HINTS</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">needs_web</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="kc">False</span>
+    <span class="n">clean</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s1">&#39;[，,。.？?！!\s]*(?:如果不知道|不知道的话|不清楚|你可以|可以)?&#39;</span>
+        <span class="sa">r</span><span class="s1">&#39;(?:联网|上网|网上)?(?:查询|搜索|搜一下|查一查|百度|谷歌).*$&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">raw</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">clean</span> <span class="ow">or</span> <span class="n">raw</span><span class="p">),</span> <span class="kc">True</span>
+</code></pre></div>
+<hr />
+<h2 id="5124">5.12.4 三层分类架构<a class="headerlink" href="#5124" title="Permanent link">&para;</a></h2>
+<p>分类节点是整个 QA Agent 的入口决策点。三层设计的核心思路：<strong>越快的规则越先跑，LLM 调用放在最后。</strong></p>
+<div class="highlight"><pre><span></span><code>用户输入
+  │
+  ├─ Layer 0a  规则（&lt; 1ms）
+  │    闲聊 / 时间 / 打招呼 → GENERAL ──────────────────────► 直接跳到生成
+  │
+  ├─ Layer 0b  规则（&lt; 1ms）
+  │    含&quot;课程 / 项目 / 章节&quot;等词 → 专业，跳过 MiniLM
+  │                                   │
+  │                               Layer 2（LLM 判策略）
+  │
+  ├─ Layer 1   MiniLM（&lt; 5ms，进程内 CPU 推理）
+  │    P(general) ≥ 0.85 → GENERAL
+  │    P(general) &lt; 0.85 → 专业
+  │                   │
+  │               Layer 2（LLM 判策略）
+  │
+  └─ Layer 2   LLM（仅在确认需要 RAG 后调用）
+               → PRECISE / VAGUE / BROAD
+</code></pre></div>
+<p><strong>为什么 Layer 0b 的课程词要跳过 MiniLM？</strong></p>
+<p>MiniLM 训练的是"通用 IT 知识 vs 课程专属"，但"课程"、"第3章"、"我们的项目"这类词语义非常稳定——只要出现就一定是课程相关。让 MiniLM 推理一遍（虽然只有 5ms）是浪费，规则直接命中更可靠。</p>
+<p><strong>为什么 Layer 2 还要有规则快判（<code>_fast_rag_strategy</code>）？</strong></p>
+<p>PRECISE / VAGUE / BROAD 策略判断同样可以用规则覆盖大部分情况：
+- 问题极短（≤6字）或含"没懂/解释一下" → VAGUE
+- 含"全面/对比/总结/有哪些" → BROAD
+- 其余 → PRECISE</p>
+<p>只有规则判为 VAGUE/BROAD 且问题长度 ≥ 18 字时（说明问题比较具体，规则可能误判），才调一次 LLM 校正。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ──────────────────────────────────────────────────────────────</span>
+<span class="c1"># 规则集</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────</span>
+
+<span class="n">_GENERAL_EXACT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;你好&quot;</span><span class="p">,</span> <span class="s2">&quot;hi&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;嗨&quot;</span><span class="p">,</span> <span class="s2">&quot;hey&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;谢谢&quot;</span><span class="p">,</span> <span class="s2">&quot;谢谢你&quot;</span><span class="p">,</span> <span class="s2">&quot;感谢&quot;</span><span class="p">,</span> <span class="s2">&quot;thanks&quot;</span><span class="p">,</span> <span class="s2">&quot;thank you&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;你是谁&quot;</span><span class="p">,</span> <span class="s2">&quot;你叫什么&quot;</span><span class="p">,</span> <span class="s2">&quot;你叫什么名字&quot;</span><span class="p">,</span> <span class="s2">&quot;你是什么&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;你能做什么&quot;</span><span class="p">,</span> <span class="s2">&quot;你有什么功能&quot;</span><span class="p">,</span> <span class="s2">&quot;你能帮我做什么&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;再见&quot;</span><span class="p">,</span> <span class="s2">&quot;拜拜&quot;</span><span class="p">,</span> <span class="s2">&quot;bye&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">_GENERAL_KEYWORDS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;你是谁&quot;</span><span class="p">,</span> <span class="s2">&quot;你叫什么&quot;</span><span class="p">,</span> <span class="s2">&quot;你能做什么&quot;</span><span class="p">,</span> <span class="s2">&quot;你有什么功能&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;介绍一下你自己&quot;</span><span class="p">,</span> <span class="s2">&quot;自我介绍&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;今天天气&quot;</span><span class="p">,</span> <span class="s2">&quot;天气怎么样&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;讲个笑话&quot;</span><span class="p">,</span> <span class="s2">&quot;说个故事&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;今天是&quot;</span><span class="p">,</span> <span class="s2">&quot;今天几号&quot;</span><span class="p">,</span> <span class="s2">&quot;今天是几号&quot;</span><span class="p">,</span> <span class="s2">&quot;今天是星期&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;现在是&quot;</span><span class="p">,</span> <span class="s2">&quot;现在几点&quot;</span><span class="p">,</span> <span class="s2">&quot;现在时间&quot;</span><span class="p">,</span> <span class="s2">&quot;当前时间&quot;</span><span class="p">,</span> <span class="s2">&quot;当前日期&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;几月几号&quot;</span><span class="p">,</span> <span class="s2">&quot;星期几&quot;</span><span class="p">,</span> <span class="s2">&quot;是几月&quot;</span><span class="p">,</span> <span class="s2">&quot;几号了&quot;</span><span class="p">,</span> <span class="s2">&quot;日期是&quot;</span><span class="p">,</span> <span class="s2">&quot;今天日期&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 命中即确认为专业问题，跳过 MiniLM，直接进 Layer 2</span>
+<span class="n">_SPECIALIZED_KEYWORDS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;课程&quot;</span><span class="p">,</span> <span class="s2">&quot;实战&quot;</span><span class="p">,</span> <span class="s2">&quot;项目&quot;</span><span class="p">,</span> <span class="s2">&quot;案例&quot;</span><span class="p">,</span> <span class="s2">&quot;老师&quot;</span><span class="p">,</span> <span class="s2">&quot;章节&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;作业&quot;</span><span class="p">,</span> <span class="s2">&quot;课堂&quot;</span><span class="p">,</span> <span class="s2">&quot;培训&quot;</span><span class="p">,</span> <span class="s2">&quot;我们学的&quot;</span><span class="p">,</span> <span class="s2">&quot;课程项目&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;第几章&quot;</span><span class="p">,</span> <span class="s2">&quot;第几节&quot;</span><span class="p">,</span> <span class="s2">&quot;训练营&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">_VAGUE_QUERY_HINTS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;没懂&quot;</span><span class="p">,</span> <span class="s2">&quot;不懂&quot;</span><span class="p">,</span> <span class="s2">&quot;不太懂&quot;</span><span class="p">,</span> <span class="s2">&quot;讲讲&quot;</span><span class="p">,</span> <span class="s2">&quot;解释一下&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;啥意思&quot;</span><span class="p">,</span> <span class="s2">&quot;什么意思&quot;</span><span class="p">,</span> <span class="s2">&quot;看不懂&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">_BROAD_QUERY_HINTS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;全面&quot;</span><span class="p">,</span> <span class="s2">&quot;系统&quot;</span><span class="p">,</span> <span class="s2">&quot;总结&quot;</span><span class="p">,</span> <span class="s2">&quot;梳理&quot;</span><span class="p">,</span> <span class="s2">&quot;路线&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;对比&quot;</span><span class="p">,</span> <span class="s2">&quot;区别&quot;</span><span class="p">,</span> <span class="s2">&quot;全景&quot;</span><span class="p">,</span> <span class="s2">&quot;有哪些&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_rule_classify_general</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;规则层：是否为闲聊/时间/打招呼类（→ GENERAL）&quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">_GENERAL_EXACT</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">kw</span> <span class="ow">in</span> <span class="n">q</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">_GENERAL_KEYWORDS</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_rule_classify_specialized</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;规则层：是否含课程/项目信号词（→ 专业，跳过 MiniLM）&quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">kw</span> <span class="ow">in</span> <span class="n">q</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">_SPECIALIZED_KEYWORDS</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_fast_rag_strategy</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;规则快判 RAG 策略（&lt; 1ms）&quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">6</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">kw</span> <span class="ow">in</span> <span class="n">q</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">_VAGUE_QUERY_HINTS</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;VAGUE&quot;</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">kw</span> <span class="ow">in</span> <span class="n">q</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">_BROAD_QUERY_HINTS</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;BROAD&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;PRECISE&quot;</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_determine_rag_strategy</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;LLM 精判 RAG 策略（仅在规则判为 VAGUE/BROAD 且问题较长时调用）&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="s2">&quot;qa&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">([</span>
+            <span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">RAG_STRATEGY_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">))</span>
+        <span class="p">])</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">_get_message_content</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;PRECISE&quot;</span><span class="p">,</span> <span class="s2">&quot;VAGUE&quot;</span><span class="p">,</span> <span class="s2">&quot;BROAD&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">label</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;classify_query.rag_strategy_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s2">&quot;PRECISE&quot;</span>   <span class="c1"># 兜底：最保守策略</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_determine_rag_strategy_fast</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    两阶段策略判定：</span>
+<span class="sd">    ① 规则快判 → 若为 PRECISE，直接返回（不调 LLM）</span>
+<span class="sd">    ② 规则判为 VAGUE/BROAD 且问题较长（≥18字）→ LLM 校正（避免误判）</span>
+<span class="sd">    ③ 规则判为 VAGUE/BROAD 且问题极短 → 直接相信规则</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="n">_fast_rag_strategy</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">strategy</span> <span class="o">==</span> <span class="s2">&quot;PRECISE&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">strategy</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">_determine_rag_strategy</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">strategy</span>
+</code></pre></div>
+<hr />
+<h2 id="5125-classify_query_node">5.12.5 <code>classify_query_node</code><a class="headerlink" href="#5125-classify_query_node" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># ──────────────────────────────────────────────────────────────</span>
+<span class="c1"># 节点：classify_query — Query 类型判断（含历史摘要加载）</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">classify_query_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">QAState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Query 分类节点，决定走哪条处理路径。</span>
+
+<span class="sd">    同时负责从 DB 加载当前会话的历史摘要（合并了源码中的 load_memory 节点）。</span>
+
+<span class="sd">    返回的 query_type：</span>
+<span class="sd">      GENERAL  → 跳过 RAG，直接 LLM 回答</span>
+<span class="sd">      PRECISE  → 直接向量检索</span>
+<span class="sd">      VAGUE    → 先 HyDE 再检索</span>
+<span class="sd">      BROAD    → 先 Multi-Query 改写再并行检索</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># ── 取最后一条 HumanMessage 作为原始输入 ─────────────────</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">raw_query</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">messages</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">HumanMessage</span><span class="p">):</span>
+            <span class="n">raw_query</span> <span class="o">=</span> <span class="n">_get_message_content</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">break</span>
+
+    <span class="c1"># ── 联网指令识别 ──────────────────────────────────────────</span>
+    <span class="n">original_query</span><span class="p">,</span> <span class="n">auto_web</span> <span class="o">=</span> <span class="n">_extract_query_and_web_flag</span><span class="p">(</span><span class="n">raw_query</span><span class="p">)</span>
+    <span class="n">enable_web_search</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enable_web_search&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">or</span> <span class="n">auto_web</span>
+
+    <span class="c1"># ── 从 DB 加载历史摘要（取代 load_memory_and_embed_node）──</span>
+    <span class="n">existing_summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">backend.dependencies</span> <span class="kn">import</span> <span class="n">AsyncSessionLocal</span>
+        <span class="n">thread_id</span> <span class="o">=</span> <span class="n">build_thread_id</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;student_id&quot;</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;session_id&quot;</span><span class="p">])</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">AsyncSessionLocal</span><span class="p">()</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT summary FROM qa_sessions WHERE thread_id = :tid&quot;</span><span class="p">),</span>
+                <span class="p">{</span><span class="s2">&quot;tid&quot;</span><span class="p">:</span> <span class="n">thread_id</span><span class="p">},</span>
+            <span class="p">))</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="n">existing_summary</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">row</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;classify_query.load_memory_failed&quot;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="n">_base</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;original_query&quot;</span><span class="p">:</span>    <span class="n">original_query</span><span class="p">,</span>
+        <span class="s2">&quot;existing_summary&quot;</span><span class="p">:</span>  <span class="n">existing_summary</span><span class="p">,</span>
+        <span class="s2">&quot;rewritten_queries&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;hyde_document&quot;</span><span class="p">:</span>     <span class="kc">None</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">auto_web</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enable_web_search&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">_base</span><span class="p">[</span><span class="s2">&quot;enable_web_search&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;classify_query.auto_web_enabled&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">original_query</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
+
+    <span class="c1"># ── Layer 0a：规则 → GENERAL（闲聊/时间/打招呼）───────────</span>
+    <span class="k">if</span> <span class="n">_rule_classify_general</span><span class="p">(</span><span class="n">original_query</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;classify_query.general_by_rule&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">original_query</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">_base</span><span class="p">,</span> <span class="s2">&quot;query_type&quot;</span><span class="p">:</span> <span class="s2">&quot;GENERAL&quot;</span><span class="p">}</span>
+
+    <span class="c1"># ── Layer 0b：关键词快速通道 → 专业（课程/项目词）──────────</span>
+    <span class="k">if</span> <span class="n">_rule_classify_specialized</span><span class="p">(</span><span class="n">original_query</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;classify_query.specialized_by_keyword&quot;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">original_query</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
+        <span class="n">strategy</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_determine_rag_strategy_fast</span><span class="p">(</span><span class="n">original_query</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;classify_query.rag_strategy&quot;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">_base</span><span class="p">,</span> <span class="s2">&quot;query_type&quot;</span><span class="p">:</span> <span class="n">strategy</span><span class="p">}</span>
+
+    <span class="c1"># ── Layer 1：MiniLM 二分类（CPU 推理，线程池避免阻塞）──────</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span>
+    <span class="n">label</span><span class="p">,</span> <span class="n">confidence</span> <span class="o">=</span> <span class="k">await</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_in_executor</span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="n">get_query_classifier</span><span class="p">()</span><span class="o">.</span><span class="n">classify</span><span class="p">,</span> <span class="n">original_query</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;general&quot;</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;classify_query.general_by_minilm&quot;</span><span class="p">,</span>
+            <span class="n">query</span><span class="o">=</span><span class="n">original_query</span><span class="p">[:</span><span class="mi">50</span><span class="p">],</span>
+            <span class="n">confidence</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">_base</span><span class="p">,</span> <span class="s2">&quot;query_type&quot;</span><span class="p">:</span> <span class="s2">&quot;GENERAL&quot;</span><span class="p">}</span>
+
+    <span class="c1"># ── Layer 2：MiniLM → 专业，LLM 判检索策略 ──────────────</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;classify_query.specialized_by_minilm&quot;</span><span class="p">,</span>
+        <span class="n">query</span><span class="o">=</span><span class="n">original_query</span><span class="p">[:</span><span class="mi">50</span><span class="p">],</span>
+        <span class="n">confidence</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">confidence</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">strategy</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_determine_rag_strategy_fast</span><span class="p">(</span><span class="n">original_query</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;classify_query.rag_strategy&quot;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="n">strategy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">_base</span><span class="p">,</span> <span class="s2">&quot;query_type&quot;</span><span class="p">:</span> <span class="n">strategy</span><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong><code>_base</code> 字典的作用</strong>：所有分支都要返回 <code>original_query</code>、<code>existing_summary</code>、<code>rewritten_queries</code>（空列表）、<code>hyde_document</code>（None）。用 <code>{**_base, "query_type": ...}</code> 展开合并，避免每个分支重复写相同字段。</p>
+</blockquote>
+<hr />
+<h2 id="5126-hyde_generate_nodevague">5.12.6 <code>hyde_generate_node</code>（VAGUE 分支）<a class="headerlink" href="#5126-hyde_generate_nodevague" title="Permanent link">&para;</a></h2>
+<p><strong>HyDE（Hypothetical Document Embeddings）核心思路</strong>：</p>
+<div class="highlight"><pre><span></span><code>模糊 Query：&quot;解释一下&quot;
+           ↓
+   LLM 生成假设文档：
+   &quot;Spring IOC 容器是一种控制反转实现，
+    它通过 BeanFactory 管理对象生命周期...&quot;
+           ↓
+   用假设文档的向量去检索（比模糊 Query 向量更接近知识库内容）
+</code></pre></div>
+<p>为什么有效：原始 Query 的向量与知识库文档向量距离远（语义太模糊）；假设文档的向量与知识库里的真实文档向量在语义空间中更相近，召回准确率显著提升。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ──────────────────────────────────────────────────────────────</span>
+<span class="c1"># 节点：hyde_generate — HyDE 假设文档生成（VAGUE 分支）</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">hyde_generate_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">QAState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    针对模糊 Query，让 LLM 先生成一段假设性回答文档，</span>
+<span class="sd">    用该文档的向量代替原始 Query 向量去检索。</span>
+
+<span class="sd">    temperature=0.3：生成结果要有一定多样性（覆盖更多语义），</span>
+<span class="sd">    但不能太随机（避免偏离主题）。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">query</span>    <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;original_query&quot;</span><span class="p">]</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="n">history_text</span> <span class="o">=</span> <span class="n">_format_history_for_prompt</span><span class="p">(</span><span class="n">messages</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:])</span>  <span class="c1"># 最近 3 轮</span>
+
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">HYDE_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">history_text</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+
+    <span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="s2">&quot;qa&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">([</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">prompt</span><span class="p">)])</span>
+    <span class="n">hyde_doc</span> <span class="o">=</span> <span class="n">_get_message_content</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;hyde_generate.done&quot;</span><span class="p">,</span>
+        <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">[:</span><span class="mi">50</span><span class="p">],</span>
+        <span class="n">hyde_doc_length</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">hyde_doc</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;hyde_document&quot;</span><span class="p">:</span> <span class="n">hyde_doc</span><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="5127-multi_query_rewrite_nodebroad">5.12.7 <code>multi_query_rewrite_node</code>（BROAD 分支）<a class="headerlink" href="#5127-multi_query_rewrite_nodebroad" title="Permanent link">&para;</a></h2>
+<p><strong>Multi-Query 核心思路</strong>：</p>
+<div class="highlight"><pre><span></span><code>宽泛 Query：&quot;没懂&quot; / &quot;讲讲微服务&quot;
+           ↓
+   LLM 改写为 3-5 个具体子 Query：
+   &quot;微服务和单体架构的区别是什么？&quot;
+   &quot;微服务之间如何通信？&quot;
+   &quot;Spring Cloud 有哪些核心组件？&quot;
+           ↓
+   每个子 Query 独立检索（下一节实现），结果合并去重
+</code></pre></div>
+<p>上一轮 AI 回答作为上下文的原因：当用户说"没懂"时，需要知道"没懂什么"——上一轮 AI 回答的主题就是线索。</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ──────────────────────────────────────────────────────────────</span>
+<span class="c1"># 节点：multi_query_rewrite — Multi-Query 改写（BROAD 分支）</span>
+<span class="c1"># ──────────────────────────────────────────────────────────────</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">multi_query_rewrite_node</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">QAState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    针对宽泛/极短 Query，改写为 3-5 个具体子 Query，</span>
+<span class="sd">    下一节 retrieve_node 会对这些子 Query 并行检索后合并去重。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">query</span>    <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;original_query&quot;</span><span class="p">]</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;messages&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="c1"># 取上一轮 AI 回答（推断&quot;没懂&quot;指的是什么）</span>
+    <span class="n">last_ai_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">messages</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">AIMessage</span><span class="p">):</span>
+            <span class="n">last_ai_text</span> <span class="o">=</span> <span class="n">_get_message_content</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">break</span>
+
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">MULTI_QUERY_REWRITE_PROMPT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">last_answer</span><span class="o">=</span><span class="n">last_ai_text</span><span class="p">[:</span><span class="mi">500</span><span class="p">]</span> <span class="k">if</span> <span class="n">last_ai_text</span> <span class="k">else</span> <span class="s2">&quot;（无上一轮回答）&quot;</span><span class="p">,</span>
+        <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="s2">&quot;qa&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">([</span><span class="n">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">prompt</span><span class="p">)])</span>
+
+    <span class="c1"># 解析：每行一个子 Query，去掉序号前缀（&quot;1. &quot; &quot;①&quot; &quot;- &quot; 等）</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">_get_message_content</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">rewritten</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;0123456789.-）)、 &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">raw</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">3</span>
+    <span class="p">][:</span><span class="n">MAX_BROAD_QUERIES</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rewritten</span><span class="p">:</span>
+        <span class="n">rewritten</span> <span class="o">=</span> <span class="p">[</span><span class="n">query</span><span class="p">]</span>   <span class="c1"># 改写失败时回退到原始 Query</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;multi_query_rewrite.done&quot;</span><span class="p">,</span>
+        <span class="n">original</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+        <span class="n">count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">rewritten</span><span class="p">),</span>
+        <span class="n">queries</span><span class="o">=</span><span class="n">rewritten</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;rewritten_queries&quot;</span><span class="p">:</span> <span class="n">rewritten</span><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>序号去除逻辑</strong>：<code>lstrip("0123456789.-）)、 ")</code> 从左边剥掉所有数字、标点和空格字符。例如 <code>"1. Spring IOC 是什么？"</code> → <code>"Spring IOC 是什么？"</code>；<code>"① Redis ZSet"</code> → <code>"Redis ZSet"</code>。</p>
+</blockquote>
+<hr />
+<h2 id="import">✅ 本节验证（import 检查）<a class="headerlink" href="#import" title="Permanent link">&para;</a></h2>
+<p>三个节点都依赖 LLM / DB，不在无服务环境下直接运行，先用 import 检查语法：</p>
+<div class="highlight"><pre><span></span><code>conda activate edu_agent
+python -c <span class="s2">&quot;</span>
+<span class="s2">from backend.agents.qa.nodes import (</span>
+<span class="s2">    classify_query_node,</span>
+<span class="s2">    hyde_generate_node,</span>
+<span class="s2">    multi_query_rewrite_node,</span>
+<span class="s2">)</span>
+<span class="s2">print(&#39;nodes.py 前半部分 import 成功&#39;)</span>
+<span class="s2">print(&#39;classify_query_node:&#39;, classify_query_node.__name__)</span>
+<span class="s2">print(&#39;hyde_generate_node:&#39;, hyde_generate_node.__name__)</span>
+<span class="s2">print(&#39;multi_query_rewrite_node:&#39;, multi_query_rewrite_node.__name__)</span>
+<span class="s2">&quot;</span>
+</code></pre></div>
+<p>预期输出：</p>
+<div class="highlight"><pre><span></span><code>nodes.py 前半部分 import 成功
+classify_query_node: classify_query_node
+hyde_generate_node: hyde_generate_node
+multi_query_rewrite_node: multi_query_rewrite_node
+</code></pre></div>
+<hr />
+<h2 id="_3">章节总结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>三层分类</strong>：规则（&lt; 1ms）→ MiniLM（&lt; 5ms）→ LLM（仅在必要时），每层各自负责最擅长的部分，总体延迟控制在 5-50ms</li>
+<li><strong>Layer 0b 快速通道</strong>：课程/项目词直接跳过 MiniLM，规则比模型更稳定</li>
+<li><strong><code>_determine_rag_strategy_fast</code></strong>：规则先判，问题长度 ≥ 18 字才调 LLM 校正，既省钱又准确</li>
+<li><strong>HyDE</strong>：用 LLM 生成假设文档再检索，解决模糊 Query 向量与知识库向量语义距离远的问题</li>
+<li><strong>Multi-Query</strong>：宽泛问题拆成多个具体子 Query，扩大知识库召回覆盖面</li>
+<li><strong>历史摘要加载合并进 classify 节点</strong>：去掉源码中的独立 <code>load_memory_and_embed_node</code>，图结构更简洁</li>
+</ul>
+<p><strong>下一节 <code>5.13 节点②：检索与精排</code></strong> 实现 <code>retrieve_node</code>：调用 5.7 的 <code>retrieve()</code> Pipeline，处理 PRECISE / VAGUE / BROAD 三种路径，其中 BROAD 对多个子 Query 并行检索后合并去重。</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="页脚" >
+      
+        
+        <a href="05-11-State%E4%B8%8EPrompts.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 5.11 State 与 Prompts" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              5.11 State 与 Prompts
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="05-13-%E8%8A%82%E7%82%B9%E2%91%A1%E6%A3%80%E7%B4%A2%E4%B8%8E%E7%B2%BE%E6%8E%92.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 5.13 节点②：检索与精排" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              5.13 节点②：检索与精排
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var inner = document.querySelector('.md-header__inner');
+      if (!inner) return;
+      var div = document.createElement('div');
+      div.className = 'itheima-header-logo';
+      div.innerHTML = '<img src="../img/logo1.png" alt="黑马程序员">';
+      inner.appendChild(div);
+    });
+  </script>
+
+    
+  </body>
+</html>
